@@ -132,6 +132,21 @@ export default async function ConversionPage({ params }: PageProps) {
                 </div>
             </div>
 
+            <div className="mt-12 mb-8">
+                <h3 className="text-xl font-bold mb-6 text-center">More {fromUnit.symbol} Conversions</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {category.units.filter(u => u.id !== fromUnit.id && u.id !== toUnit.id).slice(0, 8).map(u => (
+                        <Link
+                            key={u.id}
+                            href={`/${categoryId}/${fromUnit.id}-to-${u.id}`}
+                            className="text-sm p-3 bg-card border border-border rounded-lg text-center hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                        >
+                            {fromUnit.name} to {u.name}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             <div className="mt-16 mb-8">
                 <AdUnit className="max-w-3xl mx-auto" slotId="footer-slot" />
             </div>
