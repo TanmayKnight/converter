@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,12 @@ export default function RootLayout({
         </main>
         <Footer />
         <Analytics />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595166353140049"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

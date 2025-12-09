@@ -10,12 +10,12 @@ export function AdUnit({ slotId, className }: { slotId?: string; className?: str
                 {/* 
             <Script
                 async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX"
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595166353140049"
                 crossOrigin="anonymous"
             />
             <ins className="adsbygoogle"
                 style={{ display: 'block' }}
-                data-ad-client="ca-pub-XXXXXXXXXXXXXX"
+                data-ad-client="ca-pub-6595166353140049"
                 data-ad-slot={slotId}
                 data-ad-format="auto"
                 data-full-width-responsive="true"></ins>
