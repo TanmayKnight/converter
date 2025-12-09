@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { DollarSign, Percent, Clock } from 'lucide-react';
 import Link from 'next/link';
+import { AffiliateCard } from '@/components/AffiliateCard';
 
 export default function LoanCalculator() {
     const [amount, setAmount] = useState<string>('10000');
@@ -106,6 +107,26 @@ export default function LoanCalculator() {
                         <div className="text-sm text-muted-foreground mb-1">Total Interest Payable</div>
                         <div className="text-2xl font-bold text-foreground">${totalInterest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-12">
+                <h3 className="text-xl font-bold mb-6">Recommended Financial Tools</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <AffiliateCard
+                        title="Best Personal Loans 2024"
+                        description="Compare rates from top lenders. Loans up to $100,000. Rates as low as 6.99% APR."
+                        ctaText="Compare Rates"
+                        href="https://www.bankrate.com/loans/personal-loans/rates/"
+                        badge="Top Pick"
+                    />
+                    <AffiliateCard
+                        title="High Yield Savings"
+                        description="Earn up to 5.00% APY with a high-yield savings account. No monthly fees."
+                        ctaText="View Offers"
+                        href="https://www.nerdwallet.com/best/banking/high-yield-online-savings-accounts"
+                        badge="Featured"
+                    />
                 </div>
             </div>
         </div>

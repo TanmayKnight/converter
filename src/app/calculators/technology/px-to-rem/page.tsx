@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeftRight, Check, Copy, Code } from 'lucide-react';
+import { AffiliateCard } from '@/components/AffiliateCard';
 
 export default function PxRemConverter() {
     const [baseSize, setBaseSize] = useState('16');
@@ -80,6 +81,26 @@ export default function PxRemConverter() {
                             className="w-full bg-secondary/50 border-2 border-transparent focus:border-primary rounded-2xl p-6 text-4xl text-center font-bold outline-none transition-all"
                         />
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-12">
+                <h3 className="text-xl font-bold mb-6 text-center">Web Development Tools</h3>
+                <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                    <AffiliateCard
+                        title="Hostinger"
+                        description="Premium Shared Hosting + Free Domain. Everything you need to launch a website."
+                        ctaText="Get Started"
+                        href="https://www.hostinger.com/"
+                        badge="75% OFF"
+                    />
+                    <AffiliateCard
+                        title="Udemy"
+                        description="Learn React, Next.js and TypeScript from industry experts."
+                        ctaText="Find Courses"
+                        href="https://www.udemy.com/"
+                        badge="Best Seller"
+                    />
                 </div>
             </div>
         </div>

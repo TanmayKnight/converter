@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { DollarSign, Percent, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { AffiliateCard } from '@/components/AffiliateCard';
 
 export default function MortgageCalculator() {
     // Inputs
@@ -132,6 +133,26 @@ export default function MortgageCalculator() {
                         <div className="text-sm text-muted-foreground mb-1">Total Cost of Loan</div>
                         <div className="text-2xl font-bold text-foreground">${totalPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
                     </div>
+                </div>
+            </div>
+
+            <div className="mt-12">
+                <h3 className="text-xl font-bold mb-6">Expert Mortgage Tools</h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <AffiliateCard
+                        title="Rocket Mortgage"
+                        description="Get approved in minutes. See how much home you can afford with a custom rate."
+                        ctaText="Get Pre-Approved"
+                        href="https://www.rocketmortgage.com/"
+                        badge="Fastest Approval"
+                    />
+                    <AffiliateCard
+                        title="Better.com"
+                        description="Zero commission. Zero lender fees. The 100% digital way to get a mortgage."
+                        ctaText="See Rates"
+                        href="https://better.com/"
+                        badge="Lowest Fees"
+                    />
                 </div>
             </div>
         </div>

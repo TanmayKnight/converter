@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { AffiliateCard } from '@/components/AffiliateCard';
 
 type Mode = 'simple' | 'compound' | 'cd' | 'recurring' | 'depreciation' | 'npv' | 'roi';
 
@@ -143,6 +144,26 @@ export default function InvestmentCalculator() {
                             <div className="text-4xl font-extrabold text-foreground">${result}</div>
                         </div>
                     )}
+                </div>
+            </div>
+
+            <div className="mt-12">
+                <h3 className="text-xl font-bold mb-6">Grow Your Wealth</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <AffiliateCard
+                        title="Robinhood"
+                        description="Commission-free investing. Get your first stock for free when you sign up."
+                        ctaText="Claim Free Stock"
+                        href="https://robinhood.com/"
+                        badge="Free Stock"
+                    />
+                    <AffiliateCard
+                        title="Webull"
+                        description="Advanced trading tools and extended hours trading. 0 commisions."
+                        ctaText="Open Account"
+                        href="https://www.webull.com/"
+                        badge="Pro Tools"
+                    />
                 </div>
             </div>
         </div>

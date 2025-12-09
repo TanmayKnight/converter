@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { AffiliateCard } from '@/components/AffiliateCard';
 
 type Mode = 'gst' | 'vat';
 
@@ -103,6 +104,26 @@ export default function TaxCalculator() {
                             </div>
                         </div>
                     )}
+                </div>
+            </div>
+
+            <div className="mt-12">
+                <h3 className="text-xl font-bold mb-6">Tax Filing Tools</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                    <AffiliateCard
+                        title="TurboTax"
+                        description="Max your refund guaranteed. File your own taxes with confidence."
+                        ctaText="File For Free"
+                        href="https://turbotax.intuit.com/"
+                        badge="Most Popular"
+                    />
+                    <AffiliateCard
+                        title="H&R Block"
+                        description="Get every dollar you deserve. File online or with a tax pro."
+                        ctaText="Start Filing"
+                        href="https://www.hrblock.com/"
+                        badge="Expert Help"
+                    />
                 </div>
             </div>
         </div>
