@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'UnitMaster - Premium Unit Converter',
   description: 'Fast, accurate, and beautiful unit converter for all your needs.',
+  metadataBase: new URL('https://unitmaster.io'),
 };
 
 export default function RootLayout({

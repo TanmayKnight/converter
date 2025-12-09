@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { unitDefinitions } from '@/lib/units/definitions';
 
 // Base URL - In production, this should be the actual domain
-const BASE_URL = 'https://unitmaster.vercel.app';
+const BASE_URL = 'https://unitmaster.io';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const routes: MetadataRoute.Sitemap = [
