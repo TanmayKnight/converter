@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { DollarSign, Percent, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { AffiliateCard } from '@/components/AffiliateCard';
+import { CalculatorContent } from '@/components/CalculatorContent';
 
 export default function MortgageCalculator() {
     // Inputs
@@ -155,6 +156,38 @@ export default function MortgageCalculator() {
                     />
                 </div>
             </div>
+
+            <CalculatorContent title="Everything You Need to Know About Mortgages">
+                <h3>How a Mortgage Calculator Helps You Save</h3>
+                <p>
+                    A mortgage is likely the largest debt you will ever take on, so understanding the math behind it is crucial.
+                    This calculator uses the standard amortization formula to determine your monthly principal and interest payments.
+                    By adjusting the interest rate or down payment, you can see exactly how these variables impact your monthly budget.
+                </p>
+
+                <h3>Understanding the Components</h3>
+                <ul>
+                    <li><strong>Principal:</strong> The loan amount you borrow to purchase the home.</li>
+                    <li><strong>Interest:</strong> The cost of borrowing money, expressed as an annual percentage rate (APR).</li>
+                    <li><strong>Term:</strong> The length of time you have to repay the loan (commonly 15 or 30 years).</li>
+                </ul>
+
+                <h3>30-Year vs. 15-Year Mortgages</h3>
+                <p>
+                    The two most common loan terms in the United States are the 30-year and 15-year fixed-rate mortgages.
+                    A <strong>30-year fixed</strong> loan offers lower monthly payments but results in paying significantly more interest over the life of the loan.
+                    A <strong>15-year fixed</strong> loan has higher monthly payments, but you build equity faster and pay far less interest total.
+                    Use our calculator to compare both scenarios by simply changing the "Loan Term" input.
+                </p>
+
+                <h3>How to Quality for a Lower Rate</h3>
+                <p>
+                    Your interest rate is determined by your credit score, debt-to-income ratio, and down payment size.
+                    Generally, a credit score above 760 will qualify you for the best rates. Putting down at least 20% also eliminates the need for
+                    Private Mortgage Insurance (PMI), further reducing your monthly costs. We recommend checking your credit report for errors
+                    months before you intend to apply for a mortgage.
+                </p>
+            </CalculatorContent>
         </div>
     );
 }

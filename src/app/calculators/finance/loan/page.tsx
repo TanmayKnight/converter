@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { DollarSign, Percent, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { AffiliateCard } from '@/components/AffiliateCard';
+import { CalculatorContent } from '@/components/CalculatorContent';
 
 export default function LoanCalculator() {
     const [amount, setAmount] = useState<string>('10000');
@@ -129,6 +130,37 @@ export default function LoanCalculator() {
                     />
                 </div>
             </div>
+
+            <CalculatorContent title="Personal Loans Demystified">
+                <h3>When Should You Take a Personal Loan?</h3>
+                <p>
+                    Personal loans are versatile tools that can be used for debt consolidation, home improvements, or major purchases.
+                    Because they are typically "unsecured" (not backed by collateral like your house or car), they often have higher interest rates than mortgages but lower rates than credit cards.
+                    The math in this calculator helps you decide if a loan is affordable for your monthly budget.
+                </p>
+
+                <h3>How Amortization Works</h3>
+                <p>
+                    Most personal loans are "fully amortizing," meaning your monthly payment stays the same, but the portion going toward interest decreases over time while the principal repayment increases.
+                    At the beginning of your loan, a large chunk of your payment goes straight to the lender's profit (interest). By the end, almost 100% of your payment reduces your debt.
+                </p>
+
+                <h3>Improving Your Approval Odds</h3>
+                <p>
+                    Lenders look at your breakdown of monthly debt obligations versus your gross monthly income (DTI Ratio).
+                    A DTI below 36% is ideal. If you are struggling to get approved, conside applying with a co-signer or paying down small credit card balances first
+                    to boost your credit score.
+                </p>
+
+                <h3>Hidden Fees to Watch For</h3>
+                <p>
+                    <strong>Origination Fee:</strong> A one-time fee deducted from your loan proceeds (usually 1-8%). If you borrow $10,000 with a 5% fee, you only receive $9,500.
+                </p>
+                <p>
+                    <strong>Prepayment Penalty:</strong> Some lenders charge you a fee for paying off your loan early. Our calculator assumes no prepayment penalty,
+                    and most reputable modern lenders (like SoFi and Upstart) have eliminated these fees.
+                </p>
+            </CalculatorContent>
         </div>
     );
 }

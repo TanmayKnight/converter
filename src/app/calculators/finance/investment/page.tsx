@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { AffiliateCard } from '@/components/AffiliateCard';
+import { CalculatorContent } from '@/components/CalculatorContent';
 
 type Mode = 'simple' | 'compound' | 'cd' | 'recurring' | 'depreciation' | 'npv' | 'roi';
 
@@ -166,6 +167,40 @@ export default function InvestmentCalculator() {
                     />
                 </div>
             </div>
+
+            <CalculatorContent title="Mastering Investment Growth">
+                <h3>The Power of Compound Interest</h3>
+                <p>
+                    Compound interest is often called the "eighth wonder of the world." Unlike simple interest, where you earn money only on your initial principal,
+                    compound interest allows you to earn interest on your interest. Over long periods (10+ years), this exponential growth can turn modest monthly contributions
+                    into substantial wealth. This calculator helps you visualize that curve.
+                </p>
+
+                <h3>Investment Vehicles Explained</h3>
+                <p>
+                    <strong>Mutual Funds & ETFs:</strong> Baskets of stocks that offer instant diversification. Historically, the S&P 500 has returned about 10% annually before inflation.
+                </p>
+                <p>
+                    <strong>High-Yield Savings:</strong> These accounts pay higher interest rates than traditional checking accounts, making them ideal for emergency funds or short-term goals.
+                </p>
+                <p>
+                    <strong>CDs (Certificate of Deposit):</strong> You lock your money away for a set term (e.g., 1 year) in exchange for a guaranteed interest rate.
+                    They are extremely safe but offer lower returns than stocks.
+                </p>
+
+                <h3>Inflation and Real Returns</h3>
+                <p>
+                    When calculating long-term growth, it's important to remember inflation (the rising cost of goods).
+                    If your investment grows by 7% but inflation is 3%, your "real" return (purchasing power increase) is only about 4%.
+                    Our advanced modes help you account for depreciation and net present value (NPV) to make smarter decisions.
+                </p>
+
+                <h3>Start Early, Invest Consistently</h3>
+                <p>
+                    Time is your biggest asset. Investing $500/month starting at age 25 yields significantly more at age 60 than starting at age 35,
+                    even if you invest double the amount later. Use the "Recurring Deposit" mode to see how consistent habits impact your financial future.
+                </p>
+            </CalculatorContent>
         </div>
     );
 }
