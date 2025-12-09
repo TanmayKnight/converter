@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { unitDefinitions, UnitCategory, CategoryDefinition } from '@/lib/units/definitions';
 import { ConverterWidget } from '@/components/Converter';
+import { AdUnit } from '@/components/AdUnit';
 import { Metadata } from 'next';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 
@@ -83,6 +84,10 @@ export default async function CategoryPage({ params }: PageProps) {
 
             <div className="mb-16">
                 <ConverterWidget category={categoryId} />
+            </div>
+
+            <div className="mb-16">
+                <AdUnit className="max-w-3xl mx-auto" slotId="category-footer-slot" />
             </div>
 
             <div className="prose prose-neutral dark:prose-invert max-w-none">

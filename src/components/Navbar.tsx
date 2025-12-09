@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Menu, X, Calculator } from 'lucide-react';
+import { Search } from './Search';
 
 export function Navbar() {
     return (
@@ -13,6 +14,14 @@ export function Navbar() {
                         UnitMaster
                     </span>
                 </Link>
+
+                <div className="flex-1 max-w-md mx-4 hidden md:block">
+                    <Search />
+                </div>
+
+                <div className="md:hidden">
+                    <Search />
+                </div>
 
             </div>
         </nav>

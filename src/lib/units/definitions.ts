@@ -1,4 +1,4 @@
-export type UnitCategory = 'length' | 'weight' | 'temperature' | 'volume' | 'area' | 'time' | 'digital' | 'speed' | 'pressure' | 'power' | 'energy' | 'force' | 'currency';
+export type UnitCategory = 'length' | 'weight' | 'temperature' | 'volume' | 'area' | 'time' | 'digital' | 'speed' | 'pressure' | 'power' | 'energy' | 'force' | 'currency' | 'torque' | 'acceleration' | 'flow' | 'current' | 'voltage' | 'resistance' | 'charge' | 'magnetism' | 'illuminance' | 'radiation';
 
 export interface UnitDefinition {
     id: string;
@@ -185,12 +185,113 @@ export const unitDefinitions: Record<UnitCategory, CategoryDefinition> = {
         baseUnit: 'USD',
         units: [
             { id: 'USD', name: 'US Dollar', symbol: '$', ratio: 1 },
-            { id: 'EUR', name: 'Euro', symbol: '€', ratio: 1.08 }, // Placeholder, will update dynamically
+            { id: 'EUR', name: 'Euro', symbol: '€', ratio: 1.08 },
             { id: 'GBP', name: 'British Pound', symbol: '£', ratio: 1.26 },
             { id: 'INR', name: 'Indian Rupee', symbol: '₹', ratio: 0.012 },
             { id: 'JPY', name: 'Japanese Yen', symbol: '¥', ratio: 0.0067 },
             { id: 'AUD', name: 'Australian Dollar', symbol: 'A$', ratio: 0.65 },
             { id: 'CAD', name: 'Canadian Dollar', symbol: 'C$', ratio: 0.74 },
         ],
+    },
+    torque: {
+        id: 'torque',
+        name: 'Torque',
+        baseUnit: 'newton-meter',
+        units: [
+            { id: 'newton-meter', name: 'Newton-Meter', symbol: 'N·m', ratio: 1 },
+            { id: 'pound-force-foot', name: 'Pound-force Foot', symbol: 'lbf·ft', ratio: 1.3558179483 },
+            { id: 'pound-force-inch', name: 'Pound-force Inch', symbol: 'lbf·in', ratio: 0.112984829 },
+            { id: 'kilogram-force-meter', name: 'Kilogram-force Meter', symbol: 'kgf·m', ratio: 9.80665 },
+        ]
+    },
+    acceleration: {
+        id: 'acceleration',
+        name: 'Acceleration',
+        baseUnit: 'meter-per-second-squared',
+        units: [
+            { id: 'meter-per-second-squared', name: 'Meter/Second²', symbol: 'm/s²', ratio: 1 },
+            { id: 'g-force', name: 'G-force', symbol: 'g', ratio: 9.80665 },
+            { id: 'foot-per-second-squared', name: 'Foot/Second²', symbol: 'ft/s²', ratio: 0.3048 },
+        ]
+    },
+    flow: {
+        id: 'flow',
+        name: 'Flow Rate',
+        baseUnit: 'cubic-meter-per-second',
+        units: [
+            { id: 'cubic-meter-per-second', name: 'Cubic Meter/Second', symbol: 'm³/s', ratio: 1 },
+            { id: 'liter-per-minute', name: 'Liter/Minute', symbol: 'L/min', ratio: 1.666667e-5 },
+            { id: 'gallon-us-per-minute', name: 'Gallon (US)/Minute', symbol: 'GPM', ratio: 6.30902e-5 },
+            { id: 'cubic-foot-per-second', name: 'Cubic Foot/Second', symbol: 'CFS', ratio: 0.028316847 },
+        ]
+    },
+    current: {
+        id: 'current',
+        name: 'Current',
+        baseUnit: 'ampere',
+        units: [
+            { id: 'ampere', name: 'Ampere', symbol: 'A', ratio: 1 },
+            { id: 'milliampere', name: 'Milliampere', symbol: 'mA', ratio: 0.001 },
+            { id: 'kiloampere', name: 'Kiloampere', symbol: 'kA', ratio: 1000 },
+        ]
+    },
+    voltage: {
+        id: 'voltage',
+        name: 'Voltage',
+        baseUnit: 'volt',
+        units: [
+            { id: 'volt', name: 'Volt', symbol: 'V', ratio: 1 },
+            { id: 'millivolt', name: 'Millivolt', symbol: 'mV', ratio: 0.001 },
+            { id: 'kilovolt', name: 'Kilovolt', symbol: 'kV', ratio: 1000 },
+        ]
+    },
+    resistance: {
+        id: 'resistance',
+        name: 'Electric Resistance',
+        baseUnit: 'ohm',
+        units: [
+            { id: 'ohm', name: 'Ohm', symbol: 'Ω', ratio: 1 },
+            { id: 'kiloohm', name: 'Kiloohm', symbol: 'kΩ', ratio: 1000 },
+            { id: 'megaohm', name: 'Megaohm', symbol: 'MΩ', ratio: 1e6 },
+        ]
+    },
+    charge: {
+        id: 'charge',
+        name: 'Electric Charge',
+        baseUnit: 'coulomb',
+        units: [
+            { id: 'coulomb', name: 'Coulomb', symbol: 'C', ratio: 1 },
+            { id: 'milliampere-hour', name: 'Milliampere-hour', symbol: 'mAh', ratio: 3.6 },
+            { id: 'ampere-hour', name: 'Ampere-hour', symbol: 'Ah', ratio: 3600 },
+        ]
+    },
+    magnetism: {
+        id: 'magnetism',
+        name: 'Magnetism (Field)',
+        baseUnit: 'tesla',
+        units: [
+            { id: 'tesla', name: 'Tesla', symbol: 'T', ratio: 1 },
+            { id: 'gauss', name: 'Gauss', symbol: 'G', ratio: 1e-4 },
+        ]
+    },
+    illuminance: {
+        id: 'illuminance',
+        name: 'Illuminance',
+        baseUnit: 'lux',
+        units: [
+            { id: 'lux', name: 'Lux', symbol: 'lx', ratio: 1 },
+            { id: 'foot-candle', name: 'Foot-candle', symbol: 'fc', ratio: 10.76391 },
+        ]
+    },
+    radiation: {
+        id: 'radiation',
+        name: 'Radiation (Dose)',
+        baseUnit: 'gray',
+        units: [
+            { id: 'gray', name: 'Gray', symbol: 'Gy', ratio: 1 },
+            { id: 'sievert', name: 'Sievert', symbol: 'Sv', ratio: 1 }, // Equivalent for 1:1 QF
+            { id: 'rad', name: 'Rad', symbol: 'rad', ratio: 0.01 },
+            { id: 'rem', name: 'Rem', symbol: 'rem', ratio: 0.01 },
+        ]
     },
 };

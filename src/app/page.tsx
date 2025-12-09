@@ -18,13 +18,32 @@ import {
   DollarSign,
   TrendingUp,
   Percent,
+  Sun,
+  Radio,
+  Magnet,
+  Droplets,
+  RotateCw,
+  Move,
+  LucideIcon,
+  Binary,
+  Hash,
+  Code,
+  BoxSelect,
+  Box,
+  Banknote,
+  Sigma,
+  FunctionSquare,
+  Triangle,
+  PiggyBank,
+  Receipt,
+  Wallet,
+  Umbrella,
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory, CategoryDefinition } from '@/lib/units/definitions';
-import { Search } from '@/components/Search';
 import { CompactCard } from '@/components/CompactCard';
 
 // Map icons
-const iconMap: Record<UnitCategory, React.ElementType> = {
+const iconMap: Record<UnitCategory, LucideIcon> = {
   length: Ruler,
   weight: Weight,
   temperature: Thermometer,
@@ -38,164 +57,146 @@ const iconMap: Record<UnitCategory, React.ElementType> = {
   energy: Activity,
   force: Anchor,
   currency: Coins,
+  torque: RotateCw,
+  acceleration: Move,
+  flow: Droplets,
+  current: Zap,
+  voltage: Zap,
+  resistance: Zap,
+  charge: Zap,
+  magnetism: Magnet,
+  illuminance: Sun,
+  radiation: Radio,
 };
 
-// Groups
-const groups = [
-  {
-    name: 'Common Converters',
-    description: 'Everyday units for general use.',
-    categories: ['length', 'weight', 'temperature', 'volume', 'area', 'time', 'currency'] as UnitCategory[]
-  },
-  {
-    name: 'Engineering & Physics',
-    description: 'Technical units for specialized calculations.',
-    categories: ['speed', 'pressure', 'power', 'energy', 'force'] as UnitCategory[]
-  },
-  {
-    name: 'Digital & Science',
-    description: 'Data storage and other scientific measurments.',
-    categories: ['digital'] as UnitCategory[]
-  }
-];
-
 export default function Home() {
-  const getCategory = (id: UnitCategory) => unitDefinitions[id];
+  // Define groups with thematic mix of Converters and Calculators
+  const columns = [
+    {
+      id: 'everyday',
+      title: 'Everyday Essentials',
+      description: 'Daily utilities and common conversions.',
+      color: 'text-blue-600',
+      border: 'border-blue-500/20',
+      items: [
+        { type: 'converter', id: 'length' },
+        { type: 'converter', id: 'weight' },
+        { type: 'converter', id: 'temperature' },
+        { type: 'converter', id: 'volume' },
+        { type: 'converter', id: 'time' },
+        { type: 'converter', id: 'currency' },
+        { type: 'calculator', title: 'Tip Splitter', href: '/calculators/math/tip', icon: Banknote },
+        { type: 'calculator', title: 'Percentage', href: '/calculators/math/percentage', icon: Percent },
+        { type: 'calculator', title: 'BMI Calculator', href: '/calculators/health/bmi', icon: Activity },
+        { type: 'calculator', title: 'Startups / ROI', href: '/calculators/finance/roi', icon: TrendingUp },
+      ]
+    },
+    {
+      id: 'finance',
+      title: 'Business & Finance',
+      description: 'Professional tools for money management.',
+      color: 'text-emerald-600',
+      border: 'border-emerald-500/20',
+      items: [
+        { type: 'calculator', title: 'Investment', href: '/calculators/finance/investment', icon: PiggyBank },
+        { type: 'calculator', title: 'Loan Calculator', href: '/calculators/finance/loan', icon: Percent },
+        { type: 'calculator', title: 'Mortgage', href: '/calculators/finance/mortgage', icon: DollarSign },
+        { type: 'calculator', title: 'Advanced Loans', href: '/calculators/finance/loan-advanced', icon: Wallet },
+        { type: 'calculator', title: 'Tax (GST/VAT)', href: '/calculators/finance/tax', icon: Receipt },
+        { type: 'calculator', title: 'Retirement', href: '/calculators/finance/retirement', icon: Umbrella },
+        { type: 'converter', id: 'area' }, // Land area often financial
+      ]
+    },
+    {
+      id: 'science',
+      title: 'Science & Engineering',
+      description: 'Physics, Electronics, and Mechanics.',
+      color: 'text-purple-600',
+      border: 'border-purple-500/20',
+      items: [
+        { type: 'converter', id: 'speed' },
+        { type: 'converter', id: 'pressure' },
+        { type: 'converter', id: 'power' },
+        { type: 'converter', id: 'energy' },
+        { type: 'converter', id: 'force' },
+        { type: 'converter', id: 'torque' },
+        { type: 'converter', id: 'digital' },
+        { type: 'converter', id: 'current' },
+        { type: 'converter', id: 'voltage' },
+        { type: 'converter', id: 'resistance' },
+        { type: 'calculator', title: "Ohm's Law", href: '/calculators/physics/ohms-law', icon: Zap },
+        { type: 'calculator', title: 'Px to Rem', href: '/calculators/technology/px-to-rem', icon: Code },
+      ]
+    },
+    {
+      id: 'math',
+      title: 'Math & Geometry',
+      description: 'Advanced mathematics and shapes.',
+      color: 'text-orange-600',
+      border: 'border-orange-500/20',
+      items: [
+        { type: 'calculator', title: 'Algebra', href: '/calculators/math/algebra', icon: FunctionSquare },
+        { type: 'calculator', title: 'Trigonometry', href: '/calculators/math/trigonometry', icon: Triangle },
+        { type: 'calculator', title: 'Statistics', href: '/calculators/math/statistics', icon: Sigma },
+        { type: 'calculator', title: 'Area Calc', href: '/calculators/geometry/area', icon: BoxSelect },
+        { type: 'calculator', title: 'Volume Calc', href: '/calculators/geometry/volume', icon: Box },
+        { type: 'calculator', title: 'Base Converter', href: '/calculators/math/base', icon: Binary },
+        { type: 'calculator', title: 'Roman Numerals', href: '/calculators/math/roman', icon: Hash },
+      ]
+    }
+  ];
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-3.5rem)] pb-12">
-      {/* Hero Section - Compact */}
-      <section className="relative pt-8 pb-8 md:pt-12 md:pb-10 overflow-hidden">
-        <div className="container relative z-10 px-4 mx-auto text-center max-w-screen-xl">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground mb-3">
-            Convert <span className="text-primary bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">Anything</span> Instantly
-          </h1>
-          <p className="mx-auto max-w-2xl text-sm md:text-base text-muted-foreground mb-6">
-            Accurate, fast, and free unit converters and calculators.
-          </p>
-
-          <div className="mb-4">
-            <Search />
-          </div>
-        </div>
-
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-20 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 rounded-full blur-3xl mix-blend-multiply animate-pulse"></div>
-        </div>
-      </section>
 
       {/* Main Content Area */}
-      <div className="container px-4 mx-auto max-w-screen-xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
-          {/* Column 1: Common Converters */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border/40">
-              <h2 className="text-lg font-bold">General</h2>
-            </div>
-            <div className="grid gap-3">
-              {groups[0].categories.map(catId => {
-                const cat = getCategory(catId);
-                const Icon = iconMap[cat.id];
-                return (
-                  <CompactCard
-                    key={cat.id}
-                    href={`/${cat.id}`}
-                    icon={Icon}
-                    title={cat.name}
-                    description=""
-                  />
-                );
-              })}
-            </div>
-          </div>
+      <div className="container px-4 mx-auto max-w-screen-2xl mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
 
-          {/* Column 2: Engineering & Digital */}
-          <div className="space-y-8">
-            {/* Engineering */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border/40">
-                <h2 className="text-lg font-bold">Engineering</h2>
+          {columns.map((col) => (
+            <div key={col.id} className="space-y-4">
+              <div className="flex flex-col gap-1 pb-2 border-b border-border/40">
+                <h2 className={`text-lg font-bold ${col.color}`}>{col.title}</h2>
+                <p className="text-xs text-muted-foreground">{col.description}</p>
               </div>
+
               <div className="grid gap-3">
-                {groups[1].categories.map(catId => {
-                  const cat = getCategory(catId);
-                  const Icon = iconMap[cat.id];
+                {col.items.map((item: any, i) => {
+                  let href = '';
+                  let Icon;
+                  let title = '';
+                  let description = '';
+
+                  if (item.type === 'converter') {
+                    const cat = unitDefinitions[item.id as UnitCategory];
+                    if (!cat) return null; // Safety
+                    href = `/${cat.id}`;
+                    Icon = iconMap[cat.id];
+                    title = cat.name;
+                    description = '';
+                  } else {
+                    href = item.href;
+                    Icon = item.icon;
+                    title = item.title;
+                    description = '';
+                  }
+
                   return (
                     <CompactCard
-                      key={cat.id}
-                      href={`/${cat.id}`}
+                      key={i}
+                      href={href}
                       icon={Icon}
-                      title={cat.name}
-                      description=""
+                      title={title}
+                      description={description}
+                      iconColorClass={col.color}
+                      colorClass={col.border}
                     />
                   );
                 })}
               </div>
             </div>
+          ))}
 
-            {/* Digital */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border/40">
-                <h2 className="text-lg font-bold">Digital</h2>
-              </div>
-              <div className="grid gap-3">
-                {groups[2].categories.map(catId => {
-                  const cat = getCategory(catId);
-                  const Icon = iconMap[cat.id];
-                  return (
-                    <CompactCard
-                      key={cat.id}
-                      href={`/${cat.id}`}
-                      icon={Icon}
-                      title={cat.name}
-                      description=""
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Column 3: Calculators */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-2 pb-2 border-b border-border/40">
-              <h2 className="text-lg font-bold text-purple-600">Calculators</h2>
-            </div>
-            <div className="grid gap-3">
-              <CompactCard
-                href="/calculators/finance/mortgage"
-                icon={DollarSign}
-                title="Mortgage Calculator"
-                description=""
-                colorClass="border-purple-500/20"
-                iconColorClass="text-purple-600"
-              />
-              <CompactCard
-                href="/calculators/finance/loan"
-                icon={Percent}
-                title="Loan Calculator"
-                description=""
-                colorClass="border-purple-500/20"
-                iconColorClass="text-purple-600"
-              />
-              <CompactCard
-                href="/calculators/finance/roi"
-                icon={TrendingUp}
-                title="ROI Calculator"
-                description=""
-                colorClass="border-purple-500/20"
-                iconColorClass="text-purple-600"
-              />
-              <CompactCard
-                href="/calculators/health/bmi"
-                icon={Activity}
-                title="BMI Calculator"
-                description=""
-                colorClass="border-pink-500/20"
-                iconColorClass="text-pink-600"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
