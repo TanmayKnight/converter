@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: 'UnitMaster - Premium Unit Converter',
   description: 'Fast, accurate, and beautiful unit converter for all your needs.',
   metadataBase: new URL('https://unitmaster.io'),
+  verification: {
+    google: '6S98Dxq3OVsax4x2LK6Ia8f5A64nYfJW79aPzcA5Itg',
+  },
 };
 
 export default function RootLayout({
