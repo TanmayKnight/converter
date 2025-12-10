@@ -84,14 +84,6 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
             {/* Background Gradient */}
             <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50", theme.gradient)} />
 
-            {/* Coming Soon Overlay */}
-            {comingSoon && (
-                <div className="absolute top-3 right-3 z-20">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-primary/10 text-primary border border-primary/20">
-                        Coming Soon
-                    </span>
-                </div>
-            )}
 
             {/* Header Content */}
             <div className="relative p-6 pb-2 z-10 shrink-0">
@@ -160,9 +152,23 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                     ))}
                 </div>
             </div>
-            {/* Opacity for Coming Soon */}
+            {/* Prominent Coming Soon Overlay */}
             {comingSoon && (
-                <div className="absolute inset-0 bg-background/10 backdrop-blur-[1px] z-10 pointer-events-none" />
+                <div className="absolute inset-0 z-50 flex flex-col items-center justify-center">
+                    {/* Glass/Blur Effect - Reduced opacity for readability */}
+                    <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px]" />
+
+                    {/* Centered Badge */}
+                    <div className="relative bg-background/80 border border-border/40 shadow-sm px-4 py-2 rounded-full flex items-center gap-2.5 transform hover:scale-105 select-none">
+                        <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+                        </span>
+                        <span className="font-bold text-sm bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+                            Coming Soon
+                        </span>
+                    </div>
+                </div>
             )}
         </div>
     );
