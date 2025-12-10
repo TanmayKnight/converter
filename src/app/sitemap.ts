@@ -30,10 +30,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Here we'll generate the most common ones.
 
     let count = 0;
-    const LIMIT = 500;
+    const LIMIT = 2000; // Increased limit
 
     for (const category of Object.values(unitDefinitions)) {
-        const units = category.units.slice(0, 5); // Focus on top 5 units per category for sitemap
+        const units = category.units.slice(0, 15); // Increased from 5 to 15 to capture more long-tail keywords
         for (const fromUnit of units) {
             for (const toUnit of units) {
                 if (fromUnit.id !== toUnit.id) {
