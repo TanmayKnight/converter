@@ -46,10 +46,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Here we'll generate the most common ones.
 
     let count = 0;
-    const LIMIT = 2000; // Increased limit
+    const LIMIT = 5000; // Increased to capture all meaningful combinations
 
     for (const category of Object.values(unitDefinitions)) {
-        const units = category.units.slice(0, 15); // Increased from 5 to 15 to capture more long-tail keywords
+        // Remove slice restriction to allow ALL unit combinations (Programmatic SEO)
+        const units = category.units;
         for (const fromUnit of units) {
             for (const toUnit of units) {
                 if (fromUnit.id !== toUnit.id) {
