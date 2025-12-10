@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
   Ruler,
   Weight,
@@ -7,43 +6,49 @@ import {
   LayoutGrid,
   Clock,
   HardDrive,
-  ArrowRight,
   Zap,
   Gauge,
   Activity,
   Anchor,
   Wind,
   Coins,
-  Calculator,
   DollarSign,
   TrendingUp,
   Percent,
-  Sun,
-  Radio,
-  Magnet,
-  Droplets,
-  RotateCw,
-  Move,
-  LucideIcon,
+  Receipt,
+  Umbrella,
+  PiggyBank,
+  Wallet,
+  FunctionSquare,
+  Triangle,
+  Sigma,
+  BoxSelect,
+  Box,
   Binary,
   Hash,
   Code,
-  BoxSelect,
-  Box,
   Banknote,
-  Sigma,
-  FunctionSquare,
-  Triangle,
-  PiggyBank,
-  Receipt,
-  Wallet,
-  Umbrella,
+  FileText,
+  Files,
+  Scissors,
+  Merge,
+  RotateCw,
+  Move,
+  Droplets,
+  Magnet,
+  Sun,
+  Radio,
+  Image as ImageIcon,
+  Crop,
+  Maximize2,
+  Minimize2,
+  Eraser
 } from 'lucide-react';
-import { unitDefinitions, UnitCategory, CategoryDefinition } from '@/lib/units/definitions';
-import { CompactCard } from '@/components/CompactCard';
+import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
+import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
 
-// Map icons
-const iconMap: Record<UnitCategory, LucideIcon> = {
+// Map icons for unit categories
+const iconMap: Record<UnitCategory, any> = {
   length: Ruler,
   weight: Weight,
   temperature: Thermometer,
@@ -70,134 +75,137 @@ const iconMap: Record<UnitCategory, LucideIcon> = {
 };
 
 export default function Home() {
-  // Define groups with thematic mix of Converters and Calculators
-  const columns = [
-    {
-      id: 'everyday',
-      title: 'Everyday Essentials',
-      description: 'Daily utilities and common conversions.',
-      color: 'text-blue-600',
-      border: 'border-blue-500/20',
-      items: [
-        { type: 'converter', id: 'length' },
-        { type: 'converter', id: 'weight' },
-        { type: 'converter', id: 'temperature' },
-        { type: 'converter', id: 'volume' },
-        { type: 'converter', id: 'time' },
-        { type: 'converter', id: 'currency' },
-        { type: 'calculator', title: 'Tip Splitter', href: '/calculators/math/tip', icon: Banknote },
-        { type: 'calculator', title: 'Percentage', href: '/calculators/math/percentage', icon: Percent },
-        { type: 'calculator', title: 'BMI Calculator', href: '/calculators/health/bmi', icon: Activity },
-        { type: 'calculator', title: 'Startups / ROI', href: '/calculators/finance/roi', icon: TrendingUp },
-      ]
-    },
-    {
-      id: 'finance',
-      title: 'Business & Finance',
-      description: 'Professional tools for money management.',
-      color: 'text-emerald-600',
-      border: 'border-emerald-500/20',
-      items: [
-        { type: 'calculator', title: 'Investment', href: '/calculators/finance/investment', icon: PiggyBank },
-        { type: 'calculator', title: 'Loan Calculator', href: '/calculators/finance/loan', icon: Percent },
-        { type: 'calculator', title: 'Mortgage', href: '/calculators/finance/mortgage', icon: DollarSign },
-        { type: 'calculator', title: 'Advanced Loans', href: '/calculators/finance/loan-advanced', icon: Wallet },
-        { type: 'calculator', title: 'Tax (GST/VAT)', href: '/calculators/finance/tax', icon: Receipt },
-        { type: 'calculator', title: 'Retirement', href: '/calculators/finance/retirement', icon: Umbrella },
-        { type: 'converter', id: 'area' }, // Land area often financial
-      ]
-    },
-    {
-      id: 'science',
-      title: 'Science & Engineering',
-      description: 'Physics, Electronics, and Mechanics.',
-      color: 'text-purple-600',
-      border: 'border-purple-500/20',
-      items: [
-        { type: 'converter', id: 'speed' },
-        { type: 'converter', id: 'pressure' },
-        { type: 'converter', id: 'power' },
-        { type: 'converter', id: 'energy' },
-        { type: 'converter', id: 'force' },
-        { type: 'converter', id: 'torque' },
-        { type: 'converter', id: 'digital' },
-        { type: 'converter', id: 'current' },
-        { type: 'converter', id: 'voltage' },
-        { type: 'converter', id: 'resistance' },
-        { type: 'calculator', title: "Ohm's Law", href: '/calculators/physics/ohms-law', icon: Zap },
-        { type: 'calculator', title: 'Px to Rem', href: '/calculators/technology/px-to-rem', icon: Code },
-      ]
-    },
-    {
-      id: 'math',
-      title: 'Math & Geometry',
-      description: 'Advanced mathematics and shapes.',
-      color: 'text-orange-600',
-      border: 'border-orange-500/20',
-      items: [
-        { type: 'calculator', title: 'Algebra', href: '/calculators/math/algebra', icon: FunctionSquare },
-        { type: 'calculator', title: 'Trigonometry', href: '/calculators/math/trigonometry', icon: Triangle },
-        { type: 'calculator', title: 'Statistics', href: '/calculators/math/statistics', icon: Sigma },
-        { type: 'calculator', title: 'Area Calc', href: '/calculators/geometry/area', icon: BoxSelect },
-        { type: 'calculator', title: 'Volume Calc', href: '/calculators/geometry/volume', icon: Box },
-        { type: 'calculator', title: 'Base Converter', href: '/calculators/math/base', icon: Binary },
-        { type: 'calculator', title: 'Roman Numerals', href: '/calculators/math/roman', icon: Hash },
-      ]
-    }
-  ];
+
+  // Helper to get unit link with instantiated icon
+  const getUnitItem = (id: string, featured = false): BentoItem => {
+    const cat = unitDefinitions[id as UnitCategory];
+    const Icon = iconMap[id as UnitCategory];
+    return {
+      title: cat?.name || id,
+      href: `/${id}`,
+      icon: Icon ? <Icon /> : null,
+      featured,
+      type: 'converter'
+    };
+  };
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-3.5rem)] pb-12">
+      <div className="container px-4 mx-auto max-w-screen-xl mt-8">
 
-      {/* Main Content Area */}
-      <div className="container px-4 mx-auto max-w-screen-2xl mt-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
-
-          {columns.map((col) => (
-            <div key={col.id} className="space-y-4">
-              <div className="flex flex-col gap-1 pb-2 border-b border-border/40">
-                <h2 className={`text-lg font-bold ${col.color}`}>{col.title}</h2>
-                <p className="text-xs text-muted-foreground">{col.description}</p>
-              </div>
-
-              <div className="grid gap-3">
-                {col.items.map((item: any, i) => {
-                  let href = '';
-                  let Icon;
-                  let title = '';
-                  let description = '';
-
-                  if (item.type === 'converter') {
-                    const cat = unitDefinitions[item.id as UnitCategory];
-                    if (!cat) return null; // Safety
-                    href = `/${cat.id}`;
-                    Icon = iconMap[cat.id];
-                    title = cat.name;
-                    description = '';
-                  } else {
-                    href = item.href;
-                    Icon = item.icon;
-                    title = item.title;
-                    description = '';
-                  }
-
-                  return (
-                    <CompactCard
-                      key={i}
-                      href={href}
-                      icon={Icon}
-                      title={title}
-                      description={description}
-                      iconColorClass={col.color}
-                      colorClass={col.border}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-
+        <div className="mb-10 text-center space-y-2">
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
+            The <span className="text-primary">All-in-One</span> Digital Toolkit.
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+            Master your workflow with professional Financial Calculators, Unit Converters, and secure PDF & Image tools. Fast, free, and privacy-first.
+          </p>
         </div>
+
+        <BentoGrid>
+          {/* 1. Everyday Essentials (Blue) */}
+          <BentoCard
+            title="Everyday & Units"
+            description="Common unit conversions for daily use."
+            icon={<LayoutGrid />}
+            colorTheme="blue"
+            items={[
+              getUnitItem('length', true),
+              getUnitItem('weight', true),
+              getUnitItem('temperature'),
+              getUnitItem('volume'),
+              getUnitItem('time'),
+              getUnitItem('area'),
+              getUnitItem('speed'),
+              getUnitItem('digital'),
+            ]}
+          />
+
+          {/* 2. Business & Finance (Emerald) - Featured Spot */}
+          <BentoCard
+            title="Finance & Business"
+            description="Crucial tools for mortgages, loans, and taxes."
+            icon={<DollarSign />}
+            colorTheme="emerald"
+            items={[
+              { title: "Mortgage Calc", href: "/calculators/finance/mortgage", icon: <DollarSign />, featured: true, type: 'calculator' },
+              { title: "Loan Calculator", href: "/calculators/finance/loan", icon: <Wallet />, featured: true, type: 'calculator' },
+              { title: "Investment / ROI", href: "/calculators/finance/investment", icon: <TrendingUp />, type: 'calculator' },
+              { title: "Tax (GST/VAT)", href: "/calculators/finance/tax", icon: <Receipt />, type: 'calculator' },
+              { title: "Retirement", href: "/calculators/finance/retirement", icon: <Umbrella />, type: 'calculator' },
+              { title: "Currency", href: "/currency", icon: <Coins />, featured: true, type: 'converter' },
+            ]}
+          />
+
+          {/* 3. Math & Stats (Orange) */}
+          <BentoCard
+            title="Math & Statistics"
+            description="Solvers for algebra, geometry, and probability."
+            icon={<FunctionSquare />}
+            colorTheme="orange"
+            items={[
+              { title: "Percentage", href: "/calculators/math/percentage", icon: <Percent />, featured: true, type: 'calculator' },
+              { title: "Statistics", href: "/calculators/math/statistics", icon: <Sigma />, type: 'calculator' },
+              { title: "Algebra", href: "/calculators/math/algebra", icon: <FunctionSquare />, type: 'calculator' },
+              { title: "Trigonometry", href: "/calculators/math/trigonometry", icon: <Triangle />, type: 'calculator' },
+              { title: "Area & Volume", href: "/calculators/geometry/area", icon: <BoxSelect />, type: 'calculator' },
+              { title: "Tip Splitter", href: "/calculators/math/tip", icon: <Banknote />, type: 'calculator' },
+              { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
+            ]}
+          />
+
+          {/* 4. Science & Engineering (Purple) */}
+          <BentoCard
+            title="Science & Eng."
+            description="Physics, Electronics, and Web Development."
+            icon={<Zap />}
+            colorTheme="purple"
+            items={[
+              { title: "Px to Rem", href: "/calculators/technology/px-to-rem", icon: <Code />, featured: true, type: 'calculator' },
+              { title: "Ohm's Law", href: "/calculators/physics/ohms-law", icon: <Zap />, featured: true, type: 'calculator' },
+              getUnitItem('pressure'),
+              getUnitItem('power'),
+              getUnitItem('energy'),
+              getUnitItem('force'),
+              getUnitItem('torque'),
+              getUnitItem('voltage'),
+            ]}
+          />
+
+          {/* 5. PDF Tools (Rose) - NEW */}
+          <BentoCard
+            title="PDF Tools"
+            description="Merge, Split, and Compress documents securely."
+            icon={<FileText />}
+            colorTheme="rose"
+            comingSoon={true}
+            items={[
+              { title: "Merge PDF", href: "#", icon: <Merge />, featured: true, type: 'tool' },
+              { title: "Split PDF", href: "#", icon: <Scissors />, featured: true, type: 'tool' },
+              { title: "Compress PDF", href: "#", icon: <Files />, featured: true, type: 'tool' },
+              { title: "PDF to Word", href: "#", icon: <FileText />, type: 'tool' },
+              { title: "Word to PDF", href: "#", icon: <FileText />, type: 'tool' },
+              { title: "Sign PDF", href: "#", icon: <FileText />, type: 'tool' },
+            ]}
+          />
+
+          {/* 6. Image Tools (Indigo) - NEW */}
+          <BentoCard
+            title="Image Tools"
+            description="Crop, Resize, and Remove Backgrounds."
+            icon={<ImageIcon />}
+            colorTheme="blue"
+            comingSoon={true}
+            items={[
+              { title: "Crop Image", href: "#", icon: <Crop />, featured: true, type: 'tool' },
+              { title: "Resize Image", href: "#", icon: <Maximize2 />, featured: true, type: 'tool' },
+              { title: "Remove BG", href: "#", icon: <Eraser />, featured: true, type: 'tool' },
+              { title: "Convert to JPG", href: "#", icon: <ImageIcon />, type: 'tool' },
+              { title: "Compress Image", href: "#", icon: <Minimize2 />, type: 'tool' },
+            ]}
+          />
+
+        </BentoGrid>
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 import { MortgageCalculatorClient } from '@/components/calculators/MortgageCalculatorClient';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
+    // ... existing metadata ...
+    // Note: I will keep the existing metadata block intact in the real file, I'm just showing context here
     title: 'Free Mortgage Calculator - Estimate Monthly Payments & Interest',
     description: 'Calculate your monthly mortgage payments with our free, highly accurate tool. Visualize amortization, interest rates, and loan terms instantly.',
     alternates: {
@@ -19,6 +22,13 @@ export default function MortgagePage() {
     return (
         <>
             <MortgageCalculatorClient />
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Finance', path: '#' }, // Using hash for now as generic finance page doesn't exist
+                    { name: 'Mortgage Calculator', path: '/calculators/finance/mortgage' }
+                ]}
+            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

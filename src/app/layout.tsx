@@ -9,13 +9,43 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'UnitMaster - Premium Unit Converter',
-  description: 'Fast, accurate, and beautiful unit converter for all your needs.',
+  title: {
+    default: 'UnitMaster - Premium Unit Converter & Calculators',
+    template: '%s | UnitMaster',
+  },
+  description: 'The all-in-one digital toolkit. Professional financial calculators, unit converters, and PDF tools. Fast, free, and privacy-focused.',
+  keywords: ['unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter'],
+  authors: [{ name: 'UnitMaster Team' }],
   metadataBase: new URL('https://unitmaster.io'),
+  openGraph: {
+    title: 'UnitMaster',
+    description: 'The all-in-one digital toolkit for professionals.',
+    url: 'https://unitmaster.io',
+    siteName: 'UnitMaster',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'UnitMaster',
+    description: 'Calculators, Converters, and Tools for everyone.',
+    creator: '@unitmaster',
+  },
   verification: {
     google: '6S98Dxq3OVsax4x2LK6Ia8f5A64nYfJW79aPzcA5Itg',
     other: {
       'impact-site-verification': '1ce22c09-2796-4064-aa79-18e749c44bce',
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
 };
