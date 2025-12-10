@@ -148,6 +148,7 @@ export default function InvestmentCalculator() {
                 </div>
             </div>
 
+            {/* Affiliate Section Paused for SEO Focus
             <div className="mt-12">
                 <h3 className="text-xl font-bold mb-6">Grow Your Wealth</h3>
                 <div className="grid md:grid-cols-2 gap-6">
@@ -167,6 +168,7 @@ export default function InvestmentCalculator() {
                     />
                 </div>
             </div>
+            */}
 
             <CalculatorContent title="Mastering Investment Growth">
                 <h3>The Power of Compound Interest</h3>

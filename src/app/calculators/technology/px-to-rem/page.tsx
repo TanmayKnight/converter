@@ -84,25 +84,27 @@ export default function PxRemConverter() {
                 </div>
             </div>
 
+            {/* Affiliate Section Paused for SEO Focus
             <div className="mt-12">
                 <h3 className="text-xl font-bold mb-6 text-center">Web Development Tools</h3>
                 <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                    <AffiliateCard
+                    <AffiliateCard 
                         title="Hostinger"
                         description="Premium Shared Hosting + Free Domain. Everything you need to launch a website."
                         ctaText="Get Started"
-                        href="https://www.hostinger.com/"
+                        href="https://www.hostinger.com/" 
                         badge="75% OFF"
                     />
-                    <AffiliateCard
+                     <AffiliateCard 
                         title="Udemy"
                         description="Learn React, Next.js and TypeScript from industry experts."
                         ctaText="Find Courses"
-                        href="https://www.udemy.com/"
+                        href="https://www.udemy.com/" 
                         badge="Best Seller"
                     />
                 </div>
             </div>
+            */}
         </div>
     );
 }

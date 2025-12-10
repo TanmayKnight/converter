@@ -107,25 +107,27 @@ export default function TaxCalculator() {
                 </div>
             </div>
 
+            {/* Affiliate Section Paused for SEO Focus
             <div className="mt-12">
                 <h3 className="text-xl font-bold mb-6">Tax Filing Tools</h3>
                 <div className="grid md:grid-cols-2 gap-6">
-                    <AffiliateCard
+                    <AffiliateCard 
                         title="TurboTax"
                         description="Max your refund guaranteed. File your own taxes with confidence."
                         ctaText="File For Free"
-                        href="https://turbotax.intuit.com/"
+                        href="https://turbotax.intuit.com/" 
                         badge="Most Popular"
                     />
-                    <AffiliateCard
+                     <AffiliateCard 
                         title="H&R Block"
                         description="Get every dollar you deserve. File online or with a tax pro."
                         ctaText="Start Filing"
-                        href="https://www.hrblock.com/"
+                        href="https://www.hrblock.com/" 
                         badge="Expert Help"
                     />
                 </div>
             </div>
+            */}
         </div>
     );
 }

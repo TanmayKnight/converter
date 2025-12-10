@@ -111,6 +111,7 @@ export default function LoanCalculator() {
                 </div>
             </div>
 
+            {/* Affiliate Section Paused for SEO Focus
             <div className="mt-12">
                 <h3 className="text-xl font-bold mb-6">Recommended Financial Tools</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -121,7 +122,7 @@ export default function LoanCalculator() {
                         href="https://www.bankrate.com/loans/personal-loans/rates/"
                         badge="Top Pick"
                     />
-                    <AffiliateCard
+                     <AffiliateCard
                         title="High Yield Savings"
                         description="Earn up to 5.00% APY with a high-yield savings account. No monthly fees."
                         ctaText="View Offers"
@@ -130,6 +131,7 @@ export default function LoanCalculator() {
                     />
                 </div>
             </div>
+            */}
 
             <CalculatorContent title="Personal Loans Demystified">
                 <h3>When Should You Take a Personal Loan?</h3>

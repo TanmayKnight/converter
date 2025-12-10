@@ -137,25 +137,27 @@ export default function MortgageCalculator() {
                 </div>
             </div>
 
+            {/* Affiliate Section Paused for SEO Focus
             <div className="mt-12">
                 <h3 className="text-xl font-bold mb-6">Expert Mortgage Tools</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <AffiliateCard
+                    <AffiliateCard 
                         title="Rocket Mortgage"
                         description="Get approved in minutes. See how much home you can afford with a custom rate."
                         ctaText="Get Pre-Approved"
-                        href="https://www.rocketmortgage.com/"
+                        href="https://www.rocketmortgage.com/" 
                         badge="Fastest Approval"
                     />
-                    <AffiliateCard
+                     <AffiliateCard 
                         title="Better.com"
                         description="Zero commission. Zero lender fees. The 100% digital way to get a mortgage."
                         ctaText="See Rates"
-                        href="https://better.com/"
+                        href="https://better.com/" 
                         badge="Lowest Fees"
                     />
                 </div>
             </div>
+            */}
 
             <CalculatorContent title="Everything You Need to Know About Mortgages">
                 <h3>How a Mortgage Calculator Helps You Save</h3>
