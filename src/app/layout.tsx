@@ -16,11 +16,11 @@ export const metadata: Metadata = {
   description: 'The all-in-one digital toolkit. Professional financial calculators, unit converters, and PDF tools. Fast, free, and privacy-focused.',
   keywords: ['unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter'],
   authors: [{ name: 'UnitMaster Team' }],
-  metadataBase: new URL('https://unitmaster.io'),
+  metadataBase: new URL('https://unitmasterapp.com'),
   openGraph: {
     title: 'UnitMaster',
     description: 'The all-in-one digital toolkit for professionals.',
-    url: 'https://unitmaster.io',
+    url: 'https://unitmasterapp.com',
     siteName: 'UnitMaster',
     locale: 'en_US',
     type: 'website',

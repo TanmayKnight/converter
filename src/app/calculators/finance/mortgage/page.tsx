@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: 'Free Mortgage Calculator - Estimate Monthly Payments & Interest',
     description: 'Calculate your monthly mortgage payments with our free, highly accurate tool. Visualize amortization, interest rates, and loan terms instantly.',
     alternates: {
-        canonical: 'https://unitmaster.io/calculators/finance/mortgage',
+        canonical: 'https://unitmasterapp.com/calculators/finance/mortgage',
     },
     openGraph: {
         title: 'Mortgage Calculator | UnitMaster',
         description: 'Plan your home purchase with our precision mortgage calculator.',
-        url: 'https://unitmaster.io/calculators/finance/mortgage',
+        url: 'https://unitmasterapp.com/calculators/finance/mortgage',
         type: 'website',
     },
 };

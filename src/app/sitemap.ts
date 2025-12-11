@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { unitDefinitions } from '@/lib/units/definitions';
 
 // Base URL - In production, this should be the actual domain
-const BASE_URL = 'https://unitmaster.io';
+const BASE_URL = 'https://unitmasterapp.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const routes: MetadataRoute.Sitemap = [

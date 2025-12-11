@@ -48,6 +48,7 @@ export default async function ConversionPage({ params }: PageProps) {
 
     if (!fromUnit || !toUnit) notFound();
 
+
     return (
         <div className="container mx-auto px-4 py-12 max-w-screen-xl">
             {/* Navigation Header */}
@@ -146,6 +147,7 @@ export default async function ConversionPage({ params }: PageProps) {
                     ))}
                 </div>
             </div>
+
 
             <div className="mt-16 mb-8">
                 <AdUnit className="max-w-3xl mx-auto" slotId="footer-slot" />

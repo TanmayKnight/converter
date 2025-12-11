@@ -5,12 +5,12 @@ export const metadata: Metadata = {
     title: 'Investment Calculator - Calculate Compound Interest & Growth',
     description: 'Visualize your wealth growth with our Investment Calculator. Supports Compound Interest, Recurring Deposits, CDs, and NPV calculations.',
     alternates: {
-        canonical: 'https://unitmaster.io/calculators/finance/investment',
+        canonical: 'https://unitmasterapp.com/calculators/finance/investment',
     },
     openGraph: {
         title: 'Investment Calculator | UnitMaster',
         description: 'Calculate compound interest and investment returns instantly.',
-        url: 'https://unitmaster.io/calculators/finance/investment',
+        url: 'https://unitmasterapp.com/calculators/finance/investment',
         type: 'website',
     },
 };

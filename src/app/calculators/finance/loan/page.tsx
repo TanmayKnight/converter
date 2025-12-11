@@ -5,12 +5,12 @@ export const metadata: Metadata = {
     title: 'Personal Loan Calculator - Calculate Payments & APR',
     description: 'Calculate monthly payments for personal loans, auto loans, and student loans. See total interest costs and amortization.',
     alternates: {
-        canonical: 'https://unitmaster.io/calculators/finance/loan',
+        canonical: 'https://unitmasterapp.com/calculators/finance/loan',
     },
     openGraph: {
         title: 'Loan Calculator | UnitMaster',
         description: 'Estimate your monthly loan payments in seconds.',
-        url: 'https://unitmaster.io/calculators/finance/loan',
+        url: 'https://unitmasterapp.com/calculators/finance/loan',
         type: 'website',
     },
 };

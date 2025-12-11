@@ -5,12 +5,12 @@ export const metadata: Metadata = {
     title: 'GST & VAT Calculator - Calculate Tax Instantly',
     description: 'Free online Goods and Services Tax (GST) and Value Added Tax (VAT) calculator. Accurate for USA, UK, India, and Australia.',
     alternates: {
-        canonical: 'https://unitmaster.io/calculators/finance/tax',
+        canonical: 'https://unitmasterapp.com/calculators/finance/tax',
     },
     openGraph: {
         title: 'Tax Calculator | UnitMaster',
         description: 'Calculate GST and VAT totals in seconds.',
-        url: 'https://unitmaster.io/calculators/finance/tax',
+        url: 'https://unitmasterapp.com/calculators/finance/tax',
         type: 'website',
     },
 };

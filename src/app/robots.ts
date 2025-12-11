@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://unitmaster.io/sitemap.xml',
+        sitemap: 'https://unitmasterapp.com/sitemap.xml',
     };
 }
