@@ -29,15 +29,29 @@ export default function ImageToolsLayout({
 
                     {/* Sidebar Ad Slot */}
                     <aside className="w-full lg:w-80 shrink-0 space-y-8">
-                        <div className="sticky top-24">
-                            <AdUnit className="h-[600px]" slotId={AD_SLOTS.SIDEBAR_IMAGE} />
-
-                            <div className="mt-8 p-4 bg-secondary/30 rounded-lg border border-border/50">
-                                <h4 className="font-semibold mb-2 text-sm">Privacy Focused</h4>
-                                <p className="text-xs text-muted-foreground">
-                                    All processing happens in your browser. Your images are never uploaded to our servers.
-                                </p>
+                        <div className="sticky top-24 space-y-8">
+                            <div className="p-4 bg-card rounded-lg border border-border shadow-sm">
+                                <h4 className="font-semibold mb-3 text-sm flex items-center gap-2">
+                                    <span className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
+                                    Explore More
+                                </h4>
+                                <nav className="grid gap-2">
+                                    <Link href="/tools/image/remove-bg" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Remove Background</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <Link href="/tools/image/converter" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Format Converter</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <div className="h-px bg-border/50 my-1" />
+                                    <p className="text-[10px] text-muted-foreground text-center">
+                                        🔒 All tools run locally in browser.
+                                    </p>
+                                </nav>
                             </div>
+
+                            <AdUnit className="h-[600px]" slotId={AD_SLOTS.SIDEBAR_IMAGE} />
                         </div>
                     </aside>
                 </div>

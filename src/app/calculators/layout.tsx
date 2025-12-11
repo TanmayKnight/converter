@@ -21,15 +21,33 @@ export default function CalculatorsLayout({
 
                     {/* Sidebar Ad Slot */}
                     <aside className="w-full lg:w-80 shrink-0 space-y-8">
-                        <div className="sticky top-24">
-                            <AdUnit className="h-[600px]" slotId="sidebar-calculator-slot" />
-
-                            <div className="mt-8 p-4 bg-secondary/30 rounded-lg border border-border/50">
-                                <h4 className="font-semibold mb-2 text-sm">Pro Tip</h4>
-                                <p className="text-xs text-muted-foreground">
-                                    Bookmark this page for quick access to your most used calculations.
-                                </p>
+                        <div className="sticky top-24 space-y-8">
+                            <div className="p-4 bg-card rounded-lg border border-border shadow-sm">
+                                <h4 className="font-semibold mb-3 text-sm flex items-center gap-2">
+                                    <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                                    Popular Tools
+                                </h4>
+                                <nav className="grid gap-2">
+                                    <Link href="/tools/image/passport" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Passport Photo</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <Link href="/calculators/finance/mortgage" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Mortgage Calc</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <Link href="/currency" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Currency Converter</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <Link href="/calculators/health/bmi" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>BMI Calculator</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                </nav>
                             </div>
+
+                            <AdUnit className="h-[600px]" slotId="sidebar-calculator-slot" />
                         </div>
                     </aside>
                 </div>
