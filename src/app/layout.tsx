@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     creator: '@unitmaster',
   },
   verification: {
-    google: '6S98Dxq3OVsax4x2LK6Ia8f5A64nYfJW79aPzcA5Itg',
+    google: 'bjpEfNzGpb13ry19KxJAobdZBxyUuMaTil95SQG-GS8',
     other: {
       'impact-site-verification': '1ce22c09-2796-4064-aa79-18e749c44bce',
     },
