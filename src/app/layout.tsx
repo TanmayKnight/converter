@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     google: 'bjpEfNzGpb13ry19KxJAobdZBxyUuMaTil95SQG-GS8',
     other: {
       'impact-site-verification': '1ce22c09-2796-4064-aa79-18e749c44bce',
+      'google-adsense-account': 'ca-pub-6595166353140049',
     },
   },
   robots: {
