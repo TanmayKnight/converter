@@ -35,7 +35,14 @@ export default function TermsOfService() {
                         UnitMaster or its suppliers will not be hold accountable for any damages that will arise with the use or inability to use the materials on UnitMaster's Website, even if UnitMaster or an authorize representative of this Website has been notified, orally or written, of the possibility of such damage.
                     </p>
                 </section>
+
+                <section>
+                    <h2 className="text-xl font-semibold mb-2">5. Contact</h2>
+                    <p>
+                        If you have any questions about these Terms, please contact us at <a href="mailto:tableaulancer@gmail.com" className="hover:text-primary transition-colors">tableaulancer@gmail.com</a>.
+                    </p>
+                </section>
             </div>
-        </div>
+        </div >
     );
 }
