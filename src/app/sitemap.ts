@@ -25,6 +25,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: `${BASE_URL}/calculators/geometry/area`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/technology/px-to-rem`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/physics/ohms-law`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
+        // Image Tools (High Value)
+        { url: `${BASE_URL}/tools/image/crop`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/image/remove-bg`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/image/passport`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/image/converter`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/image/headshot`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+
         { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
         { url: `${BASE_URL}/terms`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },

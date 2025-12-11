@@ -27,11 +27,6 @@ export default function TipCalculator() {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <div className="mb-6">
-                <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                    ← Back to Home
-                </Link>
-            </div>
 
             <div className="max-w-md mx-auto">
                 <div className="text-center mb-8">

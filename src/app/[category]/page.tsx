@@ -60,19 +60,7 @@ export default async function CategoryPage({ params }: PageProps) {
     const displayedConversions = popularConversions.slice(0, 40);
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-screen-xl">
-            {/* Navigation Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                <Link
-                    href="/"
-                    className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors group"
-                >
-                    <div className="p-2 rounded-full bg-secondary group-hover:bg-primary/10 mr-2 transition-colors">
-                        <ArrowLeft className="h-4 w-4" />
-                    </div>
-                    Back to Home
-                </Link>
-            </div>
+        <div className="container mx-auto px-4 py-4 max-w-screen-xl">
 
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold mb-4">{category.name} Converter</h1>

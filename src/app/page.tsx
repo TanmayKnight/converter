@@ -42,7 +42,9 @@ import {
   Crop,
   Maximize2,
   Minimize2,
-  Eraser
+  Eraser,
+  Sparkles,
+  User
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -195,13 +197,13 @@ export default function Home() {
             description="Crop, Resize, and Remove Backgrounds."
             icon={<ImageIcon />}
             colorTheme="blue"
-            comingSoon={true}
             items={[
-              { title: "Crop Image", href: "#", icon: <Crop />, featured: true, type: 'tool' },
-              { title: "Resize Image", href: "#", icon: <Maximize2 />, featured: true, type: 'tool' },
-              { title: "Remove BG", href: "#", icon: <Eraser />, featured: true, type: 'tool' },
-              { title: "Convert to JPG", href: "#", icon: <ImageIcon />, type: 'tool' },
-              { title: "Compress Image", href: "#", icon: <Minimize2 />, type: 'tool' },
+              { title: "Crop Image", href: "/tools/image/crop", icon: <Crop />, featured: true, type: 'tool' },
+              { title: "Remove BG", href: "/tools/image/remove-bg", icon: <Eraser />, featured: true, type: 'tool' },
+              { title: "Passport Photo", href: "/tools/image/passport", icon: <User />, featured: true, type: 'tool' },
+              { title: "Convert to JPG", href: "/tools/image/converter", icon: <ImageIcon />, type: 'tool' },
+              { title: "Compress Image", href: "/tools/image/converter", icon: <Minimize2 />, type: 'tool' },
+              { title: "Studio Headshot", href: "/tools/image/headshot", icon: <User />, type: 'tool' },
             ]}
           />
 

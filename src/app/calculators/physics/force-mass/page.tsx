@@ -32,11 +32,6 @@ export default function MassForceCalculator() {
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <div className="mb-6">
-                <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-                    ← Back to Home
-                </Link>
-            </div>
 
             <div className="text-center mb-10">
                 <h1 className="text-3xl font-bold mb-2">Mass ↔ Force (Kg to Kn)</h1>

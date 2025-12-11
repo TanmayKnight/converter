@@ -78,7 +78,23 @@ export function Search() {
             'auto loan': '/calculators/finance/loan-advanced',
             'car loan': '/calculators/finance/loan-advanced',
             'payday': '/calculators/finance/loan-advanced',
-            'personal loan': '/calculators/finance/loan-advanced'
+            'personal loan': '/calculators/finance/loan-advanced',
+            // Image Tools
+            'crop': '/tools/image/crop',
+            'resize': '/tools/image/crop',
+            'passport': '/tools/image/passport',
+            'id photo': '/tools/image/passport',
+            'visa photo': '/tools/image/passport',
+            'background': '/tools/image/remove-bg',
+            'remove bg': '/tools/image/remove-bg',
+            'erase': '/tools/image/remove-bg',
+            'headshot': '/tools/image/headshot',
+            'studio': '/tools/image/headshot',
+            'suit': '/tools/image/headshot',
+            'convert image': '/tools/image/converter',
+            'compress image': '/tools/image/converter',
+            'jpg': '/tools/image/converter',
+            'png': '/tools/image/converter'
         };
 
         for (const [key, path] of Object.entries(calculatorMap)) {
