@@ -46,8 +46,11 @@ import {
   Sparkles,
   User,
   QrCode,
+  Video,
+  Mic,
   Braces,
-  Code2
+  Code2,
+  Shield
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -193,6 +196,8 @@ export default async function Home() {
             items={[
               { title: "JSON Formatter", href: "/tools/dev/json-formatter", icon: <Braces />, featured: true, type: 'tool' },
               { title: "QR Code Gen", href: "/tools/dev/qr-code", icon: <QrCode />, featured: true, type: 'tool' },
+              { title: "JWT Debugger", href: "/tools/dev/jwt-debugger", icon: <Shield />, type: 'tool' },
+              { title: "Base64 Conv.", href: "/tools/dev/base64", icon: <Binary />, type: 'tool' },
             ]}
           />
 
@@ -210,6 +215,20 @@ export default async function Home() {
               { title: "Area & Volume", href: "/calculators/geometry/area", icon: <BoxSelect />, type: 'calculator' },
               { title: "Tip Splitter", href: "/calculators/math/tip", icon: <Banknote />, type: 'calculator' },
               { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
+            ]}
+          />
+
+
+          {/* Credit/Creator Studio (Rose) - New */}
+          <BentoCard
+            title="Creator Studio"
+            description="Tools for YouTubers and Content Creators."
+            icon={<Video />}
+            colorTheme="rose"
+            items={[
+              { title: "Thumbnail Grabber", href: "/tools/creator/thumbnail", icon: <ImageIcon />, featured: true, type: 'tool' },
+              { title: "Video Trimmer", href: "#", icon: <Video />, type: 'other' }, // Coming Soon
+              { title: "Audio Extractor", href: "#", icon: <Mic />, type: 'other' }, // Coming Soon
             ]}
           />
 

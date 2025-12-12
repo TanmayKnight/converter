@@ -10,6 +10,8 @@ export function DevToolsNav() {
 
     const links = [
         { href: '/tools/dev/json-formatter', label: 'JSON Formatter' },
+        { href: '/tools/dev/jwt-debugger', label: 'JWT Debugger' },
+        { href: '/tools/dev/base64', label: 'Base64 Converter' },
         { href: '/tools/dev/qr-code', label: 'QR Code Gen' },
     ];
 

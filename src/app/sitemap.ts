@@ -44,6 +44,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         // Developer Tools (High Value)
         { url: `${BASE_URL}/tools/dev/json-formatter`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/dev/qr-code`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/dev/jwt-debugger`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/dev/base64`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+
+        // Creator Tools
+        { url: `${BASE_URL}/tools/creator/thumbnail`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
 
         { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
         { url: `${BASE_URL}/privacy`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
