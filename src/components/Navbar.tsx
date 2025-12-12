@@ -16,6 +16,15 @@ export async function Navbar() {
             .eq('id', user.id)
             .single()
         profile = data
+
+        // Fallback for Google Auth if profile/first_name is missing
+        if (!profile?.first_name && user.user_metadata) {
+            const fullName = user.user_metadata.full_name || user.user_metadata.name || ''
+            const firstName = fullName.split(' ')[0]
+            if (firstName) {
+                profile = { ...profile, first_name: firstName }
+            }
+        }
     }
 
     return (
