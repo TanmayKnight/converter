@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { unitDefinitions, UnitCategory, CategoryDefinition } from '@/lib/units/definitions';
 import { ConverterWidget } from '@/components/Converter';
 import { AdUnit } from '@/components/AdUnit';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 import { Metadata } from 'next';
 
 interface PageProps {
@@ -152,6 +153,14 @@ export default async function ConversionPage({ params }: PageProps) {
             <div className="mt-16 mb-8">
                 <AdUnit className="max-w-3xl mx-auto" slotId="footer-slot" />
             </div>
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: category.name, path: `/${categoryId}` },
+                    { name: `${fromUnit.name} to ${toUnit.name}`, path: `/${categoryId}/${fromUnit.id}-to-${toUnit.id}` }
+                ]}
+            />
 
             <script
                 type="application/ld+json"

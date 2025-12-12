@@ -72,6 +72,26 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'UnitMaster',
+              url: 'https://unitmasterapp.com',
+              logo: 'https://unitmasterapp.com/logo.png',
+              sameAs: [
+                'https://twitter.com/unitmaster'
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                email: 'tableaulancer@gmail.com',
+                contactType: 'customer support'
+              }
+            }),
+          }}
+        />
       </body>
     </html>
   );
