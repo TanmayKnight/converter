@@ -44,7 +44,10 @@ import {
   Minimize2,
   Eraser,
   Sparkles,
-  User
+  User,
+  QrCode,
+  Braces,
+  Code2
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -179,7 +182,23 @@ export default async function Home() {
             ]}
           />
 
-          {/* 5. Math & Statistics (Orange) - Academic/Niche */}
+
+          {/* 5. Developer Tools (Cyan) - Professional */}
+          <BentoCard
+            title="Developer Tools"
+            description="Utilities for coding and data manipulation."
+            icon={<Code2 />}
+            colorTheme="purple"
+            locked={isLocked}
+            items={[
+              { title: "JSON Formatter", href: "/tools/dev/json-formatter", icon: <Braces />, featured: true, type: 'tool' },
+              { title: "QR Code Gen", href: "/tools/dev/qr-code", icon: <QrCode />, featured: true, type: 'tool' },
+              { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
+              { title: "Px to Rem", href: "/calculators/technology/px-to-rem", icon: <Code />, type: 'calculator' },
+            ]}
+          />
+
+          {/* 6. Math & Statistics (Orange) - Academic/Niche */}
           <BentoCard
             title="Math & Statistics"
             description="Solvers for algebra, geometry, and probability."
@@ -192,18 +211,16 @@ export default async function Home() {
               { title: "Trigonometry", href: "/calculators/math/trigonometry", icon: <Triangle />, type: 'calculator' },
               { title: "Area & Volume", href: "/calculators/geometry/area", icon: <BoxSelect />, type: 'calculator' },
               { title: "Tip Splitter", href: "/calculators/math/tip", icon: <Banknote />, type: 'calculator' },
-              { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
             ]}
           />
 
-          {/* 6. Science & Engineering (Purple) - Niche */}
+          {/* 7. Science & Physics (Purple) - Niche */}
           <BentoCard
-            title="Science & Eng."
-            description="Physics, Electronics, and Web Development."
+            title="Science & Physics"
+            description="Physics concepts, electronics, and forces."
             icon={<Zap />}
             colorTheme="purple"
             items={[
-              { title: "Px to Rem", href: "/calculators/technology/px-to-rem", icon: <Code />, featured: true, type: 'calculator' },
               { title: "Ohm's Law", href: "/calculators/physics/ohms-law", icon: <Zap />, featured: true, type: 'calculator' },
               getUnitItem('pressure'),
               getUnitItem('power'),

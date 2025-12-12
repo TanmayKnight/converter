@@ -24,12 +24,14 @@
     "next": "16.0.8",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^5.4.449",
+    "qrcode.react": "^4.2.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-dropzone": "^14.3.8",
     "react-image-crop": "^11.0.10",
     "react-pdf": "^10.2.0",
     "react-rnd": "^10.5.2",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

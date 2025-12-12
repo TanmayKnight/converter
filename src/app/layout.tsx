@@ -4,6 +4,7 @@ import './globals.css';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from 'sonner';
 import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -66,6 +67,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <Analytics />
+        <Toaster />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595166353140049"
