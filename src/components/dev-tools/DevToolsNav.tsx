@@ -11,8 +11,6 @@ export function DevToolsNav() {
     const links = [
         { href: '/tools/dev/json-formatter', label: 'JSON Formatter' },
         { href: '/tools/dev/qr-code', label: 'QR Code Gen' },
-        { href: '/calculators/math/base', label: 'Base Converter' },
-        { href: '/calculators/technology/px-to-rem', label: 'Px to Rem' },
     ];
 
     return (

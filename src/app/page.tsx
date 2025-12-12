@@ -193,8 +193,6 @@ export default async function Home() {
             items={[
               { title: "JSON Formatter", href: "/tools/dev/json-formatter", icon: <Braces />, featured: true, type: 'tool' },
               { title: "QR Code Gen", href: "/tools/dev/qr-code", icon: <QrCode />, featured: true, type: 'tool' },
-              { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
-              { title: "Px to Rem", href: "/calculators/technology/px-to-rem", icon: <Code />, type: 'calculator' },
             ]}
           />
 
@@ -211,16 +209,18 @@ export default async function Home() {
               { title: "Trigonometry", href: "/calculators/math/trigonometry", icon: <Triangle />, type: 'calculator' },
               { title: "Area & Volume", href: "/calculators/geometry/area", icon: <BoxSelect />, type: 'calculator' },
               { title: "Tip Splitter", href: "/calculators/math/tip", icon: <Banknote />, type: 'calculator' },
+              { title: "Base Converter", href: "/calculators/math/base", icon: <Binary />, type: 'tool' },
             ]}
           />
 
-          {/* 7. Science & Physics (Purple) - Niche */}
+          {/* 7. Science & Engineering (Purple) - Niche */}
           <BentoCard
-            title="Science & Physics"
-            description="Physics concepts, electronics, and forces."
+            title="Science & Eng."
+            description="Physics, Electronics, and Web Development."
             icon={<Zap />}
             colorTheme="purple"
             items={[
+              { title: "Px to Rem", href: "/calculators/technology/px-to-rem", icon: <Code />, featured: true, type: 'calculator' },
               { title: "Ohm's Law", href: "/calculators/physics/ohms-law", icon: <Zap />, featured: true, type: 'calculator' },
               getUnitItem('pressure'),
               getUnitItem('power'),

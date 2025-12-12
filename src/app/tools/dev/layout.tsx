@@ -47,10 +47,6 @@ export default function DevToolsLayout({
                                         <span>QR Code Gen</span>
                                         <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </Link>
-                                    <Link href="/calculators/math/base" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
-                                        <span>Base Converter</span>
-                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    </Link>
                                     <div className="h-px bg-border/50 my-1" />
                                     <p className="text-[10px] text-muted-foreground text-center">
                                         🔒 All tools run locally in browser.
