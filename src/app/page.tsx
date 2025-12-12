@@ -48,6 +48,8 @@ import {
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
+import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 
 // Map icons for unit categories
 const iconMap: Record<UnitCategory, any> = {
@@ -76,9 +78,13 @@ const iconMap: Record<UnitCategory, any> = {
   radiation: Radio,
 };
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
 
-  // Helper to get unit link with instantiated icon
+  const { data: { user } } = await supabase.auth.getUser();
+  const isLocked = !user;
+
+  // Helper to get unit item with instantiated icon
   const getUnitItem = (id: string, featured = false): BentoItem => {
     const cat = unitDefinitions[id as UnitCategory];
     const Icon = iconMap[id as UnitCategory];
@@ -105,7 +111,7 @@ export default function Home() {
         </div>
 
         <BentoGrid>
-          {/* 1. Everyday Essentials (Blue) */}
+          {/* 1. Everyday Essentials (Blue) - Free */}
           <BentoCard
             title="Everyday & Units"
             description="Common unit conversions for daily use."
@@ -123,12 +129,30 @@ export default function Home() {
             ]}
           />
 
-          {/* 2. Business & Finance (Emerald) - Featured Spot */}
+          {/* 2. PDF Tools (Rose) - LOCKED */}
+          <BentoCard
+            title="PDF Tools"
+            description="Merge, Split, and Compress documents securely."
+            icon={<FileText />}
+            colorTheme="rose"
+            locked={isLocked}
+            items={[
+              { title: "Merge PDF", href: "/tools/pdf/merge", icon: <Merge />, featured: true, type: 'tool' },
+              { title: "Split PDF", href: "/tools/pdf/split", icon: <Scissors />, featured: true, type: 'tool' },
+              { title: "Compress PDF", href: "/tools/pdf/compress", icon: <Files />, featured: true, type: 'tool' },
+              { title: "PDF to Image", href: "/tools/pdf/pdf-to-image", icon: <ImageIcon />, type: 'tool' },
+              { title: "Image to PDF", href: "/tools/pdf/image-to-pdf", icon: <ImageIcon />, type: 'tool' },
+              { title: "Sign PDF", href: "/tools/pdf/sign", icon: <FileText />, type: 'tool' },
+            ]}
+          />
+
+          {/* 3. Finance & Business (Emerald) - LOCKED */}
           <BentoCard
             title="Finance & Business"
             description="Crucial tools for mortgages, loans, and taxes."
             icon={<DollarSign />}
             colorTheme="emerald"
+            locked={isLocked}
             items={[
               { title: "Mortgage Calc", href: "/calculators/finance/mortgage", icon: <DollarSign />, featured: true, type: 'calculator' },
               { title: "Loan Calculator", href: "/calculators/finance/loan", icon: <Wallet />, featured: true, type: 'calculator' },
@@ -139,7 +163,23 @@ export default function Home() {
             ]}
           />
 
-          {/* 3. Math & Stats (Orange) */}
+          {/* 4. Image Tools (Indigo) - Moderate Utility */}
+          <BentoCard
+            title="Image Tools"
+            description="Crop, Resize, and Remove Backgrounds."
+            icon={<ImageIcon />}
+            colorTheme="blue"
+            items={[
+              { title: "Crop Image", href: "/tools/image/crop", icon: <Crop />, featured: true, type: 'tool' },
+              { title: "Remove BG", href: "/tools/image/remove-bg", icon: <Eraser />, featured: true, type: 'tool' },
+              { title: "Passport Photo", href: "/tools/image/passport", icon: <User />, featured: true, type: 'tool' },
+              { title: "Convert to JPG", href: "/tools/image/converter", icon: <ImageIcon />, type: 'tool' },
+              { title: "Compress Image", href: "/tools/image/converter", icon: <Minimize2 />, type: 'tool' },
+              { title: "Studio Headshot", href: "/tools/image/headshot", icon: <User />, type: 'tool' },
+            ]}
+          />
+
+          {/* 5. Math & Statistics (Orange) - Academic/Niche */}
           <BentoCard
             title="Math & Statistics"
             description="Solvers for algebra, geometry, and probability."
@@ -156,7 +196,7 @@ export default function Home() {
             ]}
           />
 
-          {/* 4. Science & Engineering (Purple) */}
+          {/* 6. Science & Engineering (Purple) - Niche */}
           <BentoCard
             title="Science & Eng."
             description="Physics, Electronics, and Web Development."
@@ -171,39 +211,6 @@ export default function Home() {
               getUnitItem('force'),
               getUnitItem('torque'),
               getUnitItem('voltage'),
-            ]}
-          />
-
-          {/* 5. PDF Tools (Rose) - NEW */}
-          <BentoCard
-            title="PDF Tools"
-            description="Merge, Split, and Compress documents securely."
-            icon={<FileText />}
-            colorTheme="rose"
-            comingSoon={true}
-            items={[
-              { title: "Merge PDF", href: "#", icon: <Merge />, featured: true, type: 'tool' },
-              { title: "Split PDF", href: "#", icon: <Scissors />, featured: true, type: 'tool' },
-              { title: "Compress PDF", href: "#", icon: <Files />, featured: true, type: 'tool' },
-              { title: "PDF to Word", href: "#", icon: <FileText />, type: 'tool' },
-              { title: "Word to PDF", href: "#", icon: <FileText />, type: 'tool' },
-              { title: "Sign PDF", href: "#", icon: <FileText />, type: 'tool' },
-            ]}
-          />
-
-          {/* 6. Image Tools (Indigo) - NEW */}
-          <BentoCard
-            title="Image Tools"
-            description="Crop, Resize, and Remove Backgrounds."
-            icon={<ImageIcon />}
-            colorTheme="blue"
-            items={[
-              { title: "Crop Image", href: "/tools/image/crop", icon: <Crop />, featured: true, type: 'tool' },
-              { title: "Remove BG", href: "/tools/image/remove-bg", icon: <Eraser />, featured: true, type: 'tool' },
-              { title: "Passport Photo", href: "/tools/image/passport", icon: <User />, featured: true, type: 'tool' },
-              { title: "Convert to JPG", href: "/tools/image/converter", icon: <ImageIcon />, type: 'tool' },
-              { title: "Compress Image", href: "/tools/image/converter", icon: <Minimize2 />, type: 'tool' },
-              { title: "Studio Headshot", href: "/tools/image/headshot", icon: <User />, type: 'tool' },
             ]}
           />
 

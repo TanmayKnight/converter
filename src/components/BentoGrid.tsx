@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import React from 'react';
 
 export interface BentoItem {
@@ -21,6 +22,7 @@ export interface BentoCategoryProps {
     items: BentoItem[];
     className?: string; // For customized grid spanning (e.g. col-span-2)
     comingSoon?: boolean;
+    locked?: boolean;
 }
 
 const themeStyles = {
@@ -69,7 +71,7 @@ const typeBadges = {
     other: { label: 'Other', bg: 'bg-gray-100 dark:bg-gray-800', text: 'text-gray-500' },
 };
 
-export function BentoCard({ title, description, icon, colorTheme, items, className, comingSoon }: BentoCategoryProps) {
+export function BentoCard({ title, description, icon, colorTheme, items, className, comingSoon, locked }: BentoCategoryProps) {
     const theme = themeStyles[colorTheme];
     const featuredItems = items.filter(i => i.featured);
     const standardItems = items.filter(i => !i.featured);
@@ -144,7 +146,11 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                         <Link
                             key={idx}
                             href={item.href}
-                            className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-background/40 transition-colors"
+                            className={cn(
+                                "text-xs text-muted-foreground hover:text-foreground flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-background/40 transition-colors",
+                                locked && "pointer-events-none"
+                            )}
+                            tabIndex={locked ? -1 : 0}
                         >
                             <span className={cn("h-1.5 w-1.5 rounded-full", theme.bg.replace('/5', '/50'))} />
                             {item.title}
@@ -152,8 +158,33 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                     ))}
                 </div>
             </div>
-            {/* Prominent Coming Soon Overlay */}
-            {comingSoon && (
+
+            {/* Locked Overlay */}
+            {locked && (
+                <div className="absolute inset-0 z-40 flex flex-col items-center justify-center p-6 text-center">
+                    {/* Glass/Blur Effect */}
+                    <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" />
+
+                    {/* Lock Content */}
+                    <div className="relative z-50 flex flex-col items-center animate-in fade-in zoom-in duration-300">
+                        <div className="h-12 w-12 rounded-full bg-background border border-border shadow-sm flex items-center justify-center mb-3">
+                            <Lock className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <h3 className="font-bold text-lg mb-1">Member Access</h3>
+                        <p className="text-xs text-muted-foreground mb-4 max-w-[200px]">
+                            Join for <strong>Free</strong> to access these professional tools.
+                        </p>
+                        <Link href="/sign-up">
+                            <Button size="sm" className="rounded-full shadow-lg shadow-primary/20">
+                                Sign Up for Free
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            )}
+
+            {/* Prominent Coming Soon Overlay (Only if not locked) */}
+            {comingSoon && !locked && (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center">
                     {/* Glass/Blur Effect - Reduced opacity for readability */}
                     <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px]" />

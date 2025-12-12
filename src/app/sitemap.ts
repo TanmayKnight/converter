@@ -26,6 +26,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: `${BASE_URL}/calculators/technology/px-to-rem`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/physics/ohms-law`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
 
+        // PDF Tools (High Value)
+        { url: `${BASE_URL}/tools/pdf/merge`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/split`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/compress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/sign`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/pdf-to-image`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/image-to-pdf`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+
         // Image Tools (High Value)
         { url: `${BASE_URL}/tools/image/crop`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/image/remove-bg`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
