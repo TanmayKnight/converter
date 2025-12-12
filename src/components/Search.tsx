@@ -1,21 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { Search as SearchIcon } from 'lucide-react';
+import { Search as SearchIcon, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { unitDefinitions } from '@/lib/units/definitions';
 
-export function Search() {
+interface SearchProps {
+    mobile?: boolean;
+}
+
+export function Search({ mobile }: SearchProps) {
     const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+        setIsOpen(false); // Close on search
         if (!query.trim()) return;
 
         const searchTerm = query.toLowerCase();
 
-        // Check for calculators
+        // ... (rest of search logic same as before, no changes needed to map)
         const calculatorMap: Record<string, string> = {
             'mortgage': '/calculators/finance/mortgage',
             'loan': '/calculators/finance/loan',
@@ -106,7 +112,7 @@ export function Search() {
 
         // 1. Check for specific conversion "X to Y"
         if (searchTerm.includes(' to ')) {
-            const [from, to] = searchTerm.split(' to ').map(s => s.trim());
+            const [from, to] = searchTerm.split(' to ').map((s: string) => s.trim());
             // Try to find units
             let fromUnitId, toUnitId, categoryId;
 
@@ -144,10 +150,38 @@ export function Search() {
                 return;
             }
         }
-
-        // No match found - could show a toast, but for now just clear or do nothing
-        // alert("No matching conversion found"); 
     };
+
+    if (mobile) {
+        if (isOpen) {
+            return (
+                <div className="absolute inset-0 bg-background z-50 flex items-center px-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <form onSubmit={handleSearch} className="flex-1 flex items-center gap-2">
+                        <div className="relative flex-1">
+                            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <input
+                                autoFocus
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="Search tools..."
+                                className="w-full bg-secondary text-sm rounded-full pl-9 pr-4 py-2 outline-none focus:ring-1 focus:ring-primary"
+                            />
+                        </div>
+                    </form>
+                    <button onClick={() => setIsOpen(false)} className="ml-2 p-2 text-muted-foreground hover:text-foreground">
+                        <X className="h-5 w-5" />
+                    </button>
+                </div>
+            );
+        }
+
+        return (
+            <button onClick={() => setIsOpen(true)} className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-colors">
+                <SearchIcon className="h-5 w-5" />
+            </button>
+        );
+    }
 
     return (
         <div className="relative group w-full">

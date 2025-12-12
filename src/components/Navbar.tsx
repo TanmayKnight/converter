@@ -29,12 +29,12 @@ export async function Navbar() {
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="container mx-auto px-4 h-16 flex items-center justify-between relative">
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                         <Calculator className="h-6 w-6" />
                     </div>
-                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600 block md:hidden lg:block">
                         UnitMaster
                     </span>
                 </Link>
@@ -45,7 +45,7 @@ export async function Navbar() {
 
                 <div className="flex items-center gap-4">
                     <div className="md:hidden">
-                        <Search />
+                        <Search mobile />
                     </div>
                     <UserMenu user={user} profile={profile} />
                 </div>
