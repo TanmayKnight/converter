@@ -1,8 +1,23 @@
 import Link from 'next/link';
 import { Menu, X, Calculator } from 'lucide-react';
 import { Search } from './Search';
+import { UserMenu } from '@/components/auth/UserMenu';
+import { createClient } from '@/lib/supabase/server';
 
-export function Navbar() {
+export async function Navbar() {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+
+    let profile = null
+    if (user) {
+        const { data } = await supabase
+            .from('profiles')
+            .select('first_name')
+            .eq('id', user.id)
+            .single()
+        profile = data
+    }
+
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -19,8 +34,11 @@ export function Navbar() {
                     <Search />
                 </div>
 
-                <div className="md:hidden">
-                    <Search />
+                <div className="flex items-center gap-4">
+                    <div className="md:hidden">
+                        <Search />
+                    </div>
+                    <UserMenu user={user} profile={profile} />
                 </div>
 
             </div>
