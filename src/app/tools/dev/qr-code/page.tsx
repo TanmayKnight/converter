@@ -29,7 +29,7 @@ export default function QrCodeGeneratorPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="space-y-8">
             <div className="text-center space-y-4 mb-12">
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
                     QR Code Generator

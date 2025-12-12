@@ -47,7 +47,7 @@ export default function JsonFormatterPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-5xl">
+        <div className="space-y-8">
             <div className="text-center space-y-4 mb-8">
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                     JSON Formatter & Validator
