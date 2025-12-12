@@ -5,7 +5,7 @@ import { AlertTriangle } from 'lucide-react'
 export default function AuthErrorPage({
     searchParams,
 }: {
-    searchParams: { error?: string; error_code?: string; error_description?: string }
+    searchParams: { error?: string; error_code?: string; error_description?: string; message?: string }
 }) {
     // In Next.js 15+, searchParams is a promise, but in 14 it's an object. 
     // Assuming Next 14/15 compat or just ignoring strict typing for the prompt.
