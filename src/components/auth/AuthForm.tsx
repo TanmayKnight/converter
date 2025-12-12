@@ -88,7 +88,9 @@ export function AuthForm() {
                     },
                 })
                 if (error) throw error
-                setMessage('Check your email to confirm your account.')
+                if (error) throw error
+                // Redirect to verification page
+                router.push(`/auth/verify-email?email=${encodeURIComponent(email)}`)
             } else {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
@@ -198,8 +200,8 @@ export function AuthForm() {
                                     value={zipCode}
                                     onChange={(e) => setZipCode(e.target.value)}
                                     className={`w-full px-4 py-2 border rounded-lg focus:ring-2 bg-white dark:bg-zinc-800 dark:text-white ${zipCode && country && !validateZipCode(zipCode, country)
-                                            ? 'border-red-500 focus:ring-red-500'
-                                            : 'border-zinc-300 dark:border-zinc-700 focus:ring-primary'
+                                        ? 'border-red-500 focus:ring-red-500'
+                                        : 'border-zinc-300 dark:border-zinc-700 focus:ring-primary'
                                         }`}
                                     placeholder="ZIP Code"
                                 />
