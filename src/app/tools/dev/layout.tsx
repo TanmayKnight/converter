@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { DevToolsNav } from '@/components/dev-tools/DevToolsNav';
 import { AdUnit } from '@/components/AdUnit';
 import { AD_SLOTS } from '@/lib/ads';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: {
@@ -20,6 +21,12 @@ export default function DevToolsLayout({
 }) {
     return (
         <div className="min-h-screen bg-background pb-12">
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Developer Tools', path: '/tools/dev' }
+                ]}
+            />
             {/* Sub-navigation for tools */}
             <DevToolsNav />
 

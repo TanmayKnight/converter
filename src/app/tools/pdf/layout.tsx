@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { PdfToolsNav } from '@/components/pdf/PdfToolsNav';
 import { AdUnit } from '@/components/AdUnit';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: {
@@ -19,6 +20,12 @@ export default function PDFToolsLayout({
 }) {
     return (
         <div className="min-h-screen bg-background pb-12">
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'PDF Tools', path: '/tools/pdf' }
+                ]}
+            />
             {/* Sub-navigation for tools */}
             <PdfToolsNav />
 

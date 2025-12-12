@@ -46,8 +46,27 @@ export default function JsonFormatterPage() {
         setError(null);
     };
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'UnitMaster JSON Formatter',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Any',
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+        },
+        featureList: 'Format JSON, Minify JSON, Validate JSON',
+        description: 'Free online JSON formatter and validator. Beautify and minify JSON code instantly in your browser.',
+    };
+
     return (
         <div className="space-y-8">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="text-center space-y-4 mb-8">
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                     JSON Formatter & Validator

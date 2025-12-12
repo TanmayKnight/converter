@@ -28,8 +28,27 @@ export default function QrCodeGeneratorPage() {
         toast.success("QR Code downloaded");
     };
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'UnitMaster QR Code Generator',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Any',
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+        },
+        featureList: 'Generate QR Codes, Custom Size, Download PNG',
+        description: 'Free online QR code generator. Create custom QR codes for URLs, text, and Wi-Fi instantly.',
+    };
+
     return (
         <div className="space-y-8">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="text-center space-y-4 mb-12">
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
                     QR Code Generator

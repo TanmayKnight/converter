@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ImageToolsNav } from '@/components/image-tools/ImageToolsNav';
 import { AdUnit } from '@/components/AdUnit';
 import { AD_SLOTS } from '@/lib/ads';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Free Online Image Tools - Crop, Resize, Remove Background',
@@ -17,6 +18,12 @@ export default function ImageToolsLayout({
 }) {
     return (
         <div className="min-h-screen bg-background pb-12">
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Image Tools', path: '/tools/image' }
+                ]}
+            />
             {/* Sub-navigation for tools */}
             <ImageToolsNav />
 
