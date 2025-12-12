@@ -112,7 +112,11 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                         <Link
                             key={idx}
                             href={item.href}
-                            className="flex items-center justify-between p-3 rounded-xl bg-background/60 hover:bg-background border border-border/30 hover:border-border/60 transition-all shadow-sm group/item"
+                            tabIndex={locked ? -1 : 0}
+                            className={cn(
+                                "flex items-center justify-between p-3 rounded-xl bg-background/60 hover:bg-background border border-border/30 hover:border-border/60 transition-all shadow-sm group/item",
+                                locked && "pointer-events-none opacity-80"
+                            )}
                         >
                             <div className="flex items-center gap-3 min-w-0">
                                 {item.icon && (
@@ -129,7 +133,12 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                                         {badge.label}
                                     </span>
                                 )}
-                                <ArrowRight className="h-3 w-3 text-muted-foreground -translate-x-2 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                                {!locked && (
+                                    <ArrowRight className="h-3 w-3 text-muted-foreground -translate-x-2 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                                )}
+                                {locked && (
+                                    <Lock className="h-3 w-3 text-muted-foreground/50" />
+                                )}
                             </div>
                         </Link>
                     );
@@ -161,21 +170,23 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
 
             {/* Locked Overlay */}
             {locked && (
-                <div className="absolute inset-0 z-40 flex flex-col items-center justify-center p-6 text-center">
-                    {/* Glass/Blur Effect */}
-                    <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" />
+                <div className="absolute inset-0 z-40 flex flex-col items-center justify-end p-6 text-center">
+                    {/* Glass/Blur Effect - Almost clear */}
+                    <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px]" />
+                    {/* Gradient Fade - Subtle at bottom only */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
                     {/* Lock Content */}
-                    <div className="relative z-50 flex flex-col items-center animate-in fade-in zoom-in duration-300">
-                        <div className="h-12 w-12 rounded-full bg-background border border-border shadow-sm flex items-center justify-center mb-3">
-                            <Lock className="h-5 w-5 text-muted-foreground" />
+                    <div className="relative z-50 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 border border-primary/20 shadow-sm flex items-center justify-center mb-2">
+                            <Lock className="h-4 w-4 text-primary" />
                         </div>
-                        <h3 className="font-bold text-lg mb-1">Member Access</h3>
-                        <p className="text-xs text-muted-foreground mb-4 max-w-[200px]">
-                            Join for <strong>Free</strong> to access these professional tools.
+                        <h3 className="font-bold text-base mb-1">Unlock Premium Tools</h3>
+                        <p className="text-[11px] text-muted-foreground mb-4 max-w-[200px]">
+                            Get unlimited access to all professional features.
                         </p>
-                        <Link href="/sign-up">
-                            <Button size="sm" className="rounded-full shadow-lg shadow-primary/20">
+                        <Link href="/sign-up" className="w-full">
+                            <Button size="sm" className="w-full rounded-xl shadow-lg shadow-primary/20 font-semibold h-9">
                                 Sign Up for Free
                             </Button>
                         </Link>
