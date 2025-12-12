@@ -3,10 +3,10 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, ArrowRight, RefreshCw, CheckCircle } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
     const searchParams = useSearchParams()
     const email = searchParams.get('email')
 
@@ -119,5 +119,17 @@ export default function VerifyEmailPage() {
                 </div>
             </div>
         </div>
+    )
+}
+
+export default function VerifyEmailPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+        }>
+            <VerifyEmailContent />
+        </Suspense>
     )
 }
