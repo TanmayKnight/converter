@@ -49,9 +49,20 @@ export default function AuthErrorPage({
                     Authentication Error
                 </h1>
 
-                <p className="text-zinc-500 dark:text-zinc-400 mb-8">
-                    There was a problem signing you in. The link may have expired or is invalid.
-                </p>
+                {searchParams.message ? (
+                    <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-lg p-4 mb-6">
+                        <p className="text-red-800 dark:text-red-200 font-medium mb-1">
+                            {searchParams.error || 'Check Details'}
+                        </p>
+                        <p className="text-red-600 dark:text-red-300 text-sm">
+                            {searchParams.message}
+                        </p>
+                    </div>
+                ) : (
+                    <p className="text-zinc-500 dark:text-zinc-400 mb-8">
+                        There was a problem signing you in. The link may have expired or is invalid.
+                    </p>
+                )}
 
                 <div className="space-y-3">
                     <Link
