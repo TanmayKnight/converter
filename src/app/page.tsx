@@ -228,7 +228,7 @@ export default async function Home() {
             items={[
               { title: "Thumbnail Grabber", href: "/tools/creator/thumbnail", icon: <ImageIcon />, featured: true, type: 'tool' },
               { title: "Video Trimmer", href: "/tools/creator/trimmer", icon: <Video />, featured: true, type: 'tool' }, // New!
-              { title: "Audio Extractor", href: "#", icon: <Mic />, type: 'other' }, // Coming Soon
+              { title: "Audio Extractor", href: "/tools/creator/audio-extractor", icon: <Mic />, type: 'tool' }, // New!
             ]}
           />
 
