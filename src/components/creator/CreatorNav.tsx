@@ -26,18 +26,6 @@ export function CreatorNav() {
                     {links.map((link) => {
                         const isActive = pathname === link.href;
 
-                        if (link.disabled) {
-                            return (
-                                <div
-                                    key={link.href}
-                                    className="px-3 py-1.5 rounded-full text-muted-foreground/50 cursor-not-allowed flex items-center gap-2 whitespace-nowrap text-xs"
-                                >
-                                    {link.label}
-                                    <span className="text-[10px] bg-secondary px-1.5 rounded">Soon</span>
-                                </div>
-                            );
-                        }
-
                         return (
                             <Link
                                 key={link.href}
