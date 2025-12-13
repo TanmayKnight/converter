@@ -31,6 +31,7 @@ export function PrivacyDashboard() {
             <button
                 onClick={() => setIsOpen(true)}
                 className="fixed top-24 right-4 z-40 flex items-center gap-2 p-3 bg-card/80 backdrop-blur-md border border-green-500/30 rounded-full shadow-lg hover:shadow-green-500/20 transition-all hover:scale-105 group"
+                aria-label="Toggle Privacy Dashboard"
             >
                 <div className="relative">
                     <ShieldCheck className="h-5 w-5 text-green-500" />
@@ -54,6 +55,7 @@ export function PrivacyDashboard() {
                 <button
                     onClick={() => setIsOpen(false)}
                     className="p-1 hover:bg-secondary rounded-full transition-colors"
+                    aria-label="Close Dashboard"
                 >
                     <X className="h-4 w-4 text-muted-foreground" />
                 </button>

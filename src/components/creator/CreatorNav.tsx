@@ -12,6 +12,8 @@ export function CreatorNav() {
         { href: '/tools/creator/thumbnail', label: 'Thumbnail Grabber' },
         { href: '/tools/creator/trimmer', label: 'Video Trimmer' },
         { href: '/tools/creator/audio-extractor', label: 'Audio Extractor' },
+        { href: '/tools/creator/voice-changer', label: 'Voice Changer' },
+        { href: '/tools/creator/audio-mixer', label: 'Audio Mixer' },
     ];
 
     return (

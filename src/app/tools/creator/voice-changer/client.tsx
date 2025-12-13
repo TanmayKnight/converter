@@ -1,0 +1,298 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Toaster, toast } from 'sonner';
+import { Loader2, Mic, Upload, Play, Download, Square, Music, Wand2 } from 'lucide-react';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { fetchFile, toBlobURL } from '@ffmpeg/util';
+
+const PRESETS = [
+    { id: 'chipmunk', name: 'Chipmunk', icon: '🐿️', filter: 'asetrate=44100*1.5,aresample=44100,atempo=1' },
+    { id: 'robot', name: 'Robot', icon: '🤖', filter: 'asetrate=44100*0.8,aresample=44100,atempo=1.25,aecho=0.8:0.9:1000:0.3' },
+    { id: 'deep', name: 'Deep Voice', icon: '👹', filter: 'asetrate=44100*0.7,aresample=44100,atempo=1.3' },
+    { id: 'fast', name: 'Speed Up', icon: '⏩', filter: 'atempo=1.5' },
+    { id: 'slow', name: 'Slow Motion', icon: '🐢', filter: 'atempo=0.7' },
+];
+
+export default function VoiceChangerClient() {
+    const [ffmpeg, setFfmpeg] = useState<FFmpeg | null>(null);
+    const [loaded, setLoaded] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
+    const [audioFile, setAudioFile] = useState<File | null>(null);
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [processedUrl, setProcessedUrl] = useState<string | null>(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
+
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const chunksRef = useRef<Blob[]>([]);
+
+    useEffect(() => {
+        load();
+    }, []);
+
+    const load = async () => {
+        const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+        const ffmpegInstance = new FFmpeg();
+
+        ffmpegInstance.on('log', ({ message }) => {
+            console.log(message);
+        });
+
+        try {
+            await ffmpegInstance.load({
+                coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+                wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+            });
+            setFfmpeg(ffmpegInstance);
+            setLoaded(true);
+        } catch (error) {
+            console.error(error);
+            toast.error('Failed to load Audio Engine');
+        }
+    };
+
+    const startRecording = async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream);
+            chunksRef.current = [];
+
+            mediaRecorderRef.current.ondataavailable = (e) => {
+                if (e.data.size > 0) chunksRef.current.push(e.data);
+            };
+
+            mediaRecorderRef.current.onstop = () => {
+                const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+                const file = new File([blob], 'recording.webm', { type: 'audio/webm' });
+                setAudioFile(file);
+                setAudioUrl(URL.createObjectURL(blob));
+                setProcessedUrl(null); // Clear previous
+            };
+
+            mediaRecorderRef.current.start();
+            setIsRecording(true);
+        } catch (err) {
+            toast.error('Microphone access denied');
+        }
+    };
+
+    const stopRecording = () => {
+        if (mediaRecorderRef.current && isRecording) {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+            // Stop all tracks
+            mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+        }
+    };
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setAudioFile(file);
+            setAudioUrl(URL.createObjectURL(file));
+            setProcessedUrl(null);
+        }
+    };
+
+    const processAudio = async () => {
+        if (!ffmpeg || !loaded || !audioFile || !selectedPreset) return;
+
+        setIsProcessing(true);
+        try {
+            const inputName = 'input.' + audioFile.name.split('.').pop();
+            const outputName = 'output.mp3';
+
+            await ffmpeg.writeFile(inputName, await fetchFile(audioFile));
+
+            const filter = PRESETS.find(p => p.id === selectedPreset)?.filter || '';
+
+            // Basic command: input -> filter -> output
+            await ffmpeg.exec([
+                '-i', inputName,
+                '-af', filter,
+                outputName
+            ]);
+
+            const data = await ffmpeg.readFile(outputName);
+            const blob = new Blob([(data as any)], { type: 'audio/mp3' });
+            setProcessedUrl(URL.createObjectURL(blob));
+            toast.success('Audio processed!');
+        } catch (error) {
+            console.error(error);
+            toast.error('Conversion failed');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    return (
+        <div className="container mx-auto px-4 py-12 max-w-4xl">
+            <div className="text-center mb-12">
+                <div className="p-4 bg-primary/10 rounded-full inline-block mb-4">
+                    <Wand2 className="h-10 w-10 text-primary" />
+                </div>
+                <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+                    Voice Changer Studio
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Record your voice or upload audio and transform it instantly.
+                    Professional audio filters using WebAssembly.
+                </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+                {/* Input Section */}
+                <Card className="p-6 space-y-6">
+                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                        <Mic className="h-5 w-5" /> Source Audio
+                    </h2>
+
+                    <div className="flex flex-col gap-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <Button
+                                variant={isRecording ? "destructive" : "default"}
+                                onClick={isRecording ? stopRecording : startRecording}
+                                className="h-24 flex flex-col gap-2"
+                            >
+                                {isRecording ? <Square className="h-8 w-8" /> : <Mic className="h-8 w-8" />}
+                                {isRecording ? "Stop Recording" : "Record Voice"}
+                            </Button>
+
+                            <div className="relative h-24">
+                                <input
+                                    type="file"
+                                    accept="audio/*"
+                                    onChange={handleFileUpload}
+                                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                />
+                                <div className="absolute inset-0 border-2 border-dashed border-border rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-secondary/50 transition-colors">
+                                    <Upload className="h-8 w-8 text-muted-foreground" />
+                                    <span className="text-sm font-medium">Upload File</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {audioUrl && (
+                            <div className="p-4 bg-secondary/30 rounded-xl">
+                                <p className="text-xs font-medium text-muted-foreground mb-2 uppercase">Original Preview</p>
+                                <audio controls src={audioUrl} className="w-full h-8" />
+                            </div>
+                        )}
+                    </div>
+                </Card>
+
+                {/* Effect Section */}
+                <Card className="p-6 space-y-6">
+                    <h2 className="text-xl font-semibold flex items-center gap-2">
+                        <Music className="h-5 w-5" /> Select Effect
+                    </h2>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {PRESETS.map(preset => (
+                            <button
+                                key={preset.id}
+                                onClick={() => setSelectedPreset(preset.id)}
+                                className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${selectedPreset === preset.id
+                                    ? 'border-primary bg-primary/10 ring-2 ring-primary/20'
+                                    : 'border-border hover:border-primary/50 hover:bg-secondary/50'
+                                    }`}
+                            >
+                                <span className="text-2xl">{preset.icon}</span>
+                                <span className="text-sm font-medium">{preset.name}</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <Button
+                        onClick={processAudio}
+                        disabled={!loaded || !audioFile || !selectedPreset || isProcessing}
+                        className="w-full h-12 text-lg"
+                    >
+                        {isProcessing ? (
+                            <>
+                                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Processing...
+                            </>
+                        ) : (
+                            'Apply Effect'
+                        )}
+                    </Button>
+
+                    {processedUrl && (
+                        <div className="animate-in fade-in slide-in-from-top-4 p-4 bg-green-500/10 border border-green-500/20 rounded-xl space-y-3">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-semibold text-green-600">Result Ready!</span>
+                                <a
+                                    href={processedUrl}
+                                    download={`voice_${selectedPreset}.mp3`}
+                                    className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                                >
+                                    <Download className="h-3 w-3" /> Download MP3
+                                </a>
+                            </div>
+                            <audio controls src={processedUrl} className="w-full h-8" />
+                        </div>
+                    )}
+
+                </Card>
+            </div >
+
+            {/* SEO Content */}
+            < div className="mt-16 prose prose-slate dark:prose-invert max-w-none" >
+                <h2 className="text-3xl font-bold mb-6">Free Online Voice Changer Studio</h2>
+                <p className="lead text-lg text-muted-foreground mb-8">
+                    Transform your voice instantly with our professional-grade, browser-based Voice Changer. Add effects like Chipmunk, Robot, or Deep Voice to your recordings without installing any software.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-12 mb-12">
+                    <div>
+                        <h3 className="text-xl font-semibold mb-4">How to Change Your Voice Online</h3>
+                        <ol className="list-decimal pl-5 space-y-2">
+                            <li><strong>Select Input</strong>: Click "Record Voice" to use your microphone or "Upload File" to select an audio clip.</li>
+                            <li><strong>Choose an Effect</strong>: Browse our library of AI-tuned presets like Robot, Chipmunk, or Speed Modifiers.</li>
+                            <li><strong>Process Instantly</strong>: Our WebAssembly engine processes audio locally on your device in milliseconds.</li>
+                            <li><strong>Download</strong>: Listen to the preview and download your new MP3 file for free.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold mb-4">Professional Audio Filters</h3>
+                        <ul className="list-disc pl-5 space-y-2">
+                            <li><strong>Privacy First</strong>: All processing happens in your browser. We never upload your audio to our servers.</li>
+                            <li><strong>No Limits</strong>: Change as many voices as you want. No credits, no sign-ups required.</li>
+                            <li><strong>High Quality</strong>: Uses advanced DSP (Digital Signal Processing) for crystal clear audio output.</li>
+                            <li><strong>Universal Compatibility</strong>: Works on Chrome, Firefox, Safari, and Edge on both Desktop and Mobile.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="bg-secondary/30 p-8 rounded-2xl mb-12">
+                    <h3 className="text-2xl font-bold mb-4">Why use UnitMaster Voice Changer?</h3>
+                    <p className="mb-4">
+                        Unlike other online tools that require you to upload your sensitive audio files to a remote server, UnitMaster utilizes <strong>ffmpeg.wasm</strong> technology. This means the heavy lifting is done by your own computer's CPU, guaranteeing zero latency uploading and 100% privacy.
+                    </p>
+                    <p>
+                        Perfect for content creators, gamers, streamers, and anyone looking to anonymize their voice or create fun sound effects for videos (TikTok, YouTube Shorts, Reels).
+                    </p>
+                </div>
+
+                <h3 className="text-2xl font-bold mb-6">Frequently Asked Questions</h3>
+                <div className="space-y-6">
+                    <div>
+                        <h4 className="font-semibold text-lg mb-2">Is this Voice Changer free?</h4>
+                        <p className="text-muted-foreground">Yes, our Voice Changer Studio is 100% free to use. There are no hidden paywalls for standard effects.</p>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold text-lg mb-2">Can I use this for real-time calls?</h4>
+                        <p className="text-muted-foreground">Currently, this tool processes recorded audio or uploaded files. Real-time voice changing for calls (Discord, Zoom) requires a system-level driver which browsers cannot provide securely yet.</p>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold text-lg mb-2">What formats are supported?</h4>
+                        <p className="text-muted-foreground">We support all major audio formats including MP3, WAV, OGG, M4A, and WEBM. The output is always a high-compatibility MP3 file.</p>
+                    </div>
+                </div>
+            </div >
+        </div >
+    );
+}

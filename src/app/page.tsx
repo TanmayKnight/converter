@@ -39,6 +39,7 @@ import {
   Sun,
   Radio,
   Image as ImageIcon,
+  Mic,
   Crop,
   Maximize2,
   Minimize2,
@@ -47,10 +48,11 @@ import {
   User,
   QrCode,
   Video,
-  Mic,
   Braces,
   Code2,
-  Shield
+  Shield,
+  Wand2,
+  Music
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -227,8 +229,10 @@ export default async function Home() {
             colorTheme="rose"
             items={[
               { title: "Thumbnail Grabber", href: "/tools/creator/thumbnail", icon: <ImageIcon />, featured: true, type: 'tool' },
-              { title: "Video Trimmer", href: "/tools/creator/trimmer", icon: <Video />, featured: true, type: 'tool' }, // New!
-              { title: "Audio Extractor", href: "/tools/creator/audio-extractor", icon: <Mic />, type: 'tool' }, // New!
+              { title: "Video Trimmer", href: "/tools/creator/trimmer", icon: <Video />, featured: true, type: 'tool' },
+              { title: "Voice Changer", href: "/tools/creator/voice-changer", icon: <Wand2 className="h-4 w-4 text-purple-500" />, type: 'tool' },
+              { title: "Audio Mixer", href: "/tools/creator/audio-mixer", icon: <Music className="h-4 w-4 text-pink-500" />, type: 'tool' }, // New!
+              { title: "Audio Extractor", href: "/tools/creator/audio-extractor", icon: <Mic />, type: 'tool' },
             ]}
           />
 
