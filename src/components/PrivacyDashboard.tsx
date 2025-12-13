@@ -30,7 +30,7 @@ export function PrivacyDashboard() {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-4 right-4 z-50 flex items-center gap-2 p-3 bg-card/80 backdrop-blur-md border border-green-500/30 rounded-full shadow-lg hover:shadow-green-500/20 transition-all hover:scale-105 group"
+                className="fixed top-24 right-4 z-40 flex items-center gap-2 p-3 bg-card/80 backdrop-blur-md border border-green-500/30 rounded-full shadow-lg hover:shadow-green-500/20 transition-all hover:scale-105 group"
             >
                 <div className="relative">
                     <ShieldCheck className="h-5 w-5 text-green-500" />
@@ -44,7 +44,7 @@ export function PrivacyDashboard() {
     }
 
     return (
-        <div className="fixed bottom-4 right-4 z-50 w-80 bg-card rounded-2xl shadow-2xl border border-border animate-in slide-in-from-bottom-5 fade-in duration-200 overflow-hidden">
+        <div className="fixed top-24 right-4 z-40 w-80 bg-card rounded-2xl shadow-2xl border border-border animate-in slide-in-from-right-5 fade-in duration-200 overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-green-500/10 to-transparent p-4 flex items-center justify-between border-b border-border">
                 <div className="flex items-center gap-2">
@@ -91,10 +91,10 @@ export function PrivacyDashboard() {
                             <div key={req.id} className="flex items-center justify-between text-xs p-2 rounded-lg hover:bg-secondary/50 transition-colors">
                                 <span className="text-foreground">{req.name}</span>
                                 <span className={`flex items-center gap-1.5 ${req.status === 'Blocked' ? 'text-red-500' :
-                                        req.status.includes('Offline') ? 'text-green-500' : 'text-blue-500'
+                                    req.status.includes('Offline') ? 'text-green-500' : 'text-blue-500'
                                     }`}>
                                     <span className={`h-1.5 w-1.5 rounded-full ${req.status === 'Blocked' ? 'bg-red-500' :
-                                            req.status.includes('Offline') ? 'bg-green-500' : 'bg-blue-500'
+                                        req.status.includes('Offline') ? 'bg-green-500' : 'bg-blue-500'
                                         }`} />
                                     {req.status}
                                 </span>
