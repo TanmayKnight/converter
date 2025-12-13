@@ -179,9 +179,42 @@ export default function CompressPDFPage() {
             )}
 
             {/* Content / SEO Section */}
-            <div className="prose dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Compress PDFs Online</h2>
-                <p>Shrink your PDF file size instantly for free. We optimize the document structure to reduce size without compromising quality.</p>
+            <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Compress PDF File Size Online</h2>
+                <p>
+                    Email attachments have size limits. Websites have upload caps. Storage space isn't infinite.
+                    <strong>UnitMaster PDF Compressor</strong> solves these problems by intelligently optimizing the internal structure of your PDF files to reduce their size without destroying their readability.
+                </p>
+
+                <h3>How Does PDF Compression Work?</h3>
+                <p>
+                    A PDF file is more than just text and images; it's a complex database of objects, fonts, and metadata. Our compression engine focuses on <strong>structural optimization</strong>:
+                </p>
+                <ul>
+                    <li><strong>Object Streams</strong>: We group small PDF objects together into compressed streams.</li>
+                    <li><strong>Metadata Stripping</strong>: We remove unnecessary editing history, thumbnails, and bloated metadata that doesn't affect the visual content.</li>
+                    <li><strong>Font Subsetting</strong>: (In supported files) We ensure only the characters actually used in the document are embedded.</li>
+                </ul>
+
+                <h3>Lossless vs. Lossy Compression</h3>
+                <p>
+                    Most online tools rely on heavy <em>lossy</em> compression—they take your crisp images and blur them to save space.
+                    UnitMaster prioritizes <strong>integrity</strong>. Our default mode is "Safe Compression," which focuses on reducing file overhead while keeping your text sharp and your images clear.
+                </p>
+
+                <h3>Best Practices for Small PDFs</h3>
+                <ol>
+                    <li><strong>Scan at Lower DPI</strong>: If you are scanning text documents, 150 DPI is usually sufficient. 300+ DPI bloats file size massively.</li>
+                    <li><strong>Avoid "Print to PDF"</strong>: If possible, "Save as PDF" directly from Word or Google Docs. It creates much cleaner, smaller code than the "Print" driver.</li>
+                    <li><strong>Vector Graphics</strong>: Use SVG or vector logos instead of high-res PNGs where possible.</li>
+                </ol>
+
+                <h3>Secure & Client-Side</h3>
+                <p>
+                    Just like all our tools, this compressor runs <strong>locally in your browser</strong>.
+                    We do not upload your sensitive financial reports or legal contracts to any server to compress them.
+                    You get the speed of a native desktop app with the convenience of the web.
+                </p>
             </div>
         </div>
     );

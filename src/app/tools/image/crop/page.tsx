@@ -179,17 +179,40 @@ export default function ImageCropperPage() {
             )}
 
             {/* SEO Content Section */}
-            <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>How to Crop Images Online</h2>
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50 text-left">
+                <h2>Guide to Image Cropping and Aspect Ratios</h2>
                 <p>
-                    Our free online image cropper allows you to easily crop photos, remove unwanted parts, and adjust the aspect ratio for social media platforms like Instagram, Facebook, and Twitter.
-                    No account required, and your images are processed entirely in your browser for maximum privacy.
+                    Cropping is one of the most fundamental photo editing techniques. It allows you to improve framing, remove distractions, and fit your image to specific dimensions.
+                    The <strong>UnitMaster Image Cropper</strong> gives you pixel-perfect control over your photos without reducing their quality.
+                </p>
+
+                <h3>Understanding Aspect Ratios</h3>
+                <p>
+                    An aspect ratio describes the proportional relationship between the width and height of an image. It is usually expressed as two numbers separated by a colon (e.g., 16:9).
+                    Choosing the right aspect ratio is critical for where your image will be displayed.
                 </p>
                 <ul>
-                    <li><strong>Upload</strong>: Drag and drop your JPG, PNG, or WebP image.</li>
-                    <li><strong>Adjust</strong>: Select a preset (Square, 16:9) or drag the handles to crop freely.</li>
-                    <li><strong>Download</strong>: Click "Download Crop" to save the high-quality result instantly.</li>
+                    <li><strong>1:1 (Square)</strong>: Perfect for Instagram posts, Facebook profile pictures, and product thumbnails. It focuses the viewer's attention on the center of the frame.</li>
+                    <li><strong>16:9 (Widescreen)</strong>: The standard for YouTube thumbnails, Facebook cover photos, and modern screens. Use this for landscapes and banner images.</li>
+                    <li><strong>4:3 (Standard)</strong>: Common for digital cameras and retro-style photos. It offers a taller frame than 16:9.</li>
+                    <li><strong>9:16 (Vertical)</strong>: The native format for TikTok, Instagram Reels, and YouTube Shorts.</li>
                 </ul>
+
+                <h3>Professional Cropping Tips</h3>
+                <p>
+                    To get the best results, keep these principles in mind:
+                </p>
+                <ol>
+                    <li><strong>Rule of Thirds</strong>: Imagine a 3x3 grid over your image. Try to place your subject along these lines or their intersections for a more balanced composition.</li>
+                    <li><strong>Leave Breathing Room</strong>: Don't crop too tightly. Leaving some space around your subject prevents the image from feeling claustrophobic.</li>
+                    <li><strong>Watch the Resolution</strong>: Cropping removes pixels. If you crop a small image too heavily, it may become pixelated. Start with the highest resolution image possible.</li>
+                </ol>
+
+                <h3>Secure & Fast</h3>
+                <p>
+                    Unlike other tools that upload your photos to a cloud server, UnitMaster processes your edits <strong>locally in your browser</strong> using HTML5 Canvas technology.
+                    This means your personal photos never leave your device, guaranteeing 100% privacy and zero upload waiting time.
+                </p>
             </div>
         </div>
     );

@@ -204,9 +204,41 @@ export default function ImageToPdfPage() {
                 )}
             </div>
 
-            <div className="prose dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50 mt-12">
-                <h2>Convert Images to PDF</h2>
-                <p>Compile your holiday photos, scanned documents, or screenshots into a single, shareable PDF file. Runs entirely in your browser for maximum privacy.</p>
+            <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50 mt-12">
+                <h2>Create Professional PDF Portfolios from Images</h2>
+                <p>
+                    Sending 20 separate JPG attachments in an email is unprofessional and annoying for the recipient.
+                    <strong>UnitMaster Image to PDF</strong> lets you combine photos, scans, and screenshots into a single, clean document.
+                </p>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li><strong>Receipt Scanning</strong>: Photograph your travel receipts and merge them into one PDF for expense reimbursement.</li>
+                    <li><strong>Design Portfolios</strong>: Designers can arrange their best work into a linear presentation that viewers can scroll through easily.</li>
+                    <li><strong>Digitizing Paper Archives</strong>: Turn a folder of scanned letters into a readable digital book.</li>
+                </ul>
+
+                <h3>Optimization & Compression</h3>
+                <p>
+                    Images from modern smartphones are huge (often 5MB+ each). A PDF with 10 of them would be 50MB—too big to email.
+                    Our tool intelligently processes the images to maintain visual clarity while keeping the final file size manageable.
+                </p>
+
+                <h3>How to Order Your Pages</h3>
+                <p>
+                    The order matters. Our drag-and-drop interface allows you to:
+                </p>
+                <ol>
+                    <li><strong>Sequence Chronologically</strong>: Great for receipts or timelines.</li>
+                    <li><strong>Group by Topic</strong>: Keep related screenshots together.</li>
+                    <li><strong>Curate the Narrative</strong>: Start with your strongest image (the cover) to grab attention.</li>
+                </ol>
+
+                <h3>Local Processing</h3>
+                <p>
+                    We use the <strong>pdf-lib</strong> library to assemble your document directly in the browser.
+                    Your personal photos NEVER leave your device. This is crucial for privacy when handling personal ID scans or family photos.
+                </p>
             </div>
         </div>
     );

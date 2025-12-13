@@ -192,17 +192,49 @@ export default function AudioExtractorClient() {
             )}
 
             {/* SEO Content */}
-            <div className="mt-12 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Extract Audio from Video Online</h2>
+            <div className="mt-16 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Extract Audio from Video: The Ultimate Guide</h2>
                 <p>
-                    Easily convert video files to high-quality MP3 audio directly in your browser.
-                    Perfect for extracting songs, speeches, or background music from your videos.
+                    Sometimes the video isn't what matters—it's the sound. Whether it's a speech, a concert recording, or a podcast episode filmed as a video,
+                    <strong>UnitMaster Audio Extractor</strong> lets you isolate the audio track and save it as a high-quality MP3 file in seconds.
+                </p>
+
+                <h3>How Audio Extraction Works</h3>
+                <p>
+                    Video files (like MP4 or MOV) are "containers" that hold both a video stream (visuals) and an audio stream (sound).
+                    Our tool uses a process called <strong>demuxing</strong> and <strong>transcoding</strong>. It effectively ignores the heavy visual data and focuses only on processing the audio stream.
+                </p>
+                <p>
+                    By default, we convert your audio to <strong>MP3 format at 192kbps</strong>. This bitrate offers the perfect balance between crystal-clear sound quality and a manageable file size, suitable for any music player or editing software.
+                </p>
+
+                <h3>Use Cases for Audio Extraction</h3>
+                <ul>
+                    <li><strong>Podcasters</strong>: Convert your video interviews into audio episodes for Spotify or Apple Podcasts.</li>
+                    <li><strong>Musicians</strong>: Extract a sample or backing track from a video recording of a session.</li>
+                    <li><strong>Students</strong>: Turn a recorded lecture video into an MP3 so you can listen to it while commuting/walking.</li>
+                    <li><strong>Transcription</strong>: It's much easier to upload a small MP3 file to transcription services than a massive video file.</li>
+                </ul>
+
+                <h3>Supported Inputs</h3>
+                <p>
+                    We support a wide range of video inputs, including:
                 </p>
                 <ul>
-                    <li><strong>Supports Any Format</strong>: Works with MP4, MKV, MOV, WebM, and more.</li>
-                    <li><strong>High Quality</strong>: Extracts typically at 192kbps MP3 stereo.</li>
-                    <li><strong>Privacy Focused</strong>: All processing happens on your device. No files are uploaded.</li>
+                    <li><strong>MP4</strong>: The most common video format.</li>
+                    <li><strong>MOV</strong>: Apple's QuickTime format.</li>
+                    <li><strong>WebM</strong>: Common for web-based recordings.</li>
+                    <li><strong>MKV</strong>: High-quality archival format.</li>
                 </ul>
+
+                <h3>Why Choose Client-Side Extraction?</h3>
+                <p>
+                    Processing audio requires significant computing power. Most online converters upload your file to a cloud server to process it.
+                    This creates two problems: <strong>Privacy risk</strong> and <strong>Wait times</strong>.
+                </p>
+                <p>
+                    UnitMaster runs entirely in your browser using <strong>WebAssembly</strong>. Your CPU handles the extraction. This means your private voice recordings or unreleased music never leave your machine, and you don't need to depend on slow upload speeds.
+                </p>
             </div>
 
         </div>

@@ -248,6 +248,40 @@ export default function PassportPhotoPage() {
                     </div>
                 </div>
             )}
+            {/* SEO Content */}
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>The Ultimate Guide to DIY Passport Photos</h2>
+                <p>
+                    Why pay $15 at a drug store for a grainy photo? With a smartphone and <strong>UnitMaster</strong>, you can take a compliant passport photo at home for free.
+                    However, governments are strict. A rejected photo means a rejected application. Follow these rules carefully.
+                </p>
+
+                <h3>Critical Requirements (US & EU)</h3>
+                <ul>
+                    <li><strong>Background</strong>: Must be plain white or off-white. No patterns, no shadows. Use a white sheet or wall.</li>
+                    <li><strong>Lighting</strong>: Even lighting is key. Face a window to get natural light. Avoid side lighting which creates shadows on one side of the face.</li>
+                    <li><strong>Expression</strong>: Neutral expression. Both eyes open. Mouth closed. No smiling (for most countries).</li>
+                    <li><strong>Attire</strong>: Wear normal daily clothes. No uniforms. No camouflage. No hats (unless for religious purposes). Glasses are now banned in US passport photos.</li>
+                </ul>
+
+                <h3>The layout of a Perfect Shot</h3>
+                <p>
+                    The "Biometric Standard" requires specific proportions:
+                </p>
+                <ul>
+                    <li><strong>The "Eye Line"</strong>: Your eyes must be in the top third of the photo.</li>
+                    <li><strong>Head Size</strong>: Your head must take up roughly 60-70% of the total height. Too far away? Rejected. Too close? Rejected.</li>
+                </ul>
+                <p>
+                    Our tool handles the cropping and aspect ratio (2x2 inch for US, 35x45mm for UK/EU) automatically, but you must provide a good source image.
+                </p>
+
+                <h3>Printing Your Photo</h3>
+                <p>
+                    Once you download your 2x2 inch image, you can print it on a standard 4x6 inch photo paper (you can fit 2 photos side-by-side).
+                    Do not print on regular copy paper; use glossy or matte photo quality paper.
+                </p>
+            </div>
         </div>
     );
 }

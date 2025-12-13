@@ -10,6 +10,7 @@ export function Footer() {
                 </p>
                 <div className="flex items-center space-x-4">
                     <Link href="/about" className="text-sm text-muted-foreground hover:underline">About Us</Link>
+                    <Link href="/contact" className="text-sm text-muted-foreground hover:underline">Contact</Link>
                     <Link href="/privacy" className="text-sm text-muted-foreground hover:underline">Privacy Policy</Link>
                     <Link href="/terms" className="text-sm text-muted-foreground hover:underline">Terms</Link>
                 </div>

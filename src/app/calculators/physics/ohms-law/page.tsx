@@ -76,6 +76,46 @@ export default function OhmsLawCalculator() {
                     <button onClick={clear} className="bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-medium hover:bg-secondary/80 transition-all">Clear</button>
                 </div>
             </div>
+            {/* SEO Content */}
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Ohm's Law: The Foundation of Electronics</h2>
+                <p>
+                    If you want to understand how electricity works, you must understand Ohm's Law.
+                    Discovered by Georg Ohm in 1827, it describes the relationship between Voltage, Current, and Resistance.
+                </p>
+
+                <h3>The Water Pipe Analogy</h3>
+                <p>
+                    The easiest way to visualize electricity is to think of water flowing through a pipe:
+                </p>
+                <ul>
+                    <li><strong>Voltage (V)</strong> = <strong>Water Pressure</strong>. It is the force pushing the electrons. Measured in Volts.</li>
+                    <li><strong>Current (I)</strong> = <strong>Flow Rate</strong>. It is how much water (electrons) is actually moving. Measured in Amps.</li>
+                    <li><strong>Resistance (R)</strong> = <strong>Pipe Size</strong>. A narrow pipe resists flow; a wide pipe allows it. Measured in Ohms (Ω).</li>
+                </ul>
+
+                <h3>The Formulas</h3>
+                <p>The primary formula is <code>V = I × R</code>. From this, we can derive:</p>
+                <ul>
+                    <li><code>I = V / R</code> (Current = Voltage divided by Resistance)</li>
+                    <li><code>R = V / I</code> (Resistance = Voltage divided by Current)</li>
+                </ul>
+
+                <h3>What about Power (Watts)?</h3>
+                <p>
+                    Power (P) describes the rate of energy consumption. The formula is <code>P = V × I</code>.
+                    <br />
+                    <em>Example:</em> A 100-Watt lightbulb running on 120 Volts draws about 0.83 Amps.
+                </p>
+
+                <h3>Practical Usage</h3>
+                <p>
+                    Why does this matter?
+                    <br />
+                    <strong>Circuit Safety</strong>: If you try to push too much Current through a wire with high Resistance, the energy is converted to Heat. This is why overloaded extension cords melt and start fires.
+                    Engineers use Ohm's Law to determine the correct fuse size (Amps) to protect your home.
+                </p>
+            </div>
         </div>
     );
 }

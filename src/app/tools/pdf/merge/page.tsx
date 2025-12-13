@@ -137,14 +137,44 @@ export default function MergePDFPage() {
             </div>
 
             {/* Content / SEO Section */}
-            <div className="prose dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Merge PDFs Instantly</h2>
-                <p>UnitMaster provides a secure way to combine multiple PDF documents. Because we process files locally, there are no file size limits imposed by a server.</p>
-                <h3>How to use?</h3>
+            <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>How to Merge PDF Files Online (Free & Private)</h2>
+                <p>
+                    Merging multiple PDF documents into a single file is essential for organizing reports, combining agreements, or cleaning up your digital workspace.
+                    <strong>UnitMaster PDF Merger</strong> allows you to combine an unlimited number of PDF files securely in your browser.
+                </p>
+
+                <h3>Why Privacy Matters for PDF Tools</h3>
+                <p>
+                    Most online PDF tools require you to upload your sensitive documents (tax returns, legal contracts, medical records) to a remote server.
+                    Even if they promise to delete them, there is always a risk of data breaches or transmission leaks.
+                </p>
+                <p>
+                    We take a radically different approach. Our tool runs <strong>entirely on your device</strong>. The merging engine is downloaded to your browser,
+                    meaning your files never leave your computer. It is physically impossible for us to view your documents.
+                </p>
+
+                <h3>Features of Our PDF Combiner</h3>
                 <ul>
-                    <li>Upload your PDF files.</li>
-                    <li>Drag and drop to reorder.</li>
-                    <li>Click "Merge" to combine them.</li>
+                    <li><strong>Unlimited Files</strong>: Merge 2 or 200 files. We don't impose artificial limits.</li>
+                    <li><strong>Drag & Drop Reordering</strong>: Easily arrange your documents in the exact order you need.</li>
+                    <li><strong>Instant Processing</strong>: No upload wait times. A 50MB merge takes milliseconds, not minutes.</li>
+                    <li><strong>Clean Output</strong>: We don't add watermarks to your professional documents.</li>
+                </ul>
+
+                <h3>Step-by-Step Instructions</h3>
+                <ol>
+                    <li><strong>Select Files</strong>: Drop your PDFs into the upload zone or click to select from your computer.</li>
+                    <li><strong>Arrange</strong>: Drag the file thumbnails to reorder them. The top-left file will be the first pages of your new document.</li>
+                    <li><strong>Merge</strong>: Click the "Merge PDF Files" button.</li>
+                    <li><strong>Save</strong>: Your new document is ready instantly. Click "Download PDF" to save it.</li>
+                </ol>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li><strong>Job Applications</strong>: Combine your Resume and Cover Letter into one professional attachment.</li>
+                    <li><strong>Invoices & Receipts</strong>: Merge monthly expense receipts into a single file for your accountant.</li>
+                    <li><strong>Project Reports</strong>: Combine individual chapter PDFs into a final thesis or report.</li>
                 </ul>
             </div>
         </div>

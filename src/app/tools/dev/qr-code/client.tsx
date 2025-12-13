@@ -124,16 +124,48 @@ export default function QrCodeClient() {
 
             {/* SEO Content */}
             <div className="mt-16 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Free QR Code Generator</h2>
+                <h2>Generate Free Static QR Codes</h2>
                 <p>
-                    Generate permanent, high-quality QR codes for your business, events, or personal use.
-                    This tool runs entirely in your browser using HTML5 Canvas technology, ensuring your data remains private and secure.
+                    QR Codes (Quick Response Codes) have become the bridge between the physical and digital worlds.
+                    From restaurant menus to Wi-Fi sharing, they are ubiquitous.
+                    <strong>UnitMaster QR Generator</strong> allows you to create high-resolution, static codes instantly.
                 </p>
-                <h3>Features</h3>
+
+                <h3>Static vs. Dynamic QR Codes</h3>
+                <p>
+                    It is important to understand the difference:
+                </p>
                 <ul>
-                    <li><strong>Instant Generation</strong>: No loading times or server requests.</li>
-                    <li><strong>Private</strong>: Data is processed locally on your device.</li>
-                    <li><strong>Customizable</strong>: Adjust resolution size up to 1024px.</li>
+                    <li><strong>Static (What we offer)</strong>: The data (like your URL) is embedded directly into the pattern of the code. It is permanent and will work forever. It does not rely on any third-party redirection service.</li>
+                    <li><strong>Dynamic</strong>: The code points to a redirection URL owned by a service provider. If that service goes down or starts charging fees, your printed codes break.</li>
+                </ul>
+                <p>
+                    We exclusively generate <strong>Static Codes</strong>. This means you own your code. Even if UnitMaster disappears tomorrow, your printed QR codes will continue to scan perfectly.
+                </p>
+
+                <h3>Privacy & Security</h3>
+                <p>
+                    Many "free" QR generators track your users. They insert a redirect link that collects analytics (location, device, time) before sending the user to your actual destination.
+                    <strong>We do not do this.</strong>
+                </p>
+                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-6 not-prose">
+                    <p className="text-sm">
+                        <strong>🛡️ Zero Tracking:</strong> The Code is generated locally in your browser using JavaScript. The final URL in the code is exactly what you typed. No middlemen. No tracking scripts.
+                    </p>
+                </div>
+
+                <h3>Best Practices for Printing</h3>
+                <ol>
+                    <li><strong>Size Matters</strong>: Ensure your code is at least 2cm x 2cm (0.8" x 0.8") for reliable scanning.</li>
+                    <li><strong>Contrast</strong>: Always maintain high contrast. A black code on a white background is the gold standard.</li>
+                    <li><strong>Whitespace</strong>: Leave a "quiet zone" (margin) around the code. If you crop too close to the dots, scanners might fail to detect it.</li>
+                </ol>
+
+                <h3>Common Uses</h3>
+                <ul>
+                    <li><strong>Wi-Fi Access</strong>: Share your guest Wi-Fi network without reading out a long password.</li>
+                    <li><strong>Contact Cards (vCard)</strong>: Put a code on your business card that instantly saves your contact info to a phone.</li>
+                    <li><strong>Product Packaging</strong>: Link customers to your instruction manual or support page.</li>
                 </ul>
             </div>
         </div>

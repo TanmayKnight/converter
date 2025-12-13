@@ -132,16 +132,45 @@ export default function RemoveBackgroundPage() {
 
             {/* SEO Content */}
             <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Free Background Remover</h2>
+                <h2>Free AI Background Remover</h2>
                 <p>
-                    Remove backgrounds from images instantly for free. Our tool uses advanced AI that runs directly in your browser. This means your images are **never uploaded to a server**, guaranteeing 100% privacy.
+                    Manually cutting out an object from a photo using Photoshop's lasso tool used to take hours of tedious clicking.
+                    <strong>UnitMaster AI</strong> changes the game. We use state-of-the-art machine learning models to instantly detect the subject of your photo—whether it's a person, car, or product—and surgically remove the background.
                 </p>
-                <h3>Why use our tool?</h3>
+
+                <h3>How It Works (The Tech)</h3>
+                <p>
+                    This tool runs a neural network called <strong>U-2-Net</strong> directly inside your web browser.
+                    Traditionally, AI this powerful required expensive GPU servers in the cloud.
+                    We have optimized these models to run on <strong>WebAssembly (WASM)</strong>, essentially turning your browser into a mini AI supercomputer.
+                </p>
+                <p>
+                    <strong>The Result:</strong> You get professional-grade "Magic Wand" functionality without ever sending your photo to a third party.
+                </p>
+
+                <h3>Perfect for E-Commerce</h3>
+                <p>
+                    Online marketplaces like Amazon, eBay, and Shopify require product photos to have a pure white (or transparent) background.
+                </p>
                 <ul>
-                    <li><strong>Privacy First</strong>: All processing happens on your device.</li>
-                    <li><strong>Unlimited</strong>: No credits, no daily limits.</li>
-                    <li><strong>High Quality</strong>: Handles hair and fine details with precision.</li>
+                    <li><strong>Consistency</strong>: Make all your product shots look uniform.</li>
+                    <li><strong>Focus</strong>: Remove distracting messy rooms or outdoor backgrounds.</li>
+                    <li><strong>Marketing</strong>: Easily overlay your product onto promotional banners or ad creatives.</li>
                 </ul>
+
+                <h3>Tips for Best Results</h3>
+                <ol>
+                    <li><strong>Contrast is Key</strong>: The AI works best when the subject stands out from the background (e.g., a dark product on a light table).</li>
+                    <li><strong>Good Lighting</strong>: Avoid heavy shadows crossing over the subject, as the AI might mistake a shadow for part of the object.</li>
+                    <li><strong>Focus</strong>: Ensure the subject is sharp. Blurry edges can lead to a "soft" cutout.</li>
+                </ol>
+
+                <h3>100% Free & Unlimited</h3>
+                <p>
+                    Most background remover sites charge you "credits" per image or only let you download a low-res preview for free.
+                    <strong>UnitMaster is different.</strong> Because you are using your own computer's processing power, we don't have to pay for expensive servers.
+                    That means we can offer this tool for free, with no daily limits and no watermarks.
+                </p>
             </div>
         </div>
     );

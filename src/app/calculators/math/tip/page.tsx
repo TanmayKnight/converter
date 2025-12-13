@@ -104,6 +104,37 @@ export default function TipCalculator() {
                     </div>
                 </div>
             </div>
+            {/* SEO Content */}
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Tipping Etiquette: A Global Guide</h2>
+                <p>
+                    Tipping (Gratuity) norms vary wildly across the world. While 20% is standard in New York, it might be considered rude in Tokyo.
+                    <strong>UnitMaster Tip Calculator</strong> helps you do the math instantly, but knowing <em>when</em> to tip is up to you.
+                </p>
+
+                <h3>Tipping Cheat Sheet</h3>
+                <ul>
+                    <li><strong>USA & Canada</strong>: <strong>15-25%</strong>. Waiters earn below minimum wage and rely on tips. 15% is bare minimum, 20% is standard.</li>
+                    <li><strong>Europe (UK, France, Germany)</strong>: <strong>10%</strong>. Service is usually included ("Service Compris"), but leaving a small extra amount is polite.</li>
+                    <li><strong>Japan & South Korea</strong>: <strong>0%</strong>. Tipping is often seen as insulting (implying the employer doesn't pay enough). Superior service is expected as standard.</li>
+                    <li><strong>Australia & NZ</strong>: <strong>0-10%</strong>. Optional. Only for exceptional service in fine dining.</li>
+                </ul>
+
+                <h3>Splitting the Bill</h3>
+                <p>
+                    The "Per Person" feature is arguably more useful than the tip calculation itself.
+                    In large groups, mental math fails.
+                    <em>"Okay, the bill is $142.50, there are 7 of us, and we want to leave 18%."</em>
+                    Our tool solves this instantly: Each person puts in $24.02.
+                </p>
+
+                <h3>Pre-Tax or Post-Tax?</h3>
+                <p>
+                    Etiquette experts argue that you should tip on the <strong>Pre-Tax</strong> amount.
+                    Why should you tip the waiter for the tax charged by the government?
+                    However, most portable card machines (and our laziness) default to calculating on the Grand Total (Post-Tax).
+                </p>
+            </div>
         </div>
     );
 }

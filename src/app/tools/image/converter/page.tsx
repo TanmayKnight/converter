@@ -109,15 +109,43 @@ export default function ImageConverterPage() {
 
             {/* SEO Content */}
             <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Free Image Format Converter</h2>
+                <h2>Image Formats Explained: JPG vs PNG vs WebP</h2>
                 <p>
-                    Ensure your images work everywhere. Convert PNGs to high-quality JPGs for smaller file sizes, or switch to modern WEBP format for faster website loading.
+                    Choosing the right image format is crucial for web performance and visual quality.
+                    <strong>UnitMaster Converter</strong> lets you switch between them instantly. Here is how to choose:
+                </p>
+
+                <h3>JPG / JPEG (Joint Photographic Experts Group)</h3>
+                <p>
+                    <strong>Best for:</strong> Photographs, portraits, and complex scenery.
                 </p>
                 <ul>
-                    <li><strong>PNG to JPG</strong>: Reduce file size by up to 80% without visible quality loss.</li>
-                    <li><strong>JPG to PNG</strong>: Preserve transparency and quality for logos and graphics.</li>
-                    <li><strong>To WEBP</strong>: The modern standard for web performance.</li>
+                    <li><strong>Pros</strong>: Small file size. Universal compatibility.</li>
+                    <li><strong>Cons</strong>: "Lossy" compression (quality degrades with each save). No transparency support.</li>
                 </ul>
+
+                <h3>PNG (Portable Network Graphics)</h3>
+                <p>
+                    <strong>Best for:</strong> Logos, screenshots, icons, and text-heavy images.
+                </p>
+                <ul>
+                    <li><strong>Pros</strong>: "Lossless" quality (crisp edges). Supports Transparency (alpha channel).</li>
+                    <li><strong>Cons</strong>: Larger file sizes, especially for photos.</li>
+                </ul>
+
+                <h3>WebP (Google's Web Format)</h3>
+                <p>
+                    <strong>Best for:</strong> Modern websites and apps.
+                </p>
+                <ul>
+                    <li><strong>Pros</strong>: The best of both worlds. 25-35% smaller than JPGs with the same quality. Supports transparency.</li>
+                    <li><strong>Cons</strong>: Not supported by very old browsers (Internet Explorer), but works on all modern devices.</li>
+                </ul>
+
+                <h3>Optimization Tip</h3>
+                <p>
+                    If you are building a website, convert your heavy PNG headers to WebP. You will see a significant boost in your PageSpeed Insights score.
+                </p>
             </div>
         </div>
     );

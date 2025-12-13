@@ -404,17 +404,49 @@ export default function VideoTrimmerClient() {
             )}
 
             {/* SEO Content */}
-            <div className="mt-12 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Free Online Video Trimmer</h2>
+            <div className="mt-16 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Free Online Video Trimmer: Cut MP4, WebM & MOV Files Instantly</h2>
                 <p>
-                    Trim MP4, WebM, and MOV files instantly directly in your browser.
-                    Powered by WebAssembly technology, your video cuts are processed locally on your device for maximum privacy and speed.
+                    <strong>UnitMaster's Video Trimmer</strong> is the fastest and most secure way to cut video clips directly in your browser.
+                    Whether you are a content creator looking to repurpose long footage for TikTok, or just need to remove the boring start of a family video, our tool makes it effortless.
+                </p>
+
+                <h3>Why Use a Browser-Based Video Trimmer?</h3>
+                <p>
+                    Traditional video editing software like Adobe Premiere or Final Cut Pro is powerful but expensive and complex. Simple online tools are often plagued with slow uploads, watermarks, or privacy concerns.
+                    UnitMaster bridges this gap using <strong>WebAssembly (WASM)</strong> technology.
                 </p>
                 <ul>
-                    <li><strong>No Uploads</strong>: Your large video files never leave your computer.</li>
-                    <li><strong>Lossless Cutting</strong>: Uses stream copying for instant, quality-preserving storage.</li>
-                    <li><strong>Secure</strong>: 100% Client-side processing.</li>
+                    <li><strong>Zero Upload Time</strong>: Since we process your video locally on your device, you don't need to wait for a 2GB file to upload to a server.</li>
+                    <li><strong>100% Privacy</strong>: Your personal videos never leave your computer. We cannot see, store, or share your content.</li>
+                    <li><strong>Lossless Quality</strong>: Our smart "stream copy" engine cuts your video without re-encoding it, preserving the original quality perfectly.</li>
                 </ul>
+
+                <h3>Supported Formats</h3>
+                <p>
+                    We support the most common web and device formats:
+                </p>
+                <ul>
+                    <li><strong>MP4 (H.264/AVC)</strong>: The universal standard for web video.</li>
+                    <li><strong>MOV (QuickTime)</strong>: Standard for iPhone and Mac recordings.</li>
+                    <li><strong>WebM</strong>: Optimized for modern web browsers.</li>
+                    <li><strong>MKV</strong>: Supported for importing, though output is standardized to MP4 for compatibility.</li>
+                </ul>
+
+                <h3>How to Trim a Video</h3>
+                <ol>
+                    <li><strong>Upload</strong>: Drag and drop your video file into the box above.</li>
+                    <li><strong>Set Start/End</strong>: Use the blue sliders on the timeline to select the part you want to keep. You can also type exact timestamps for precision.</li>
+                    <li><strong>Preview</strong>: Click the play button to ensure you've captured exactly the right moment.</li>
+                    <li><strong>Trim & Download</strong>: Click "Trim Video" and download your new clip instantly.</li>
+                </ol>
+
+                <h3>Troubleshooting "Black Screen" Issues</h3>
+                <p>
+                    Some high-efficiency videos (like <strong>HEVC/H.265</strong> from newer iPhones) might not play natively in all browsers (like Chrome or Firefox).
+                    If you see a black screen but hear audio, click our <strong>"⚡ Optimize Preview"</strong> button. This generates a browser-friendly proxy for you to edit with,
+                    while ensuring your final export remains the original high-quality file.
+                </p>
             </div>
         </div>
     );

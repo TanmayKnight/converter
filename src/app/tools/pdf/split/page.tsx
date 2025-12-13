@@ -199,9 +199,47 @@ export default function SplitPDFPage() {
             )}
 
             {/* Content / SEO Section */}
-            <div className="prose dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Split PDF Pages Free</h2>
-                <p>Easily extract pages from any PDF document. Our tool runs locally, ensuring your sensitive documents never leave your device.</p>
+            <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Split PDF Pages Without Losing Quality</h2>
+                <p>
+                    Large PDF documents can be unwieldy. Whether you need to extract a single chapter from an ebook, pull a specific invoice from a yearly report, or just break a massive file into manageable chunks,
+                    <strong>UnitMaster PDF Splitter</strong> is the precise tool for the job.
+                </p>
+
+                <h3>How Our Browser-Based Splitter Works</h3>
+                <p>
+                    Data privacy is critical when handling documents. Unlike other services that force you to upload your files to a cloud server to "process" them, UnitMaster operates differently.
+                    We use a specialized JavaScript engine that loads your PDF <strong>directly into your browser's memory</strong>.
+                </p>
+                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-6 not-prose">
+                    <p className="text-sm">
+                        <strong>🔒 Security Guarantee:</strong> Your file never leaves your computer. The "splitting" happens on your own CPU. This makes it safe for legal contracts, medical records, and financial statements.
+                    </p>
+                </div>
+
+                <h3>Ways to Extract Pages</h3>
+                <p>
+                    Our smart range selector gives you flexible control over exactly what gets extracted:
+                </p>
+                <ul>
+                    <li><strong>Single Pages</strong>: Type <code>5</code> to extract just page 5.</li>
+                    <li><strong>Ranges</strong>: Type <code>1-5</code> to extract the first five pages.</li>
+                    <li><strong>Complex Combinations</strong>: Type <code>1-3, 5, 8-10</code> to mix and match ranges and single pages into a new custom document.</li>
+                </ul>
+
+                <h3>Why Split PDF Files?</h3>
+                <ul>
+                    <li><strong>Efficiency</strong>: Don't email a 50MB report when the recipient only needs 3 pages.</li>
+                    <li><strong>Organization</strong>: Break down scanned books into individual chapters for easier reading.</li>
+                    <li><strong>Correction</strong>: Remove accidental blank pages or error pages from a final document.</li>
+                </ul>
+
+                <h3>Features</h3>
+                <ul>
+                    <li><strong>Real-time Preview</strong>: See the page count and file size before you split.</li>
+                    <li><strong>Instant Download</strong>: No queue, no waiting, no registration required.</li>
+                    <li><strong>Cross-Platform</strong>: Works securely on Windows, Mac, Linux, and even mobile browsers.</li>
+                </ul>
             </div>
         </div>
     );

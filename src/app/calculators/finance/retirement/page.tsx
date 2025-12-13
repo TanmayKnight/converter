@@ -140,6 +140,39 @@ export default function RetirementCalculator() {
                     )}
                 </div>
             </div>
+            {/* SEO Content */}
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                <h2>Retirement Planning: The Power of Starting Early</h2>
+                <p>
+                    Retirement planning is not about "saving money"; it is about <strong>replacing your income</strong>.
+                    The <strong>UnitMaster Retirement Planner</strong> helps you calculate the "Corpus" (total pot of money) you need to survive without a salary.
+                </p>
+
+                <h3>Concept: The 4% Rule</h3>
+                <p>
+                    A popular rule of thumb in finance is the "4% Rule". It states that you can safely withdraw 4% of your retirement savings each year (adjusted for inflation) without ever running out of money.
+                </p>
+                <ul>
+                    <li>If you need $40,000/year to live, you need a corpus of $1,000,000.</li>
+                    <li>If you need $100,000/year to live, you need a corpus of $2,500,000.</li>
+                </ul>
+
+                <h3>The Magic of Compounding</h3>
+                <p>
+                    Albert Einstein reputedly called Compound Interest the "Eighth Wonder of the World".
+                    <br />
+                    <em>Example:</em> If you save $500/month starting at age 25, you might have $1.7 million by age 65 (at 10% return).
+                    If you wait until age 35 to start saving the same amount, you will only have $600,000.
+                    <strong>The 10-year delay costs you over $1 million.</strong>
+                </p>
+
+                <h3>Inflation: The Silent Killer</h3>
+                <p>
+                    $1 million today will not buy $1 million worth of goods in 30 years.
+                    If inflation averages 3% per year, the purchasing power of your money halves every 24 years.
+                    Our calculator helps you factor this in by allowing you to adjust your "Expected Return" (try using a "Real Rate of Return" relative to inflation).
+                </p>
+            </div>
         </div>
     );
 }
