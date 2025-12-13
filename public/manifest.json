@@ -1,0 +1,16 @@
+{
+    "name": "UnitMaster",
+    "short_name": "UnitMaster",
+    "description": "The Privacy-First Digital Swiss Army Knife for Developers and Professionals.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "/icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

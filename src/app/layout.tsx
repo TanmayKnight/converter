@@ -53,6 +53,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'UnitMaster',
+  },
+};
+
+export const viewport = {
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
