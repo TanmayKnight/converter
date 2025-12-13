@@ -103,6 +103,24 @@ export default function ImageCropperPage() {
 
     return (
         <div className="space-y-8">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'SoftwareApplication',
+                        name: 'Image Cropper',
+                        applicationCategory: 'PhotographyApplication',
+                        operatingSystem: 'Any',
+                        offers: {
+                            '@type': 'Offer',
+                            price: '0',
+                            priceCurrency: 'USD',
+                        },
+                        description: 'Free online image cropper tool. Crop and resize images for social media directly in the browser.',
+                    })
+                }}
+            />
             <div className="text-center space-y-2">
                 <h1 className="text-3xl font-bold">Image Cropper</h1>
                 <p className="text-muted-foreground">Crop and resize images precisely for social media or print.</p>
