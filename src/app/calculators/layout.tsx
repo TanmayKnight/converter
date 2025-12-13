@@ -52,6 +52,30 @@ export default function CalculatorsLayout({
                     </aside>
                 </div>
             </div>
+            {/* Structured Data for Breadcrumbs */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BreadcrumbList',
+                        itemListElement: [
+                            {
+                                '@type': 'ListItem',
+                                position: 1,
+                                name: 'Home',
+                                item: 'https://unitmasterapp.com'
+                            },
+                            {
+                                '@type': 'ListItem',
+                                position: 2,
+                                name: 'Calculators',
+                                item: 'https://unitmasterapp.com/calculators'
+                            }
+                        ]
+                    })
+                }}
+            />
         </div>
     );
 }

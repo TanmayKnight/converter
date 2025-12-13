@@ -15,7 +15,10 @@ export const metadata: Metadata = {
     template: '%s | UnitMaster',
   },
   description: 'The all-in-one digital toolkit. Professional financial calculators, unit converters, and PDF tools. Fast, free, and privacy-focused.',
-  keywords: ['unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter'],
+  keywords: [
+    'unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter',
+    'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator'
+  ],
   authors: [{ name: 'UnitMaster Team' }],
   metadataBase: new URL('https://unitmasterapp.com'),
   openGraph: {

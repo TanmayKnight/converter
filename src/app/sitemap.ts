@@ -18,13 +18,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: `${BASE_URL}/calculators/finance/investment`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/finance/tax`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/finance/retirement`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/finance/roi`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/finance/loan-advanced`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
         { url: `${BASE_URL}/calculators/math/percentage`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/math/statistics`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/math/algebra`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/math/trigonometry`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/math/tip`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/math/ascii`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/math/base`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/math/roman`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/math/words`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
         { url: `${BASE_URL}/calculators/geometry/area`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/geometry/volume`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
         { url: `${BASE_URL}/calculators/technology/px-to-rem`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
         { url: `${BASE_URL}/calculators/physics/ohms-law`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/physics/force-mass`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+
+        { url: `${BASE_URL}/calculators/health/bmi`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
 
         // PDF Tools (High Value)
         { url: `${BASE_URL}/tools/pdf/merge`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
