@@ -10,8 +10,8 @@ export function CreatorNav() {
 
     const links = [
         { href: '/tools/creator/thumbnail', label: 'Thumbnail Grabber' },
-        { href: '/tools/creator/trimmer', label: 'Video Trimmer', disabled: true },
-        { href: '/tools/creator/audio', label: 'Audio Extractor', disabled: true },
+        { href: '/tools/creator/trimmer', label: 'Video Trimmer' },
+        { href: '/tools/creator/audio-extractor', label: 'Audio Extractor' },
     ];
 
     return (

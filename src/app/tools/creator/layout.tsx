@@ -31,7 +31,7 @@ export default function CreatorToolsLayout({
                 links: [
                     { href: '/tools/creator/thumbnail', label: 'Thumbnail Grabber' },
                     { href: '/tools/creator/trimmer', label: 'Video Trimmer' },
-                    { href: '/tools/creator/audio', label: 'Audio Extractor', disabled: true },
+                    { href: '/tools/creator/audio-extractor', label: 'Audio Extractor' },
                 ]
             }}
         >
