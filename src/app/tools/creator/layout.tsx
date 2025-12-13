@@ -28,54 +28,46 @@ export default function CreatorToolsLayout({
                 ]}
             />
             {/* Sub-navigation for tools */}
-            <div className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-14 z-20">
-                <div className="container px-4 mx-auto max-w-screen-xl py-3">
-                    <CreatorNav />
-                </div>
-            </div>
+            <CreatorNav />
 
-            <div className="container px-4 mx-auto max-w-screen-xl mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="container mx-auto px-4 py-4 max-w-screen-2xl">
+                <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main Tool Content */}
-                    <div className="lg:col-span-8 space-y-8 min-h-[60vh]">
+                    <main className="flex-1 min-w-0">
                         {children}
-                    </div>
+                    </main>
 
                     {/* Sidebar */}
-                    <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
-                        {/* Ad Unit */}
-                        <div className="bg-secondary/10 rounded-xl overflow-hidden border border-border/50 min-h-[250px] flex flex-col items-center justify-center p-4">
-                            <AdUnit
-                                slotId="sidebar-creator-1"
-                                className="w-full h-full min-h-[250px]"
-                            />
-                        </div>
+                    {/* Sidebar Ad Slot */}
+                    <aside className="w-full lg:w-80 shrink-0 space-y-8">
+                        <div className="sticky top-24 space-y-8">
+                            <div className="p-4 bg-card rounded-lg border border-border shadow-sm">
+                                <h4 className="font-semibold mb-3 text-sm flex items-center gap-2">
+                                    <span className="h-2 w-2 rounded-full bg-purple-500 animate-pulse" />
+                                    Explore More
+                                </h4>
+                                <nav className="grid gap-2">
+                                    <Link href="/tools/creator/thumbnail" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>Thumbnail Grabber</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
+                                    <div className="text-sm text-muted-foreground/50 flex items-center justify-between group cursor-not-allowed">
+                                        <span>Video Trimmer</span>
+                                        <span className="text-[10px] bg-secondary px-1 py-0.5 rounded">Soon</span>
+                                    </div>
+                                    <div className="text-sm text-muted-foreground/50 flex items-center justify-between group cursor-not-allowed">
+                                        <span>Audio Extractor</span>
+                                        <span className="text-[10px] bg-secondary px-1 py-0.5 rounded">Soon</span>
+                                    </div>
 
-                        {/* Explore More */}
-                        <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
-                            <h3 className="font-semibold mb-4 flex items-center gap-2">
-                                <Video className="h-4 w-4 text-primary" />
-                                Creator Tools
-                            </h3>
-                            <div className="space-y-2">
-                                <Link href="/tools/creator/thumbnail" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
-                                    <span>Thumbnail Grabber</span>
-                                    <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </Link>
-                                <div className="text-sm text-muted-foreground/50 flex items-center justify-between group cursor-not-allowed">
-                                    <span>Video Trimmer</span>
-                                    <span className="text-[10px] bg-secondary px-1 py-0.5 rounded">Soon</span>
-                                </div>
-                                <div className="text-sm text-muted-foreground/50 flex items-center justify-between group cursor-not-allowed">
-                                    <span>Audio Extractor</span>
-                                    <span className="text-[10px] bg-secondary px-1 py-0.5 rounded">Soon</span>
-                                </div>
-
-                                <div className="h-px bg-border/50 my-1" />
-                                <p className="text-[10px] text-muted-foreground text-center">
-                                    🎬 Tools for modern creators.
-                                </p>
+                                    <div className="h-px bg-border/50 my-1" />
+                                    <p className="text-[10px] text-muted-foreground text-center">
+                                        🔒 Tools for modern creators.
+                                    </p>
+                                </nav>
                             </div>
+
+                            <AdUnit className="h-[600px]" slotId="sidebar-creator-1" />
                         </div>
                     </aside>
                 </div>

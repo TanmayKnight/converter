@@ -77,8 +77,8 @@ export default function ThumbnailClient() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            <div className="text-center space-y-4 mb-8">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-pink-600">
+            <div className="text-center space-y-2 mb-8">
+                <h1 className="text-3xl font-bold text-foreground">
                     YouTube Thumbnail Grabber
                 </h1>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -86,54 +86,80 @@ export default function ThumbnailClient() {
                 </p>
             </div>
 
-            {/* Input Section */}
-            <div className="max-w-xl mx-auto space-y-4">
-                <div className="flex gap-2">
-                    <input
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && extractId()}
-                        placeholder="Paste YouTube URL here (e.g. https://youtu.be/...)"
-                        className="flex-1 h-12 px-4 rounded-xl border border-border bg-background focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                    />
-                    <Button onClick={extractId} size="lg" className="rounded-xl h-12 px-6">
-                        <Search className="h-5 w-5" />
-                    </Button>
-                </div>
-                {error && (
-                    <div className="text-sm text-destructive flex items-center gap-2 justify-center animate-in fade-in">
-                        <AlertCircle className="h-4 w-4" />
-                        {error}
+            {/* Input Section - Mimicking ImageDropzone style */}
+            {!videoId && (
+                <div className="max-w-2xl mx-auto">
+                    <div className="bg-card border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-10 flex flex-col items-center justify-center space-y-6">
+                        <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center">
+                            <Search className="h-8 w-8 text-muted-foreground" />
+                        </div>
+                        <div className="space-y-2 text-center">
+                            <h3 className="font-semibold text-lg">Paste Video URL</h3>
+                            <p className="text-sm text-muted-foreground">
+                                Paste a YouTube link to instantly extract high-quality thumbnails.
+                            </p>
+                        </div>
+
+                        <div className="flex gap-2 w-full max-w-md mt-4">
+                            <input
+                                type="text"
+                                value={url}
+                                onChange={(e) => setUrl(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && extractId()}
+                                placeholder="https://youtu.be/..."
+                                className="flex-1 h-10 px-4 rounded-md border border-input bg-background focus:ring-2 focus:ring-ring focus:outline-none transition-all text-sm"
+                            />
+                            <Button onClick={extractId}>
+                                Extract
+                            </Button>
+                        </div>
+                        {error && (
+                            <div className="text-sm text-destructive flex items-center gap-2">
+                                <AlertCircle className="h-4 w-4" />
+                                {error}
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {/* Results Grid */}
             {videoId && (
                 <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-500">
 
+                    <div className="flex justify-between items-center bg-secondary/20 p-4 rounded-xl border border-border/50">
+                        <div className="flex items-center gap-3">
+                            <div className="h-10 w-10 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center text-red-600">
+                                <Search className="h-5 w-5" />
+                            </div>
+                            <div>
+                                <h3 className="font-medium text-sm">Video Found</h3>
+                                <p className="text-xs text-muted-foreground truncate max-w-[200px]">{url}</p>
+                            </div>
+                        </div>
+                        <Button variant="ghost" size="sm" onClick={() => { setVideoId(null); setUrl(''); }}>
+                            Paste Another
+                        </Button>
+                    </div>
+
                     {/* Max Res (Hero) */}
-                    <div className="space-y-3 bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <h3 className="font-semibold text-lg flex items-center gap-2">
-                                <ImageIcon className="h-5 w-5 text-primary" />
+                    <div className="bg-card border border-border rounded-xl p-4 shadow-sm">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="font-semibold text-sm flex items-center gap-2">
+                                <ImageIcon className="h-4 w-4 text-primary" />
                                 Maximum Resolution (HD)
                             </h3>
-                            <Button onClick={() => downloadImage('maxresdefault')} className="gap-2">
-                                <Download className="h-4 w-4" /> Download HD
+                            <Button size="sm" onClick={() => downloadImage('maxresdefault')} className="gap-2 h-8 text-xs">
+                                <Download className="h-3 w-3" /> Download HD
                             </Button>
                         </div>
-                        <div className="aspect-video bg-black/5 rounded-xl overflow-hidden relative group">
+                        <div className="aspect-video bg-black/5 rounded-lg overflow-hidden relative group border border-border/50">
                             <img
                                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                                 alt="Max Resolution Thumbnail"
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                         </div>
-                        <p className="text-xs text-muted-foreground text-center">
-                            Note: Some older videos may not have MaxRes thumbnails.
-                        </p>
                     </div>
 
                     {/* Other Sizes Grid */}
