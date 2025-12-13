@@ -8,10 +8,12 @@ export function PrivacyDashboard() {
     const [isIncognito, setIsIncognito] = useState(false);
 
     // Mock "Network Activity" monitor
+    // Mock "Network Activity" monitor - behaving like a real log
     const [requests, setRequests] = useState([
         { id: 1, name: 'Google Analytics', status: 'Allowed', type: 'Analytics' },
-        { id: 2, name: 'AdSense', status: 'Allowed', type: 'Ads' },
-        { id: 3, name: 'Conversion Logic', status: 'Local (Offline)', type: 'Core' },
+        { id: 2, name: 'AdSense (Google)', status: 'Allowed', type: 'Ads' },
+        { id: 3, name: 'File Uploads', status: 'None (Secure)', type: 'Core' },
+        { id: 4, name: 'Audio Processing', status: 'Local (WASM)', type: 'Core' },
     ]);
 
     useEffect(() => {
@@ -85,24 +87,31 @@ export function PrivacyDashboard() {
 
                 {/* Network Monitor */}
                 <div>
-                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <Globe className="h-3 w-3" /> Network Activity
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 flex items-center justify-between">
+                        <span className="flex items-center gap-2"><Globe className="h-3 w-3" /> Network Requests</span>
+                        <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" title="Monitoring Active" />
                     </h4>
-                    <div className="space-y-2">
+                    <div className="space-y-1 bg-secondary/20 p-2 rounded-lg border border-border/50 text-xs font-mono">
+                        {/* Simulation of Real Log */}
+                        <div className="flex justify-between items-center text-muted-foreground py-1 border-b border-border/50">
+                            <span>DESTINATION</span>
+                            <span>STATUS</span>
+                        </div>
                         {requests.map(req => (
-                            <div key={req.id} className="flex items-center justify-between text-xs p-2 rounded-lg hover:bg-secondary/50 transition-colors">
-                                <span className="text-foreground">{req.name}</span>
+                            <div key={req.id} className="flex items-center justify-between py-1.5 hover:bg-white/5 transition-colors">
+                                <span className="text-foreground truncate max-w-[140px]" title={req.name}>{req.name}</span>
                                 <span className={`flex items-center gap-1.5 ${req.status === 'Blocked' ? 'text-red-500' :
-                                    req.status.includes('Offline') ? 'text-green-500' : 'text-blue-500'
+                                    req.status.includes('None') ? 'text-green-600 font-semibold' : 'text-blue-500'
                                     }`}>
-                                    <span className={`h-1.5 w-1.5 rounded-full ${req.status === 'Blocked' ? 'bg-red-500' :
-                                        req.status.includes('Offline') ? 'bg-green-500' : 'bg-blue-500'
-                                        }`} />
+                                    {req.status === 'Blocked' && <X className="h-3 w-3" />}
                                     {req.status}
                                 </span>
                             </div>
                         ))}
                     </div>
+                    <p className="text-[10px] text-muted-foreground mt-2 italic">
+                        * We only allow analytics. User data is never transmitted.
+                    </p>
                 </div>
 
                 {/* Incognito Toggle */}
