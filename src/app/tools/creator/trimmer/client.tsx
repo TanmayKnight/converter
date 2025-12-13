@@ -314,71 +314,94 @@ export default function VideoTrimmerClient() {
                             </div>
                         )}
                     </div>
-                </div>
 
                     {/* Timeline Controls */}
-            <div className="bg-card border border-border p-6 rounded-xl space-y-6">
-                <div className="flex justify-between items-center text-sm font-medium">
-                    <div className="space-y-1">
-                        <span className="text-muted-foreground">Start Time</span>
-                        <div className="text-lg">{formatTime(startTime)}</div>
-                    </div>
-                    <div className="space-y-1 text-right">
-                        <span className="text-muted-foreground">End Time</span>
-                        <div className="text-lg">{formatTime(endTime)}</div>
-                    </div>
-                </div>
+                    <div className="bg-card border border-border p-6 rounded-xl space-y-6">
+                        <div className="flex justify-between items-center text-sm font-medium">
+                            <div className="space-y-1">
+                                <span className="text-muted-foreground">Start Time</span>
+                                <div className="text-lg">{formatTime(startTime)}</div>
+                            </div>
+                            <div className="space-y-1 text-right">
+                                <span className="text-muted-foreground">End Time</span>
+                                <div className="text-lg">{formatTime(endTime)}</div>
+                            </div>
+                        </div>
 
-                {/* Simple Range Inputs for Start/End (MVP) */}
-                <div className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-xs text-muted-foreground">Start Point</label>
-                        <input
-                            type="range"
-                            min="0"
-                            max={duration}
-                            step="0.1"
-                            value={startTime}
-                            onChange={(e) => {
-                                const val = parseFloat(e.target.value);
-                                if (val < endTime) {
-                                    setStartTime(val);
-                                    if (videoRef.current) videoRef.current.currentTime = val;
-                                }
-                            }}
-                            className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-xs text-muted-foreground">End Point</label>
-                        <input
-                            type="range"
-                            min="0"
-                            max={duration}
-                            step="0.1"
-                            value={endTime}
-                            onChange={(e) => {
-                                const val = parseFloat(e.target.value);
-                                if (val > startTime) {
-                                    setEndTime(val);
-                                    if (videoRef.current) videoRef.current.currentTime = val;
-                                }
-                            }}
-                            className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
-                        />
-                    </div>
-                </div>
+                        {/* Simple Range Inputs for Start/End (MVP) */}
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-xs text-muted-foreground">Start Point</label>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max={duration}
+                                    step="0.1"
+                                    value={startTime}
+                                    onChange={(e) => {
+                                        const val = parseFloat(e.target.value);
+                                        if (val < endTime) {
+                                            setStartTime(val);
+                                            if (videoRef.current) videoRef.current.currentTime = val;
+                                        }
+                                    }}
+                                    className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs text-muted-foreground">End Point</label>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max={duration}
+                                    step="0.1"
+                                    value={endTime}
+                                    onChange={(e) => {
+                                        const val = parseFloat(e.target.value);
+                                        if (val > startTime) {
+                                            setEndTime(val);
+                                            if (videoRef.current) videoRef.current.currentTime = val;
+                                        }
+                                    }}
+                                    className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                />
+                            </div>
+                        </div>
 
-                <div className="flex gap-4">
-                    <Button onClick={() => setVideoFile(null)} variant="outline" className="flex-1">
-                        Cancel
-                    </Button>
-                    <Button onClick={trimVideo} disabled={isProcessing} className="flex-1 gap-2">
-                        {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
-                        {isProcessing ? `Processing...` : 'Trim Video'}
-                    </Button>
+                        <div className="flex gap-4">
+                            <Button onClick={() => setVideoFile(null)} variant="outline" className="flex-1">
+                                Cancel
+                            </Button>
+                            <Button onClick={trimVideo} disabled={isProcessing} className="flex-1 gap-2">
+                                {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
+                                {isProcessing ? `Processing...` : 'Trim Video'}
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Download Section (Restored/Fixed) */}
+                    {downloadUrl && (
+                        <div className="bg-green-500/10 border border-green-500/20 p-6 rounded-xl flex items-center justify-between animate-in slide-in-from-bottom-4">
+                            <div className="flex items-center gap-3">
+                                <div className="h-10 w-10 bg-green-500/20 rounded-full flex items-center justify-center text-green-600">
+                                    <FileVideo className="h-5 w-5" />
+                                </div>
+                                <div>
+                                    <h3 className="font-medium text-green-700 dark:text-green-400">Video Ready!</h3>
+                                    <p className="text-sm text-green-600/80 dark:text-green-500/80">Your trimmed clip is ready to save.</p>
+                                </div>
+                            </div>
+                            <Button asChild className="bg-green-600 hover:bg-green-700 text-white">
+                                <a href={downloadUrl} download="trimmed-video.mp4">
+                                    <Download className="h-4 w-4 mr-2" />
+                                    Download
+                                </a>
+                            </Button>
+                        </div>
+                    )}
+
                 </div>
-            </div>
+            )}
 
             {/* SEO Content */}
             <div className="mt-12 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
