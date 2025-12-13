@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
 import Script from 'next/script';
+import { PrivacyDashboard } from '@/components/PrivacyDashboard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -81,6 +82,7 @@ export default function RootLayout({
         <Footer />
         <Analytics />
         <Toaster />
+        <PrivacyDashboard />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595166353140049"

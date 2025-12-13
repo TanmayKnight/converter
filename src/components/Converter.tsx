@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useDeferredValue } from 'react';
 import { ArrowLeft, ArrowRightLeft, Check, Copy, AlertCircle, Loader2 } from 'lucide-react';
 import { Converter } from '@/lib/converter';
 import { UnitCategory, unitDefinitions } from '@/lib/units/definitions';
@@ -28,22 +28,25 @@ export function ConverterWidget({ category, initialFrom, initialTo }: ConverterP
     const [result, setResult] = useState<string>('');
     const [copied, setCopied] = useState(false);
 
+    // Defer the calculation to keep UI responsive
+    const deferredAmount = useDeferredValue(amount);
+
     // Re-calculate when units/amount/definitions change
     useEffect(() => {
-        if (!amount || isNaN(Number(amount))) {
+        if (!deferredAmount || isNaN(Number(deferredAmount))) {
             setResult('');
             return;
         }
 
         try {
             const converter = new Converter(category, isCurrency ? currencyDefinition : undefined);
-            const res = converter.convert(amount, fromUnit, toUnit);
+            const res = converter.convert(deferredAmount, fromUnit, toUnit);
             setResult(res);
         } catch (e) {
             console.error(e);
             setResult('Error');
         }
-    }, [amount, fromUnit, toUnit, category, isCurrency, currencyDefinition]);
+    }, [deferredAmount, fromUnit, toUnit, category, isCurrency, currencyDefinition]);
 
     const handleSwap = () => {
         setFromUnit(toUnit);
@@ -59,7 +62,7 @@ export function ConverterWidget({ category, initialFrom, initialTo }: ConverterP
     };
 
     return (
-        <div className="w-full max-w-3xl mx-auto p-8 bg-card rounded-3xl shadow-2xl border border-white/20 glass">
+        <div className="w-full max-w-3xl mx-auto p-4 md:p-8 bg-card rounded-3xl shadow-2xl border border-white/20 glass">
             <div className="flex flex-col gap-6">
 
                 {/* Input Section */}
@@ -67,21 +70,22 @@ export function ConverterWidget({ category, initialFrom, initialTo }: ConverterP
                     <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 ml-1">
                         Input Amount
                     </label>
-                    <div className="flex items-center gap-2 p-2 bg-secondary/50 rounded-2xl border border-transparent focus-within:border-primary/50 focus-within:bg-secondary focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-300">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-2 bg-secondary/50 rounded-2xl border border-transparent focus-within:border-primary/50 focus-within:bg-secondary focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-300">
                         <input
                             type="number"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            className="flex-1 w-full bg-transparent text-3xl font-bold text-foreground px-4 py-2 outline-none placeholder:text-muted-foreground/30"
+                            className="flex-1 w-full bg-transparent text-2xl md:text-3xl font-bold text-foreground px-4 py-2 outline-none placeholder:text-muted-foreground/30 min-w-0"
                             placeholder="0"
                         />
-                        <div className="h-8 w-px bg-border mx-2" />
+                        <div className="hidden sm:block h-8 w-px bg-border mx-2" />
+                        <div className="block sm:hidden h-px w-full bg-border my-1" />
                         {/* From Unit Selector */}
                         <UnitSelect
                             value={fromUnit}
                             units={definitions.units}
                             onChange={setFromUnit}
-                            className="pr-2"
+                            className="w-full sm:w-auto pr-2"
                         />
                     </div>
                 </div>
@@ -102,12 +106,14 @@ export function ConverterWidget({ category, initialFrom, initialTo }: ConverterP
                     <label className="block text-xs font-semibold text-primary uppercase tracking-wider mb-2 ml-1">
                         Result
                     </label>
-                    <div className="relative flex items-center gap-2 p-2 bg-primary/5 rounded-2xl border border-primary/20">
+                    <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-2 bg-primary/5 rounded-2xl border border-primary/20">
                         <div className="flex-1 px-4 py-2 overflow-hidden">
-                            <div className="text-4xl md:text-5xl font-extrabold text-primary tracking-tight truncate">
+                            <div className="text-3xl md:text-5xl font-extrabold text-primary tracking-tight truncate">
                                 {result || '---'}
                             </div>
                         </div>
+
+                        <div className="block sm:hidden h-px w-full bg-primary/10 my-1" />
 
                         <div className="flex flex-col items-end gap-1 px-2 py-1">
                             {/* To Unit Selector */}
@@ -116,6 +122,7 @@ export function ConverterWidget({ category, initialFrom, initialTo }: ConverterP
                                 units={definitions.units}
                                 onChange={setToUnit}
                                 align="right"
+                                className="w-full sm:w-auto"
                             />
 
                             <div className="flex items-center gap-1 mt-1">
