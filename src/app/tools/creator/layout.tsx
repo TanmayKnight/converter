@@ -30,7 +30,7 @@ export default function CreatorToolsLayout({
                 adSlotId: 'sidebar-creator-1',
                 links: [
                     { href: '/tools/creator/thumbnail', label: 'Thumbnail Grabber' },
-                    { href: '/tools/creator/trimmer', label: 'Video Trimmer', disabled: true },
+                    { href: '/tools/creator/trimmer', label: 'Video Trimmer' },
                     { href: '/tools/creator/audio', label: 'Audio Extractor', disabled: true },
                 ]
             }}

@@ -227,7 +227,7 @@ export default async function Home() {
             colorTheme="rose"
             items={[
               { title: "Thumbnail Grabber", href: "/tools/creator/thumbnail", icon: <ImageIcon />, featured: true, type: 'tool' },
-              { title: "Video Trimmer", href: "#", icon: <Video />, type: 'other' }, // Coming Soon
+              { title: "Video Trimmer", href: "/tools/creator/trimmer", icon: <Video />, featured: true, type: 'tool' }, // New!
               { title: "Audio Extractor", href: "#", icon: <Mic />, type: 'other' }, // Coming Soon
             ]}
           />
