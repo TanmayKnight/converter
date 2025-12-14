@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import VideoTrimmerClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Shield, Zap, Video, CheckCircle, Smartphone, Scissors, Download, Upload } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Video Trimmer - Cut & Crop Videos Online | UnitMaster',
@@ -43,53 +44,165 @@ export default function VideoTrimmerPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+
+            {/* Tool Section */}
             <VideoTrimmerClient />
 
-            <div className="container mx-auto px-4 max-w-4xl mt-16 prose prose-slate dark:prose-invert">
-                <h2 className="text-3xl font-bold mb-6">Free Online Video Trimmer</h2>
-                <p className="lead text-lg text-muted-foreground mb-8">
-                    Cut the perfect clip from your videos instantly. Whether it's for Instagram Stories, TikTok, or YouTube, UnitMaster lets you trim MP4, MOV, and WebM files without losing quality.
-                </p>
+            {/* Features Grid */}
+            <div className="container mx-auto px-4 max-w-6xl mt-24 mb-16">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold mb-4">Why use UnitMaster Trimmer?</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                        We use advanced WebAssembly technology to process video directly on your device. This means no uploads, no waiting, and 100% privacy.
+                    </p>
+                </div>
 
-                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
-                <Accordion type="single" collapsible className="w-full not-prose">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>How to trim MP4 videos online?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <ol className="list-decimal pl-6 space-y-2">
-                                    <li><strong>Upload</strong>: Select a video file from your computer or phone.</li>
-                                    <li><strong>Trim</strong>: Drag the handles to set the new start and end times.</li>
-                                    <li><strong>Export</strong>: Click "Trim Video" to process the file instantly.</li>
-                                </ol>
+                <div className="grid md:grid-cols-3 gap-8">
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6">
+                            <Shield className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">100% Private & Secure</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Your videos never leave your device. All processing happens locally in your browser, so you don't need to trust a server with your personal files.
+                        </p>
+                    </div>
+
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 mb-6">
+                            <Zap className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Instant Processing</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            No upload time. No server queues. Since we process files locally, even large 4K videos open instantly for editing.
+                        </p>
+                    </div>
+
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6">
+                            <Video className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Lossless Quality</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Our "stream copy" mode trims your video without re-encoding it. This preserves the exact original quality, bitrate, and resolution.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Supported Formats */}
+            <div className="bg-secondary/30 py-16 border-y border-border">
+                <div className="container mx-auto px-4 max-w-4xl text-center">
+                    <h3 className="text-2xl font-bold mb-8">Supported Formats</h3>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {['MP4 (H.264)', 'MOV (QuickTime)', 'WebM', 'MKV', 'AVI'].map((fmt) => (
+                            <span key={fmt} className="bg-background border border-border px-6 py-3 rounded-full font-medium shadow-sm flex items-center gap-2">
+                                <CheckCircle className="h-4 w-4 text-green-500" />
+                                {fmt}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* How It Works Steps */}
+            <div className="container mx-auto px-4 max-w-4xl mt-24 mb-24">
+                <h2 className="text-3xl font-bold mb-12 text-center">How to Trim a Video</h2>
+
+                <div className="relative">
+                    {/* Connecting Line (Desktop) */}
+                    <div className="hidden md:block absolute left-[50%] top-0 bottom-0 w-1 bg-border -z-10 transform -translate-x-1/2"></div>
+
+                    <div className="space-y-12">
+                        {/* Step 1 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 text-right order-2 md:order-1">
+                                <h3 className="text-xl font-bold mb-2">1. Upload Video</h3>
+                                <p className="text-muted-foreground">Drag and drop your video file. We auto-detect the format and load it instantly.</p>
                             </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>Does it reduce video quality?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    No. We use "smart rendering" where possible to cut the video stream without re-encoding the entire file. This preserves the original resolution and bitrate of your video.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-3">
-                        <AccordionTrigger>Privacy & Safety</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
-                                    <p className="text-sm font-medium text-foreground">
-                                        🔒 Zero-Upload Promise: Your large video files are never uploaded to a server. All trimming happens locally on your device using WebAssembly (WASM), ensuring that your personal videos stay private.
-                                    </p>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">1</div>
+                            <div className="flex-1 order-3 pl-8 md:pl-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <Upload className="h-8 w-8 text-muted-foreground" />
                                 </div>
                             </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+                        </div>
+
+                        {/* Step 2 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 order-2 md:order-1 flex justify-end pr-8 md:pr-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <Scissors className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                            </div>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">2</div>
+                            <div className="flex-1 text-left order-3">
+                                <h3 className="text-xl font-bold mb-2">2. Set Start & End</h3>
+                                <p className="text-muted-foreground">Use the timeline sliders to choose your clip. You can also type precise timestamps.</p>
+                            </div>
+                        </div>
+
+                        {/* Step 3 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 text-right order-2 md:order-1">
+                                <h3 className="text-xl font-bold mb-2">3. Download</h3>
+                                <p className="text-muted-foreground">Click "Trim Video". Your new clip is created instantly and ready to save.</p>
+                            </div>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">3</div>
+                            <div className="flex-1 order-3 pl-8 md:pl-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <Download className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* FAQ */}
+            <div className="bg-secondary/10 py-24">
+                <div className="container mx-auto px-4 max-w-3xl">
+                    <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+                    <Accordion type="single" collapsible className="w-full bg-card border border-border rounded-2xl p-2 shadow-sm">
+                        <AccordionItem value="item-1" className="border-b-0 mb-2 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">
+                                How to trim MP4 videos online?
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                Simply upload your MP4 file, use the sliders to select the part you want to keep, and click "Trim Video". The tool will generate a new MP4 file containing only the selected segment.
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-2" className="border-b-0 mb-2 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">
+                                Does it reduce video quality?
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                <p className="mb-2">No. We use a method called "stream copying" whenever possible.</p>
+                                <p>Instead of re-rendering every pixel (which causes quality loss), we effectively just "cut" the file at the timestamps you selected. The resulting video is bit-for-bit identical to the original.</p>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-3" className="border-b-0 mb-2 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">
+                                Why is the preview sometimes black?
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                <p className="mb-2">This happens with high-efficiency formats like H.265 (HEVC) on some browsers.</p>
+                                <p>If this occurs, click the "Optimize Preview" button. We'll create a temporary compatible version for you to edit with, but we'll still use your high-quality original for the final cut.</p>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-4" className="border-b-0 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">
+                                Is it free on mobile?
+                            </AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                Yes, UnitMaster works on modern mobile browsers (iOS Safari and Android Chrome). However, for very large 4K files, a desktop is recommended for the best performance.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
             </div>
 
             <script

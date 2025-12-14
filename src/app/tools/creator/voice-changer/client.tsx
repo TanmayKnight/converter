@@ -239,60 +239,6 @@ export default function VoiceChangerClient() {
                 </Card>
             </div >
 
-            {/* SEO Content */}
-            < div className="mt-16 prose prose-slate dark:prose-invert max-w-none" >
-                <h2 className="text-3xl font-bold mb-6">Free Online Voice Changer Studio</h2>
-                <p className="lead text-lg text-muted-foreground mb-8">
-                    Transform your voice instantly with our professional-grade, browser-based Voice Changer. Add effects like Chipmunk, Robot, or Deep Voice to your recordings without installing any software.
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-12 mb-12">
-                    <div>
-                        <h3 className="text-xl font-semibold mb-4">How to Change Your Voice Online</h3>
-                        <ol className="list-decimal pl-5 space-y-2">
-                            <li><strong>Select Input</strong>: Click "Record Voice" to use your microphone or "Upload File" to select an audio clip.</li>
-                            <li><strong>Choose an Effect</strong>: Browse our library of AI-tuned presets like Robot, Chipmunk, or Speed Modifiers.</li>
-                            <li><strong>Process Instantly</strong>: Our WebAssembly engine processes audio locally on your device in milliseconds.</li>
-                            <li><strong>Download</strong>: Listen to the preview and download your new MP3 file for free.</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold mb-4">Professional Audio Filters</h3>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li><strong>Privacy First</strong>: All processing happens in your browser. We never upload your audio to our servers.</li>
-                            <li><strong>No Limits</strong>: Change as many voices as you want. No credits, no sign-ups required.</li>
-                            <li><strong>High Quality</strong>: Uses advanced DSP (Digital Signal Processing) for crystal clear audio output.</li>
-                            <li><strong>Universal Compatibility</strong>: Works on Chrome, Firefox, Safari, and Edge on both Desktop and Mobile.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="bg-secondary/30 p-8 rounded-2xl mb-12">
-                    <h3 className="text-2xl font-bold mb-4">Why use UnitMaster Voice Changer?</h3>
-                    <p className="mb-4">
-                        Unlike other online tools that require you to upload your sensitive audio files to a remote server, UnitMaster utilizes <strong>ffmpeg.wasm</strong> technology. This means the heavy lifting is done by your own computer's CPU, guaranteeing zero latency uploading and 100% privacy.
-                    </p>
-                    <p>
-                        Perfect for content creators, gamers, streamers, and anyone looking to anonymize their voice or create fun sound effects for videos (TikTok, YouTube Shorts, Reels).
-                    </p>
-                </div>
-
-                <h3 className="text-2xl font-bold mb-6">Frequently Asked Questions</h3>
-                <div className="space-y-6">
-                    <div>
-                        <h4 className="font-semibold text-lg mb-2">Is this Voice Changer free?</h4>
-                        <p className="text-muted-foreground">Yes, our Voice Changer Studio is 100% free to use. There are no hidden paywalls for standard effects.</p>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-lg mb-2">Can I use this for real-time calls?</h4>
-                        <p className="text-muted-foreground">Currently, this tool processes recorded audio or uploaded files. Real-time voice changing for calls (Discord, Zoom) requires a system-level driver which browsers cannot provide securely yet.</p>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-lg mb-2">What formats are supported?</h4>
-                        <p className="text-muted-foreground">We support all major audio formats including MP3, WAV, OGG, M4A, and WEBM. The output is always a high-compatibility MP3 file.</p>
-                    </div>
-                </div>
-            </div >
-        </div >
+        </div>
     );
 }

@@ -198,18 +198,6 @@ export default function ThumbnailClient() {
                 </div>
             )}
 
-            {/* SEO Content */}
-            <div className="mt-12 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Why download YouTube Thumbnails?</h2>
-                <p>
-                    Creators often need to recover their own thumbnails for:
-                </p>
-                <ul>
-                    <li><strong>Reposting</strong>: Sharing content on other platforms (LinkedIn, Twitter).</li>
-                    <li><strong>Archiving</strong>: Backing up your channel assets.</li>
-                    <li><strong>Analysis</strong>: Studying successful thumbnails from competitors.</li>
-                </ul>
-            </div>
         </div>
     );
 }

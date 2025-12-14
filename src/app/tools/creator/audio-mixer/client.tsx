@@ -230,41 +230,6 @@ export default function AudioMixerClient() {
                     </Card>
                 )}
 
-                {/* SEO Content */}
-                <div className="mt-16 prose prose-slate dark:prose-invert max-w-none">
-                    <h2 className="text-3xl font-bold mb-6">Free Online Audio Mixer</h2>
-                    <p className="lead text-lg text-muted-foreground mb-8">
-                        Mix strings, beats, vocals, and sound effects right in your browser. Create custom audio blends for podcasts, videos, or music mashups without downloading expensive software.
-                    </p>
-
-                    <div className="grid md:grid-cols-2 gap-12 mb-12">
-                        <div>
-                            <h3 className="text-xl font-semibold mb-4">How to Mix Audio Files</h3>
-                            <ol className="list-decimal pl-5 space-y-2">
-                                <li><strong>Add Tracks</strong>: Upload two or more audio files (MP3, WAV, etc.).</li>
-                                <li><strong>Adjust Volume</strong>: Use the sliders to balance the levels of each track (e.g., lower background music, louder voice).</li>
-                                <li><strong>Merge</strong>: Click "Merge Tracks" to combine them into a single file.</li>
-                                <li><strong>Download</strong>: Save your final mix as a high-quality MP3.</li>
-                            </ol>
-                        </div>
-                        <div>
-                            <h3 className="text-xl font-semibold mb-4">Features</h3>
-                            <ul className="list-disc pl-5 space-y-2">
-                                <li><strong>Multi-Track Support</strong>: Layer as many audio files as you need.</li>
-                                <li><strong>Volume Control</strong>: Independent volume sliders for each track.</li>
-                                <li><strong>Client-Side Privacy</strong>: Files are processed locally on your device using WebAssembly.</li>
-                                <li><strong>No Watermarks</strong>: 100% free and clean output.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="bg-secondary/30 p-8 rounded-2xl mb-12">
-                        <h3 className="text-2xl font-bold mb-4">What makes UnitMaster Audio Mixer different?</h3>
-                        <p>
-                            Most online mixers require you to upload large files to a server, which takes time and exposes your data. UnitMaster uses <strong>ffmpeg.wasm</strong> to mix audio directly in your browser. This creates a secure, fast, and professional environment for quick audio edits.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     );

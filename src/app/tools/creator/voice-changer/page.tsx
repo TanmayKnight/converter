@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import VoiceChangerClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Mic, UserCog, Lock, Upload, Play, Download } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Voice Changer Studio - Free Online Voice Effects | UnitMaster',
@@ -43,51 +44,144 @@ export default function VoiceChangerPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+
             <VoiceChangerClient />
 
-            <div className="container mx-auto px-4 max-w-4xl mt-16 prose prose-slate dark:prose-invert">
-                <h2 className="text-3xl font-bold mb-6">Free Online Voice Changer & Recorder</h2>
-                <p className="lead text-lg text-muted-foreground mb-8">
-                    Transform your voice in seconds. Whether you want to sound like a robot, a chipmunk, or a deep-voiced villain, UnitMaster lets you record or upload audio and apply professional effects instantly.
-                </p>
+            {/* Features Grid */}
+            <div className="container mx-auto px-4 max-w-6xl mt-24 mb-16">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold mb-4">Why use UnitMaster Voice Changer?</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                        Add fun or professional effects to your voice recordings instantly. Perfect for content creators, gamers, and pranksters.
+                    </p>
+                </div>
 
-                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
-                <Accordion type="single" collapsible className="w-full not-prose">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>How to change my voice online?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <ol className="list-decimal pl-6 space-y-2">
-                                    <li><strong>Record or Upload</strong>: Use your microphone or upload an audio file.</li>
-                                    <li><strong>Select Effect</strong>: Click on effects like "Robot", "Alien", "Reviewer" (Deep), or "Helium" (High Pitch).</li>
-                                    <li><strong>Download</strong>: Save the transformed audio as a high-quality WAV/MP3 file.</li>
-                                </ol>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
+                <div className="grid md:grid-cols-3 gap-8">
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500 mb-6">
+                            <Mic className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Record or Upload</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Use your microphone to record directly in the browser, or upload an existing audio file to modify.
+                        </p>
+                    </div>
 
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>What tech powers the voice effects?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    We use the Web Audio API and WebAssembly to process sound waves in real-time. This provides studio-quality effects directly in your browser.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500 mb-6">
+                            <UserCog className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">Pro Effects</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Instantly apply effects like Robot, Chipmunk (Helium), Deep Voice (Vader), and Echo to transform your sound.
+                        </p>
+                    </div>
 
-                    <AccordionItem value="item-3">
-                        <AccordionTrigger>Is it free and unlimited?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    Yes. UnitMaster Voice Changer is 100% free with no limits on recording duration (as long as your browser memory handles it).
-                                </p>
+                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div className="h-12 w-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6">
+                            <Lock className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-3">100% Private</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            All audio processing happens locally on your device. Your voice recordings are never sent to a server.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* How It Works Steps */}
+            <div className="container mx-auto px-4 max-w-4xl mt-24 mb-24">
+                <h2 className="text-3xl font-bold mb-12 text-center">How to Change Your Voice</h2>
+
+                <div className="relative">
+                    <div className="hidden md:block absolute left-[50%] top-0 bottom-0 w-1 bg-border -z-10 transform -translate-x-1/2"></div>
+
+                    <div className="space-y-12">
+                        {/* Step 1 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 text-right order-2 md:order-1">
+                                <h3 className="text-xl font-bold mb-2">1. Input Audio</h3>
+                                <p className="text-muted-foreground">Click the mic to record or upload a file.</p>
                             </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">1</div>
+                            <div className="flex-1 order-3 pl-8 md:pl-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <Upload className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Step 2 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 order-2 md:order-1 flex justify-end pr-8 md:pr-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <UserCog className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                            </div>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">2</div>
+                            <div className="flex-1 text-left order-3">
+                                <h3 className="text-xl font-bold mb-2">2. Apply Effect</h3>
+                                <p className="text-muted-foreground">Select an effect (Robot, Alien, etc.) to transform the sound.</p>
+                            </div>
+                        </div>
+
+                        {/* Step 3 */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="flex-1 text-right order-2 md:order-1">
+                                <h3 className="text-xl font-bold mb-2">3. Download</h3>
+                                <p className="text-muted-foreground">Listen to the preview and save the MP3 file.</p>
+                            </div>
+                            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold z-10 shrink-0 order-1 md:order-2">3</div>
+                            <div className="flex-1 order-3 pl-8 md:pl-0">
+                                <div className="bg-card border border-border p-4 rounded-xl inline-block shadow-sm">
+                                    <Download className="h-8 w-8 text-muted-foreground" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-secondary/10 py-24">
+                <div className="container mx-auto px-4 max-w-3xl">
+                    <h2 className="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+                    <Accordion type="single" collapsible className="w-full bg-card border border-border rounded-2xl p-2 shadow-sm">
+                        <AccordionItem value="item-1" className="border-b-0 mb-2 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">How to change my voice online?</AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                <div className="space-y-4">
+                                    <ol className="list-decimal pl-6 space-y-2">
+                                        <li><strong>Record or Upload</strong>: Use your microphone or upload an audio file.</li>
+                                        <li><strong>Select Effect</strong>: Click on effects like "Robot", "Alien", "Reviewer" (Deep), or "Helium" (High Pitch).</li>
+                                        <li><strong>Download</strong>: Save the transformed audio as a high-quality WAV/MP3 file.</li>
+                                    </ol>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-2" className="border-b-0 mb-2 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">What tech powers the voice effects?</AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                <div className="space-y-4">
+                                    <p>
+                                        We use the Web Audio API and WebAssembly to process sound waves in real-time. This provides studio-quality effects directly in your browser.
+                                    </p>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-3" className="border-b-0 px-2">
+                            <AccordionTrigger className="hover:no-underline hover:bg-secondary/50 rounded-lg px-4 py-4 text-left font-medium">Is it free and unlimited?</AccordionTrigger>
+                            <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
+                                <div className="space-y-4">
+                                    <p>
+                                        Yes. UnitMaster Voice Changer is 100% free with no limits on recording duration (as long as your browser memory handles it).
+                                    </p>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
             </div>
 
             <script
