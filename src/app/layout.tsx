@@ -21,11 +21,11 @@ export const metadata: Metadata = {
     'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator'
   ],
   authors: [{ name: 'UnitMaster Team' }],
-  metadataBase: new URL('https://unitmasterapp.com'),
+  metadataBase: new URL('https://unitmaster.io'),
   openGraph: {
     title: 'UnitMaster',
     description: 'The all-in-one digital toolkit for professionals.',
-    url: 'https://unitmasterapp.com',
+    url: 'https://unitmaster.io',
     siteName: 'UnitMaster',
     locale: 'en_US',
     type: 'website',
@@ -96,8 +96,8 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'UnitMaster',
-              url: 'https://unitmasterapp.com',
-              logo: 'https://unitmasterapp.com/logo.png',
+              url: 'https://unitmaster.io',
+              logo: 'https://unitmaster.io/logo.png',
               sameAs: [
                 'https://twitter.com/unitmaster'
               ],

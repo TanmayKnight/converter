@@ -17,7 +17,7 @@ export function JsonLdBreadcrumb({ crumbs }: JsonLdBreadcrumbProps) {
             '@type': 'ListItem',
             position: index + 1,
             name: crumb.name,
-            item: `https://unitmasterapp.com${crumb.path}`,
+            id: `https://unitmaster.io${crumb.path}`,
         })),
     };
 

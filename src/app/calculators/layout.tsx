@@ -64,13 +64,13 @@ export default function CalculatorsLayout({
                                 '@type': 'ListItem',
                                 position: 1,
                                 name: 'Home',
-                                item: 'https://unitmasterapp.com'
+                                item: 'https://unitmaster.io'
                             },
                             {
                                 '@type': 'ListItem',
                                 position: 2,
                                 name: 'Calculators',
-                                item: 'https://unitmasterapp.com/calculators'
+                                item: 'https://unitmaster.io/calculators'
                             }
                         ]
                     })
