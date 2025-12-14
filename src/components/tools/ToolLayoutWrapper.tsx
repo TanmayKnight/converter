@@ -83,8 +83,14 @@ export function ToolLayoutWrapper({
                                 </nav>
                             </div>
 
-                            {/* Ad Unit */}
-                            <AdUnit className="h-[600px]" slotId={sidebar.adSlotId} />
+                            {/* Spacer & Divider */}
+                            <div className="pt-8">
+                                <div className="h-px w-full bg-border/30" />
+                                <p className="text-[10px] text-center text-muted-foreground/40 mt-2 uppercase tracking-widest">Sponsored</p>
+                            </div>
+
+                            {/* Ad Unit - Distinct Separation */}
+                            <AdUnit className="h-[600px] shadow-none bg-transparent border-none" slotId={sidebar.adSlotId} />
                         </div>
                     </aside>
                 </div>

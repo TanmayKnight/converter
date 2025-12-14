@@ -23,7 +23,9 @@ export function AdUnit({ slotId = "4872779616", className }: { slotId?: string; 
 
     return (
         <div className={`w-full bg-secondary/30 border border-border/50 rounded-xl overflow-hidden flex flex-col items-center justify-center min-h-[100px] ${className}`}>
-            <span className="text-[10px] text-muted-foreground/50 uppercase tracking-widest font-semibold mb-1 self-start ml-2 mt-1">Advertisement</span>
+            <div className="w-full flex justify-center bg-secondary/50 py-1 border-b border-border/50">
+                <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Advertisement</span>
+            </div>
             <div className="w-full">
                 <ins className="adsbygoogle"
                     style={{ display: 'block' }}

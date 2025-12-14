@@ -68,7 +68,13 @@ export default function PDFToolsLayout({
                                 </nav>
                             </div>
 
-                            <AdUnit className="h-[600px] min-h-[600px]" slotId="sidebar-ads" />
+                            {/* Spacer & Divider */}
+                            <div className="pt-8">
+                                <div className="h-px w-full bg-border/30" />
+                                <p className="text-[10px] text-center text-muted-foreground/40 mt-2 uppercase tracking-widest">Sponsored</p>
+                            </div>
+
+                            <AdUnit className="h-[600px] min-h-[600px] shadow-none bg-transparent border-none" slotId="sidebar-ads" />
                         </div>
                     </aside>
                 </div>
