@@ -65,7 +65,11 @@ export function UserMenu({ user: serverUser, profile }: UserMenuProps) {
         )
     }
 
-    const displayName = profile?.first_name || 'Profile'
+    // Fallback to user_metadata if profile is missing (e.g., immediate Google login)
+    const metaName = user?.user_metadata?.full_name || user?.user_metadata?.name || ''
+    const fallbackName = metaName ? metaName.split(' ')[0] : ''
+
+    const displayName = profile?.first_name || fallbackName || 'Profile'
 
     return (
         <div className="flex items-center gap-4">
