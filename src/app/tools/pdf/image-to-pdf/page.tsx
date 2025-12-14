@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
 import { Button } from '@/components/ui/button';
 import { Download, Loader2, Image as ImageIcon, CheckCircle, GripVertical, Trash2, FileText, Plus } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function ImageToPdfPage() {
     const [images, setImages] = useState<File[]>([]);
@@ -211,35 +212,98 @@ export default function ImageToPdfPage() {
                     <strong>UnitMaster Image to PDF</strong> lets you combine photos, scans, and screenshots into a single, clean document.
                 </p>
 
-                <h3>Common Use Cases</h3>
-                <ul>
-                    <li><strong>Receipt Scanning</strong>: Photograph your travel receipts and merge them into one PDF for expense reimbursement.</li>
-                    <li><strong>Design Portfolios</strong>: Designers can arrange their best work into a linear presentation that viewers can scroll through easily.</li>
-                    <li><strong>Digitizing Paper Archives</strong>: Turn a folder of scanned letters into a readable digital book.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Common Use Cases</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Receipt Scanning</strong>: Photograph your travel receipts and merge them into one PDF for expense reimbursement.</li>
+                                    <li><strong>Design Portfolios</strong>: Designers can arrange their best work into a linear presentation that viewers can scroll through easily.</li>
+                                    <li><strong>Digitizing Paper Archives</strong>: Turn a folder of scanned letters into a readable digital book.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Optimization & Compression</h3>
-                <p>
-                    Images from modern smartphones are huge (often 5MB+ each). A PDF with 10 of them would be 50MB—too big to email.
-                    Our tool intelligently processes the images to maintain visual clarity while keeping the final file size manageable.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Does it optimize file size?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Images from modern smartphones are huge (often 5MB+ each). A PDF with 10 of them would be 50MB—too big to email.
+                                    Our tool intelligently processes the images to maintain visual clarity while keeping the final file size manageable.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>How to Order Your Pages</h3>
-                <p>
-                    The order matters. Our drag-and-drop interface allows you to:
-                </p>
-                <ol>
-                    <li><strong>Sequence Chronologically</strong>: Great for receipts or timelines.</li>
-                    <li><strong>Group by Topic</strong>: Keep related screenshots together.</li>
-                    <li><strong>Curate the Narrative</strong>: Start with your strongest image (the cover) to grab attention.</li>
-                </ol>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>How to Order Your Pages</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    The order matters. Our drag-and-drop interface allows you to:
+                                </p>
+                                <ol className="list-decimal pl-6 space-y-2">
+                                    <li><strong>Sequence Chronologically</strong>: Great for receipts or timelines.</li>
+                                    <li><strong>Group by Topic</strong>: Keep related screenshots together.</li>
+                                    <li><strong>Curate the Narrative</strong>: Start with your strongest image (the cover) to grab attention.</li>
+                                </ol>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Local Processing</h3>
-                <p>
-                    We use the <strong>pdf-lib</strong> library to assemble your document directly in the browser.
-                    Your personal photos NEVER leave your device. This is crucial for privacy when handling personal ID scans or family photos.
-                </p>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Is it processed locally?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Yes. We use the <strong>pdf-lib</strong> library to assemble your document directly in the browser.
+                                    Your personal photos NEVER leave your device. This is crucial for privacy when handling personal ID scans or family photos.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What can I use the Image to PDF tool for?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Common uses include merging travel receipts for reimbursement, creating design portfolios, and digitizing paper archives into a single readable document.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' Does UnitMaster compress the images?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes. Our tool processes images to optimize file size for easy sharing while maintaining visual clarity, preventing the final PDF from becoming too large.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Is the conversion secure?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes. All image processing happens locally in your browser using WebAssembly. Your photos never uploaded to any server.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

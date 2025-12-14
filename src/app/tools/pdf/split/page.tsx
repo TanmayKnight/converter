@@ -6,6 +6,7 @@ import { PDFDocument } from 'pdf-lib';
 import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Scissors, Loader2, FileText, CheckCircle } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
 
@@ -206,41 +207,90 @@ export default function SplitPDFPage() {
                     <strong>UnitMaster PDF Splitter</strong> is the precise tool for the job.
                 </p>
 
-                <h3>How Our Browser-Based Splitter Works</h3>
-                <p>
-                    Data privacy is critical when handling documents. Unlike other services that force you to upload your files to a cloud server to "process" them, UnitMaster operates differently.
-                    We use a specialized JavaScript engine that loads your PDF <strong>directly into your browser's memory</strong>.
-                </p>
-                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-6 not-prose">
-                    <p className="text-sm">
-                        <strong>🔒 Security Guarantee:</strong> Your file never leaves your computer. The "splitting" happens on your own CPU. This makes it safe for legal contracts, medical records, and financial statements.
-                    </p>
-                </div>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How Our Browser-Based Splitter Works</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Data privacy is critical when handling documents. Unlike other services that force you to upload your files to a cloud server to "process" them, UnitMaster operates differently.
+                                </p>
+                                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-2">
+                                    <p className="text-sm font-medium text-foreground">
+                                        🔒 Security Guarantee: Your file never leaves your computer. The "splitting" happens on your own CPU in your browser's local memory.
+                                    </p>
+                                </div>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Ways to Extract Pages</h3>
-                <p>
-                    Our smart range selector gives you flexible control over exactly what gets extracted:
-                </p>
-                <ul>
-                    <li><strong>Single Pages</strong>: Type <code>5</code> to extract just page 5.</li>
-                    <li><strong>Ranges</strong>: Type <code>1-5</code> to extract the first five pages.</li>
-                    <li><strong>Complex Combinations</strong>: Type <code>1-3, 5, 8-10</code> to mix and match ranges and single pages into a new custom document.</li>
-                </ul>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Ways to Extract Pages</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Our smart range selector gives you flexible control over exactly what gets extracted:
+                                </p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Single Pages</strong>: Type <code>5</code> to extract just page 5.</li>
+                                    <li><strong>Ranges</strong>: Type <code>1-5</code> to extract the first five pages.</li>
+                                    <li><strong>Complex Combinations</strong>: Type <code>1-3, 5, 8-10</code> to mix and match ranges and single pages into a new custom document.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Why Split PDF Files?</h3>
-                <ul>
-                    <li><strong>Efficiency</strong>: Don't email a 50MB report when the recipient only needs 3 pages.</li>
-                    <li><strong>Organization</strong>: Break down scanned books into individual chapters for easier reading.</li>
-                    <li><strong>Correction</strong>: Remove accidental blank pages or error pages from a final document.</li>
-                </ul>
-
-                <h3>Features</h3>
-                <ul>
-                    <li><strong>Real-time Preview</strong>: See the page count and file size before you split.</li>
-                    <li><strong>Instant Download</strong>: No queue, no waiting, no registration required.</li>
-                    <li><strong>Cross-Platform</strong>: Works securely on Windows, Mac, Linux, and even mobile browsers.</li>
-                </ul>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Why Split PDF Files?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Efficiency</strong>: Don't email a 50MB report when the recipient only needs 3 pages.</li>
+                                    <li><strong>Organization</strong>: Break down scanned books into individual chapters for easier reading.</li>
+                                    <li><strong>Correction</strong>: Remove accidental blank pages or error pages from a final document.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'Is the PDF split process secure?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes. The splitting process occurs entirely within your browser\'s local memory. Your files are not uploaded to any external server.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' How can I extract specific pages?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'You can extract pages by entering single numbers (e.g., "5") or ranges (e.g., "1-5"). You can also combine them (e.g., "1-3, 5, 7").'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Can I split large PDF files?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes, because the processing happens on your device, you are not limited by server upload caps, making it easier to handle larger files.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

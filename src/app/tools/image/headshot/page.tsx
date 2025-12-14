@@ -22,6 +22,7 @@ import {
     Undo,
     MousePointer2
 } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const SUIT_ASSETS = [
     {
@@ -389,6 +390,90 @@ export default function ManualHeadshotPage() {
                         </div>
                     </div>
                 )}
+                {/* SEO Content Section */}
+                <div className="max-w-4xl mx-auto mt-20 prose prose-neutral dark:prose-invert">
+                    <h2>Create Professional Headshots from Home (Free & Private)</h2>
+                    <p>
+                        You don't need a $200 photoshoot to look professional on LinkedIn.
+                        <strong>UnitMaster Headshot Editor</strong> combines AI background removal with digital suit overlays to help you build a stunning profile picture in minutes.
+                    </p>
+
+                    <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                    <Accordion type="single" collapsible className="w-full not-prose">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>How to take the best selfie for this tool?</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="space-y-4 text-muted-foreground">
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li><strong>Lighting</strong>: Face a window. Natural light is best. Avoid harsh shadows.</li>
+                                        <li><strong>Angle</strong>: Keep the camera at eye level. Don't look down at the phone.</li>
+                                        <li><strong>Hair</strong>: Make sure your hair is neat. The AI will cut out the background, but it can't fix "bed head".</li>
+                                    </ul>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-2">
+                            <AccordionTrigger>Is it really free?</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="space-y-4 text-muted-foreground">
+                                    <p>
+                                        Yes. This tool runs 100% in your browser. We don't have server costs for processing your images, so we don't charge you.
+                                    </p>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="item-3">
+                            <AccordionTrigger>Privacy & Safety</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="space-y-4 text-muted-foreground">
+                                    <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
+                                        <p className="text-sm font-medium text-foreground">
+                                            🔒 Zero-Upload Policy: Your face data never leaves your device. The AI background remover runs locally (WASM) in Chrome/Firefox/Safari.
+                                        </p>
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
+
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'FAQPage',
+                            mainEntity: [
+                                {
+                                    '@type': 'Question',
+                                    name: 'How do I create a professional headshot at home?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Take a well-lit selfie facing a window, upload it to our tool to remove the background, and add a professional suit overlay.'
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: ' Is this headshot generator free?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'Yes, it is completely free and unlimited because it processes everything offline in your web browser.'
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: 'Is my photo uploaded to the cloud?',
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: 'No. UnitMaster uses local AI (WebAssembly) to remove backgrounds directly on your device. Your photos remain 100% private.'
+                                    }
+                                }
+                            ]
+                        }),
+                    }}
+                />
             </div>
         </div>
     );

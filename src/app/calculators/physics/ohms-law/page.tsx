@@ -1,86 +1,30 @@
-'use client';
+import type { Metadata } from 'next';
+import OhmsLawCalculatorClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Zap } from 'lucide-react';
+export const metadata: Metadata = {
+    title: 'Ohm\'s Law Calculator - Voltage, Current, Resistance & Power',
+    description: 'Calculate Volts, Amps, Ohms, and Watts instantly. Easy to use Ohm\'s Law calculator for students, engineers, and hobbyists.',
+    keywords: ['ohms law calculator', 'voltage calculator', 'current calculator', 'resistance calculator', 'power calculator', 'watts calculator'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/physics/ohms-law',
+    },
+};
 
-export default function OhmsLawCalculator() {
-    // V = I * R
-    // P = V * I
-    const [v, setV] = useState('');
-    const [i, setI] = useState('');
-    const [r, setR] = useState('');
-    const [p, setP] = useState('');
-
-    const calculate = () => {
-        const voltage = parseFloat(v);
-        const current = parseFloat(i);
-        const resistance = parseFloat(r);
-        const power = parseFloat(p);
-
-        // Helper to format
-        const fmt = (n: number) => n.toFixed(2);
-
-        if (!isNaN(voltage) && !isNaN(current) && isNaN(resistance)) {
-            setR(fmt(voltage / current));
-            setP(fmt(voltage * current));
-        } else if (!isNaN(voltage) && !isNaN(resistance) && isNaN(current)) {
-            setI(fmt(voltage / resistance));
-            setP(fmt((voltage * voltage) / resistance));
-        } else if (!isNaN(current) && !isNaN(resistance) && isNaN(voltage)) {
-            setV(fmt(current * resistance));
-            setP(fmt(current * current * resistance));
-        }
-        // Add power permutations if needed, keeping simple for "Kw to Amps" (Power + Voltage inputs usually)
-        else if (!isNaN(power) && !isNaN(voltage) && isNaN(current)) {
-            setI(fmt(power / voltage)); // Amps = Kw / Volts (adjusted for units, but assuming base units here)
-            setR(fmt((voltage * voltage) / power));
-        }
-    };
-
-    const clear = () => {
-        setV(''); setI(''); setR(''); setP('');
-    };
-
+export default function OhmsLawPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
-                <h1 className="text-3xl font-bold mb-2">Ohm's Law Calculator</h1>
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
+                <h1 className="text-3xl font-bold mb-2">Ohm&apos;s Law Calculator</h1>
                 <p className="text-muted-foreground">Calculate Voltage, Current, Resistance, and Power.</p>
-                <div className="text-xs text-muted-foreground mt-2">Enter any two values to calculate the others.</div>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-semibold">Voltage (V)</label>
-                        <input type="number" value={v} onChange={(e) => setV(e.target.value)} className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20" placeholder="Volts" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-semibold">Current (I)</label>
-                        <input type="number" value={i} onChange={(e) => setI(e.target.value)} className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20" placeholder="Amps" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-semibold">Resistance (R)</label>
-                        <input type="number" value={r} onChange={(e) => setR(e.target.value)} className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20" placeholder="Ohms" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-semibold">Power (P)</label>
-                        <input type="number" value={p} onChange={(e) => setP(e.target.value)} className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20" placeholder="Watts" />
-                    </div>
-                </div>
+            <OhmsLawCalculatorClient />
 
-                <div className="mt-8 flex gap-4 justify-center">
-                    <button onClick={calculate} className="bg-primary text-primary-foreground px-8 py-3 rounded-xl font-bold hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95">Calculate</button>
-                    <button onClick={clear} className="bg-secondary text-secondary-foreground px-6 py-3 rounded-xl font-medium hover:bg-secondary/80 transition-all">Clear</button>
-                </div>
-            </div>
-            {/* SEO Content */}
-            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Ohm's Law: The Foundation of Electronics</h2>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Ohm&apos;s Law: The Foundation of Electronics</h2>
                 <p>
-                    If you want to understand how electricity works, you must understand Ohm's Law.
+                    If you want to understand how electricity works, you must understand Ohm&apos;s Law.
                     Discovered by Georg Ohm in 1827, it describes the relationship between Voltage, Current, and Resistance.
                 </p>
 
@@ -108,14 +52,61 @@ export default function OhmsLawCalculator() {
                     <em>Example:</em> A 100-Watt lightbulb running on 120 Volts draws about 0.83 Amps.
                 </p>
 
-                <h3>Practical Usage</h3>
-                <p>
-                    Why does this matter?
-                    <br />
-                    <strong>Circuit Safety</strong>: If you try to push too much Current through a wire with high Resistance, the energy is converted to Heat. This is why overloaded extension cords melt and start fires.
-                    Engineers use Ohm's Law to determine the correct fuse size (Amps) to protect your home.
-                </p>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Why do wires get hot?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    All wires have some <strong>Resistance</strong>. When Current flows through them, some energy is lost as heat due to this resistance (P = I²R).
+                                    If you push too much current through a thin wire (high resistance), it generates excessive heat and can melt.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>What is a Short Circuit?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    A short circuit happens when there is very low <strong>Resistance</strong> between two points of different voltage.
+                                    According to Ohm&apos;s Law (I = V/R), if R is close to zero, I (Current) becomes extremely high.
+                                    This massive surge of current causes sparks, heat, and blown fuses.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the formula for Ohms Law?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'The fundamental formula is V = I × R, where V is Voltage (Volts), I is Current (Amperes), and R is Resistance (Ohms).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I calculate Watts from Volts and Amps?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To calculate Power (Watts), multiply Voltage (Volts) by Current (Amps). The formula is P = V × I.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

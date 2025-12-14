@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 // Removed: Select imports
 import { Download, RefreshCw, X, FileImage } from 'lucide-react';
 
@@ -115,38 +116,95 @@ export default function ImageConverterPage() {
                     <strong>UnitMaster Converter</strong> lets you switch between them instantly. Here is how to choose:
                 </p>
 
-                <h3>JPG / JPEG (Joint Photographic Experts Group)</h3>
-                <p>
-                    <strong>Best for:</strong> Photographs, portraits, and complex scenery.
-                </p>
-                <ul>
-                    <li><strong>Pros</strong>: Small file size. Universal compatibility.</li>
-                    <li><strong>Cons</strong>: "Lossy" compression (quality degrades with each save). No transparency support.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>JPG / JPEG: When to use it?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p><strong>Best for:</strong> Photographs, portraits, and complex scenery.</p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Pros</strong>: Small file size. Universal compatibility.</li>
+                                    <li><strong>Cons</strong>: "Lossy" compression (quality degrades with each save). No transparency support.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>PNG (Portable Network Graphics)</h3>
-                <p>
-                    <strong>Best for:</strong> Logos, screenshots, icons, and text-heavy images.
-                </p>
-                <ul>
-                    <li><strong>Pros</strong>: "Lossless" quality (crisp edges). Supports Transparency (alpha channel).</li>
-                    <li><strong>Cons</strong>: Larger file sizes, especially for photos.</li>
-                </ul>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>PNG: When to use it?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p><strong>Best for:</strong> Logos, screenshots, icons, and text-heavy images.</p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Pros</strong>: "Lossless" quality (crisp edges). Supports Transparency (alpha channel).</li>
+                                    <li><strong>Cons</strong>: Larger file sizes, especially for photos.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>WebP (Google's Web Format)</h3>
-                <p>
-                    <strong>Best for:</strong> Modern websites and apps.
-                </p>
-                <ul>
-                    <li><strong>Pros</strong>: The best of both worlds. 25-35% smaller than JPGs with the same quality. Supports transparency.</li>
-                    <li><strong>Cons</strong>: Not supported by very old browsers (Internet Explorer), but works on all modern devices.</li>
-                </ul>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>WebP: Why choose Google's format?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p><strong>Best for:</strong> Modern websites and apps.</p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Pros</strong>: The best of both worlds. 25-35% smaller than JPGs with the same quality. Supports transparency.</li>
+                                    <li><strong>Cons</strong>: Not supported by very old browsers (Internet Explorer), but works on all modern devices.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Optimization Tip</h3>
-                <p>
-                    If you are building a website, convert your heavy PNG headers to WebP. You will see a significant boost in your PageSpeed Insights score.
-                </p>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Optimization Tip</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    If you are building a website, convert your heavy PNG headers to WebP. You will see a significant boost in your PageSpeed Insights score.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'When should I convert to JPG?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Use JPG for photographs and realistic images where file size matters. It offers high compression rates but doesn\'t support transparent backgrounds.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'When should I convert to PNG?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Use PNG for logos, graphics with text, or images requiring transparent backgrounds. It is lossless, preserving sharp edges but resulting in larger files.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What are the benefits of WebP?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'WebP is a modern format that provides superior compression (25-30% smaller than JPG) with support for both transparency and high quality, making it ideal for faster websites.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

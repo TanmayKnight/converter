@@ -1,78 +1,120 @@
-'use client';
+import type { Metadata } from 'next';
+import RomanConverterClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Roman Numeral Converter - Date & Number to Roman | UnitMaster',
+    description: 'Convert numbers to Roman Numerals (2024 -> MMXXIV) or Roman Numerals to Numbers instantly. Learn the logic and verify dates easily.',
+    keywords: ['roman numeral converter', 'roman numerals date', 'mmxxiv meaning', 'number to roman', 'roman to arabic'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/roman',
+    },
+};
 
-export default function RomanConverter() {
-    const [input, setInput] = useState('2024');
-    const [result, setResult] = useState('');
-
-    const toRoman = (num: number): string => {
-        if (num < 1 || num > 3999) return 'Enter 1-3999';
-        const val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-        const syms = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
-        let roman = '';
-        for (let i = 0; i < val.length; i++) {
-            while (num >= val[i]) {
-                num -= val[i];
-                roman += syms[i];
-            }
-        }
-        return roman;
-    };
-
-    const fromRoman = (str: string): number | string => {
-        const roman: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
-        let sum = 0;
-        for (let i = 0; i < str.length; i++) {
-            const cur = roman[str[i]];
-            const next = roman[str[i + 1]];
-            if (!cur) return 'Invalid Character';
-            if (next && cur < next) {
-                sum -= cur;
-            } else {
-                sum += cur;
-            }
-        }
-        return sum || 0; // Handle NaN/Error
-    };
-
-    useEffect(() => {
-        const val = input.trim().toUpperCase();
-        if (!val) { setResult(''); return; }
-
-        if (/^\d+$/.test(val)) {
-            // Is Number -> To Roman
-            setResult(toRoman(parseInt(val, 10)));
-        } else {
-            // Assume Roman -> To Number
-            const num = fromRoman(val);
-            setResult(num.toString());
-        }
-    }, [input]);
-
+export default function RomanPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Roman Numeral Converter</h1>
                 <p className="text-muted-foreground">Auto-detects Number to Roman OR Roman to Number.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm text-center">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    className="w-full max-w-md mx-auto block bg-background border-2 border-primary/20 focus:border-primary rounded-xl p-4 text-3xl font-mono text-center outline-none transition-all uppercase mb-8"
-                    placeholder="Enter eg. 2024 or MMXXIV"
-                />
+            <RomanConverterClient />
 
-                <div className="text-sm text-muted-foreground mb-2">CONVERTED RESULT</div>
-                <div className="text-5xl font-extrabold text-primary break-all">
-                    {result}
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>The Logic of Rome</h2>
+                <p>
+                    Roman numerals originated in ancient Rome and remained the usual way of writing numbers throughout Europe well into the Late Middle Ages.
+                    Today, we mostly use them for movie copyrights, Super Bowls, and fancy clock faces.
+                </p>
+
+                <h3>The 7 Symbols</h3>
+                <div className="grid grid-cols-7 gap-2 text-center not-prose mb-6">
+                    <div className="bg-card p-2 rounded border"><strong>I</strong><br />1</div>
+                    <div className="bg-card p-2 rounded border"><strong>V</strong><br />5</div>
+                    <div className="bg-card p-2 rounded border"><strong>X</strong><br />10</div>
+                    <div className="bg-card p-2 rounded border"><strong>L</strong><br />50</div>
+                    <div className="bg-card p-2 rounded border"><strong>C</strong><br />100</div>
+                    <div className="bg-card p-2 rounded border"><strong>D</strong><br />500</div>
+                    <div className="bg-card p-2 rounded border"><strong>M</strong><br />1000</div>
                 </div>
+
+                <h3>Subtractive Notation</h3>
+                <p>
+                    The tricky part is that a smaller number placed <em>before</em> a larger one is subtracted.
+                </p>
+                <ul>
+                    <li><strong>IV</strong>: 5 - 1 = 4</li>
+                    <li><strong>IX</strong>: 10 - 1 = 9</li>
+                    <li><strong>XL</strong>: 50 - 10 = 40</li>
+                    <li><strong>XC</strong>: 100 - 10 = 90</li>
+                    <li><strong>CM</strong>: 1000 - 100 = 900</li>
+                </ul>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Is there a zero in Roman Numerals?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>No.</strong> The Romans had no symbol for Zero. They used the word <em>nulla</em> (none).
+                                    The concept of Zero as a number was introduced to Europe later by Arabic mathematicians.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>What is the largest number?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Standard Roman numerals go up to 3,999 (MMMCMXCIX).
+                                    To write larger numbers, a line (vinculum) was placed over the symbol to multiply it by 1,000, but standard keyboards don&apos;t support this.
+                                    Our calculator is optimized for the standard range.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How do you write 2024 in Roman Numerals?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: '2024 is written as MMXXIV. (M = 1000, M = 1000, XX = 20, IV = 4).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Why is 4 written as IV and not IIII?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'This is called subtractive notation. IV means &quot;one before five&quot;. It makes the numbers shorter and easier to read. However, on some clock faces, IIII is traditionally used for symmetry with VIII.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Do Roman Numerals have a zero?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'There is no zero symbol in Roman numerals. The concept of zero as a number wasn&apos;t used in Roman mathematics.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

@@ -6,6 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
 import { Download, X, Globe, User, CheckCircle2 } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 // Passport Standards Database
@@ -256,32 +257,87 @@ export default function PassportPhotoPage() {
                     However, governments are strict. A rejected photo means a rejected application. Follow these rules carefully.
                 </p>
 
-                <h3>Critical Requirements (US & EU)</h3>
-                <ul>
-                    <li><strong>Background</strong>: Must be plain white or off-white. No patterns, no shadows. Use a white sheet or wall.</li>
-                    <li><strong>Lighting</strong>: Even lighting is key. Face a window to get natural light. Avoid side lighting which creates shadows on one side of the face.</li>
-                    <li><strong>Expression</strong>: Neutral expression. Both eyes open. Mouth closed. No smiling (for most countries).</li>
-                    <li><strong>Attire</strong>: Wear normal daily clothes. No uniforms. No camouflage. No hats (unless for religious purposes). Glasses are now banned in US passport photos.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>What are the critical requirements (US & EU)?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Background</strong>: Must be plain white or off-white. No patterns, no shadows. Use a white sheet or wall.</li>
+                                    <li><strong>Lighting</strong>: Even lighting is key. Face a window to get natural light. Avoid side lighting which creates shadows on one side of the face.</li>
+                                    <li><strong>Expression</strong>: Neutral expression. Both eyes open. Mouth closed. No smiling (for most countries).</li>
+                                    <li><strong>Attire</strong>: Wear normal daily clothes. No uniforms. No camouflage. No hats (unless for religious purposes). Glasses are now banned in US passport photos.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>The layout of a Perfect Shot</h3>
-                <p>
-                    The "Biometric Standard" requires specific proportions:
-                </p>
-                <ul>
-                    <li><strong>The "Eye Line"</strong>: Your eyes must be in the top third of the photo.</li>
-                    <li><strong>Head Size</strong>: Your head must take up roughly 60-70% of the total height. Too far away? Rejected. Too close? Rejected.</li>
-                </ul>
-                <p>
-                    Our tool handles the cropping and aspect ratio (2x2 inch for US, 35x45mm for UK/EU) automatically, but you must provide a good source image.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How to compose the perfect shot?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>The "Biometric Standard" requires specific proportions:</p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>The "Eye Line"</strong>: Your eyes must be in the top third of the photo.</li>
+                                    <li><strong>Head Size</strong>: Your head must take up roughly 60-70% of the total height. Too far away? Rejected. Too close? Rejected.</li>
+                                </ul>
+                                <p>
+                                    Our tool handles the cropping and aspect ratio (2x2 inch for US, 35x45mm for UK/EU) automatically, but you must provide a good source image.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Printing Your Photo</h3>
-                <p>
-                    Once you download your 2x2 inch image, you can print it on a standard 4x6 inch photo paper (you can fit 2 photos side-by-side).
-                    Do not print on regular copy paper; use glossy or matte photo quality paper.
-                </p>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Can I print this at home?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Yes. Once you download your 2x2 inch image, you can print it on a standard 4x6 inch photo paper (you can fit 2 photos side-by-side).
+                                    Do not print on regular copy paper; use glossy or matte photo quality paper.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'Can I take my own passport photo?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes, provided you follow the strict requirements for lighting, background (white), and composition. Our tool helps crop it to the exact legal dimensions.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' What is the size for a US passport photo?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'A US passport photo must be exactly 2x2 inches (51x51 mm). The head must be between 1 and 1 3/8 inches from the bottom of the chin to the top of the head.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Can I wear glasses in my passport photo?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'No. As of 2016, you cannot wear glasses in a US passport photo. You must remove them to avoid glare and ensure your eyes are fully visible.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

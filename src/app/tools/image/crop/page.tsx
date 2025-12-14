@@ -6,6 +6,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
 import { Download, RefreshCw, X } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -186,34 +187,88 @@ export default function ImageCropperPage() {
                     The <strong>UnitMaster Image Cropper</strong> gives you pixel-perfect control over your photos without reducing their quality.
                 </p>
 
-                <h3>Understanding Aspect Ratios</h3>
-                <p>
-                    An aspect ratio describes the proportional relationship between the width and height of an image. It is usually expressed as two numbers separated by a colon (e.g., 16:9).
-                    Choosing the right aspect ratio is critical for where your image will be displayed.
-                </p>
-                <ul>
-                    <li><strong>1:1 (Square)</strong>: Perfect for Instagram posts, Facebook profile pictures, and product thumbnails. It focuses the viewer's attention on the center of the frame.</li>
-                    <li><strong>16:9 (Widescreen)</strong>: The standard for YouTube thumbnails, Facebook cover photos, and modern screens. Use this for landscapes and banner images.</li>
-                    <li><strong>4:3 (Standard)</strong>: Common for digital cameras and retro-style photos. It offers a taller frame than 16:9.</li>
-                    <li><strong>9:16 (Vertical)</strong>: The native format for TikTok, Instagram Reels, and YouTube Shorts.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Which Aspect Ratio should I use?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>1:1 (Square)</strong>: Perfect for Instagram posts, Facebook profile pictures, and product thumbnails. It focuses the viewer's attention on the center of the frame.</li>
+                                    <li><strong>16:9 (Widescreen)</strong>: The standard for YouTube thumbnails, Facebook cover photos, and modern screens. Use this for landscapes and banner images.</li>
+                                    <li><strong>4:3 (Standard)</strong>: Common for digital cameras and retro-style photos. It offers a taller frame than 16:9.</li>
+                                    <li><strong>9:16 (Vertical)</strong>: The native format for TikTok, Instagram Reels, and YouTube Shorts.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Professional Cropping Tips</h3>
-                <p>
-                    To get the best results, keep these principles in mind:
-                </p>
-                <ol>
-                    <li><strong>Rule of Thirds</strong>: Imagine a 3x3 grid over your image. Try to place your subject along these lines or their intersections for a more balanced composition.</li>
-                    <li><strong>Leave Breathing Room</strong>: Don't crop too tightly. Leaving some space around your subject prevents the image from feeling claustrophobic.</li>
-                    <li><strong>Watch the Resolution</strong>: Cropping removes pixels. If you crop a small image too heavily, it may become pixelated. Start with the highest resolution image possible.</li>
-                </ol>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Professional Cropping Tips</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ol className="list-decimal pl-6 space-y-2">
+                                    <li><strong>Rule of Thirds</strong>: Imagine a 3x3 grid over your image. Try to place your subject along these lines or their intersections for a more balanced composition.</li>
+                                    <li><strong>Leave Breathing Room</strong>: Don't crop too tightly. Leaving some space around your subject prevents the image from feeling claustrophobic.</li>
+                                    <li><strong>Watch the Resolution</strong>: Cropping removes pixels. If you crop a small image too heavily, it may become pixelated. Start with the highest resolution image possible.</li>
+                                </ol>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Secure & Fast</h3>
-                <p>
-                    Unlike other tools that upload your photos to a cloud server, UnitMaster processes your edits <strong>locally in your browser</strong> using HTML5 Canvas technology.
-                    This means your personal photos never leave your device, guaranteeing 100% privacy and zero upload waiting time.
-                </p>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Is my photo uploaded to a server?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    No. Unlike other tools that upload your photos to a cloud server, UnitMaster processes your edits <strong>locally in your browser</strong> using HTML5 Canvas technology.
+                                </p>
+                                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-2">
+                                    <p className="text-sm font-medium text-foreground">
+                                        🔒 Private & Fast: Your personal photos never leave your device, guaranteeing 100% privacy and zero upload waiting time.
+                                    </p>
+                                </div>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What aspect ratio is best for Social Media?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'For Instagram posts and profile pictures, use 1:1 (Square). For YouTube thumbnails and cover photos, use 16:9. For TikTok and Reels, use 9:16.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' Does cropping reduce image quality?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Technically, cropping removes pixels, so the total resolution decreases. However, our tool ensures the remaining pixels are not compressed or degraded, preserving the original quality of the area you kept.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Is this cropping tool secure?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes. All image processing happens locally in your browser using HTML5 Canvas. Your photos are never uploaded to any server.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

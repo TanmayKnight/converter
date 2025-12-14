@@ -1,111 +1,136 @@
-'use client';
+import type { Metadata } from 'next';
+import BaseConverterClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Binary, Calculator, Hash, WholeWord } from 'lucide-react';
+export const metadata: Metadata = {
+    title: 'Base Converter - Binary, Octal, Decimal, Hex | UnitMaster',
+    description: 'Convert numbers between any base System (Binary, Octal, Decimal, Hexadecimal) instantly online. Support for custom bases up to 36.',
+    keywords: ['base converter', 'binary converter', 'hex converter', 'decimal to binary', 'octal converter', 'radix converter'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/base',
+    },
+};
 
-export default function BaseConverter() {
-    const [input, setInput] = useState('10');
-    const [fromBase, setFromBase] = useState(10);
-    const [toBase, setToBase] = useState(2);
-    const [result, setResult] = useState('');
-    const [error, setError] = useState('');
-
-    const bases = [
-        { value: 2, label: 'Binary (2)' },
-        { value: 8, label: 'Octal (8)' },
-        { value: 10, label: 'Decimal (10)' },
-        { value: 16, label: 'Hexadecimal (16)' },
-        { value: 3, label: 'Base 3' },
-        { value: 36, label: 'Base 36 (Max)' },
-    ];
-
-    useEffect(() => {
-        try {
-            setError('');
-            if (!input) {
-                setResult('');
-                return;
-            }
-
-            // Parse input
-            const decimalValue = parseInt(input, fromBase);
-            if (isNaN(decimalValue)) {
-                throw new Error('Invalid input');
-            }
-
-            // Convert to target
-            const converted = decimalValue.toString(toBase).toUpperCase();
-            setResult(converted);
-        } catch (e) {
-            setResult('-');
-            setError('Invalid number for selected base');
-        }
-    }, [input, fromBase, toBase]);
-
+export default function BasePage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Number System Converter</h1>
                 <p className="text-muted-foreground">Convert numbers between Binary, Decimal, Octal, and Hexadecimal.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="grid md:grid-cols-2 gap-8 items-start">
-                    {/* Input */}
-                    <div className="space-y-4">
-                        <label className="text-sm font-medium text-muted-foreground">From Base</label>
-                        <select
-                            value={fromBase}
-                            onChange={(e) => setFromBase(Number(e.target.value))}
-                            className="w-full bg-secondary/50 border border-transparent rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary/20"
-                        >
-                            {bases.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
-                        </select>
+            <BaseConverterClient />
 
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                className="w-full bg-background border-2 border-primary/20 focus:border-primary rounded-xl p-4 text-2xl font-mono outline-none transition-all uppercase"
-                                placeholder="Enter number..."
-                            />
-                        </div>
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                    </div>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Understanding Number Systems</h2>
+                <p>
+                    A <strong>Radix</strong> (or Base) determines how many unique digits use to represent numbers.
+                    We use Base-10 (Decimal) in everyday life, but computers rely on other bases.
+                </p>
 
-                    {/* Output */}
-                    <div className="space-y-4">
-                        <label className="text-sm font-medium text-primary">To Base</label>
-                        <select
-                            value={toBase}
-                            onChange={(e) => setToBase(Number(e.target.value))}
-                            className="w-full bg-secondary/50 border border-transparent rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary/20"
-                        >
-                            {bases.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
-                        </select>
+                <h3>Common Bases</h3>
+                <ul>
+                    <li><strong>Binary (Base-2)</strong>: Uses 0 and 1. The native language of computers (on/off switches).</li>
+                    <li><strong>Octal (Base-8)</strong>: Uses 0-7. Used in Unix file permissions (e.g., chmod 777).</li>
+                    <li><strong>Decimal (Base-10)</strong>: Uses 0-9. The standard human counting system.</li>
+                    <li><strong>Hexadecimal (Base-16)</strong>: Uses 0-9 and A-F. Used for colors (e.g., #FFFFFF) and memory addresses.</li>
+                </ul>
 
-                        <div className="relative bg-secondary/30 rounded-xl p-4 min-h-[80px] flex items-center justify-center border border-border">
-                            <div className="text-3xl font-mono font-bold text-primary break-all">
-                                {result}
+                <h3>How to Convert Manually?</h3>
+                <p>
+                    <strong>Decimal to Binary:</strong> Divide the number by 2 repeatedly and record the remainders. Read the remainders from bottom to top.
+                    <br />
+                    <em>Example (13):</em>
+                    <br />
+                    13 / 2 = 6 rem <strong>1</strong><br />
+                    6 / 2 = 3 rem <strong>0</strong><br />
+                    3 / 2 = 1 rem <strong>1</strong><br />
+                    1 / 2 = 0 rem <strong>1</strong><br />
+                    Result: <strong>1101</strong>
+                </p>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>What is the maximum base supported?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Our calculator supports bases up to 36.
+                                    This uses digits 0-9 combined with all letters of the alphabet (A-Z), where A=10 and Z=35.
+                                </p>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                {/* Quick Shortcuts */}
-                <div className="mt-8 pt-8 border-t border-border/50">
-                    <h3 className="text-sm font-semibold mb-4 text-muted-foreground">Quick Bases</h3>
-                    <div className="flex gap-2 flex-wrap">
-                        <button onClick={() => { setFromBase(10); setToBase(2); }} className="px-3 py-1 bg-secondary rounded-full text-xs hover:bg-primary hover:text-white transition-colors">Decimal to Binary</button>
-                        <button onClick={() => { setFromBase(2); setToBase(10); }} className="px-3 py-1 bg-secondary rounded-full text-xs hover:bg-primary hover:text-white transition-colors">Binary to Decimal</button>
-                        <button onClick={() => { setFromBase(16); setToBase(10); }} className="px-3 py-1 bg-secondary rounded-full text-xs hover:bg-primary hover:text-white transition-colors">Hex to Decimal</button>
-                        <button onClick={() => { setFromBase(10); setToBase(16); }} className="px-3 py-1 bg-secondary rounded-full text-xs hover:bg-primary hover:text-white transition-colors">Decimal to Hex</button>
-                    </div>
-                </div>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Why is Hexadecimal (Hex) so popular?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Hex is a &quot;short-hand&quot; for binary. One Hex digit represents exactly 4 binary bits (a nibble).
+                                    <br />
+                                    <code>1111</code> in Binary is <code>F</code> in Hex.
+                                    It is much easier to read <code>#FF</code> than <code>11111111</code>.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>How do I denote a base?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    In math, we use a subscript: 101<sub>2</sub> (Binary) = 5<sub>10</sub> (Decimal).
+                                    In programming, we use prefixes:
+                                    <ul className="list-disc pl-6 mt-2">
+                                        <li><code>0b</code> for Binary (0b101)</li>
+                                        <li><code>0x</code> for Hex (0xFF)</li>
+                                        <li><code>0o</code> for Octal (0o77)</li>
+                                    </ul>
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is Binary?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Binary is a base-2 number system that uses only two digits: 0 and 1. It is the fundamental language of computers.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I read Hexadecimal?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Hexadecimal (Base-16) uses numbers 0-9 and letters A-F. A=10, B=11, C=12, D=13, E=14, F=15. It is commonly used for color codes and memory.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I convert Decimal to Binary?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To convert Decimal to Binary, divide the number by 2 repeatedly and keep track of the remainders. The sequence of remainders (read in reverse) is the binary representation.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

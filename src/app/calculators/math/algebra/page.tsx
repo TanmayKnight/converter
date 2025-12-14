@@ -1,104 +1,136 @@
-'use client';
+import type { Metadata } from 'next';
+import AlgebraClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Algebra Calculator - Square Roots, Exponents & Logarithms | UnitMaster',
+    description: 'Free online algebra calculator. Calculate square roots, exponents (powers), logarithms (log, ln), and antilogarithms instantly.',
+    keywords: ['algebra calculator', 'square root calculator', 'exponent calculator', 'logarithm calculator', 'ln calculator', 'power calculator'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/algebra',
+    },
+};
 
-type Mode = 'sqrt' | 'pow' | 'log2' | 'log10' | 'ln' | 'antilog';
-
-export default function AlgebraCalculator() {
-    const [mode, setMode] = useState<Mode>('sqrt');
-    const [val1, setVal1] = useState(''); // Base or number
-    const [val2, setVal2] = useState(''); // Exponent
-    const [result, setResult] = useState<string | null>(null);
-
-    const calculate = () => {
-        const v1 = parseFloat(val1);
-        const v2 = parseFloat(val2);
-        let res = 0;
-
-        if (isNaN(v1)) return;
-
-        switch (mode) {
-            case 'sqrt':
-                res = Math.sqrt(v1);
-                break;
-            case 'pow':
-                if (!isNaN(v2)) res = Math.pow(v1, v2);
-                break;
-            case 'log2':
-                res = Math.log2(v1);
-                break;
-            case 'log10':
-                res = Math.log10(v1);
-                break;
-            case 'ln':
-                res = Math.log(v1);
-                break;
-            case 'antilog':
-                // Antilog base 10 usually, so 10^x
-                res = Math.pow(10, v1);
-                break;
-        }
-        setResult(res.toFixed(6));
-    };
-
+export default function AlgebraPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Algebra Calculator</h1>
-                <p className="text-muted-foreground">Roots, Exponents, and Logarithms.</p>
+                <p className="text-muted-foreground">Roots, Exponents, and Logarithms made simple.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar justify-center">
-                    {(['sqrt', 'pow', 'log2', 'log10', 'ln', 'antilog'] as Mode[]).map(m => (
-                        <button
-                            key={m}
-                            onClick={() => { setMode(m); setVal1(''); setVal2(''); setResult(null); }}
-                            className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${mode === m ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/80'
-                                }`}
-                        >
-                            {m === 'sqrt' ? '√ Square Root' : m === 'pow' ? 'x^y Power' : m === 'antilog' ? 'Antilog' : m}
-                        </button>
-                    ))}
-                </div>
+            <AlgebraClient />
 
-                <div className="max-w-md mx-auto space-y-6">
-                    <div>
-                        <label className="text-sm font-semibold mb-2 block">{mode === 'pow' ? 'Base (x)' : 'Number'}</label>
-                        <input
-                            type="number"
-                            value={val1}
-                            onChange={e => setVal1(e.target.value)}
-                            className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                        />
-                    </div>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Algebra Concepts Explained</h2>
+                <p>
+                    Algebra is the branch of mathematics that substitutes letters for numbers to solve for unknown values.
+                    Our calculator focuses on <strong>Fundamental Operations</strong> that are the building blocks of complex equations.
+                </p>
 
-                    {mode === 'pow' && (
-                        <div>
-                            <label className="text-sm font-semibold mb-2 block">Exponent (y)</label>
-                            <input
-                                type="number"
-                                value={val2}
-                                onChange={e => setVal2(e.target.value)}
-                                className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                            />
-                        </div>
-                    )}
+                <h3>1. Square Root (√)</h3>
+                <p>
+                    The square root of a number <em>x</em> is a number <em>y</em> such that <code>y² = x</code>.
+                    <br />
+                    <em>Example:</em> √25 = 5, because 5 * 5 = 25.
+                </p>
 
-                    <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-opacity">
-                        Calculate
-                    </button>
+                <h3>2. Exponents (Power)</h3>
+                <p>
+                    An exponent refers to the number of times a number is multiplied by itself.
+                    <br />
+                    <em>Formula:</em> <code>xⁿ</code> (x raised to the power of n).
+                    <br />
+                    <em>Example:</em> 2³ = 2 * 2 * 2 = 8.
+                </p>
 
-                    {result && (
-                        <div className="bg-secondary/20 p-6 rounded-2xl text-center border-2 border-dashed border-border mt-6">
-                            <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Result</div>
-                            <div className="text-4xl font-extrabold text-foreground">{result}</div>
-                        </div>
-                    )}
-                </div>
+                <h3>3. Logarithms</h3>
+                <p>
+                    A logarithm is the inverse of an exponent. It answers the question: &quot;To what power must we raise the base to obtain a given number?&quot;
+                </p>
+                <ul>
+                    <li><strong>Log10 (Common Log)</strong>: Base 10. Used in engineering (Decibels, Richter Scale).</li>
+                    <li><strong>Log2 (Binary Log)</strong>: Base 2. fundamental in Computer Science and Information Theory.</li>
+                    <li><strong>Ln (Natural Log)</strong>: Base <em>e</em> (2.718...). Critical in calculus and growth formulas (Compound Interest).</li>
+                </ul>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>What is the difference between Log and Ln?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>Log</strong> usually refers to the base-10 logarithm (log10), while <strong>Ln</strong> refers to the natural logarithm, which uses base <strong>e</strong> (Euler&apos;s number, approx 2.718).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How do I calculate a negative exponent?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    A negative exponent means taking the reciprocal.
+                                    <br />
+                                    <code>x⁻ⁿ = 1 / xⁿ</code>
+                                    <br />
+                                    <em>Example:</em> 2⁻² = 1 / 2² = 1 / 4 = <strong>0.25</strong>.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Can I find the square root of a negative number?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Not in the set of Real Numbers. The square root of a negative number is an <strong>Imaginary Number</strong> (denoted by <em>i</em>).
+                                    Our calculator currently works with Real Numbers only.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between Log and Ln?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Log typically refers to Logarithm Base 10, while Ln stands for Natural Logarithm, which is Base e (approx 2.718).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What does a negative exponent do?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'A negative exponent indicates the reciprocal of the base. For example, x^-n equals 1/x^n.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Why is the square root of a negative number error?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'In basic algebra, you cannot square a real number to get a negative result. The root of a negative number is an imaginary number.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

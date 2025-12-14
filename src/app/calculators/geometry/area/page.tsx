@@ -1,185 +1,103 @@
-'use client';
+import type { Metadata } from 'next';
+import AreaCalculatorClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Area Calculator - Calculate Surface Area of Shapes',
+    description: 'Free Area Calculator. Calculate the area of circle, triangle, rectangle, square, trapezoid, and more instantly. Simple formulas for geometry.',
+    keywords: ['area calculator', 'calculate area', 'surface area calculator', 'area of circle', 'area of triangle', 'geometry calculator'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/geometry/area',
+    },
+};
 
-type Shape = 'rectangle' | 'triangle' | 'circle' | 'square' | 'trapezoid' | 'parallelogram' | 'rhombus' | 'sector';
-
-export default function AreaCalculator() {
-    const [shape, setShape] = useState<Shape>('rectangle');
-    const [values, setValues] = useState({ w: '', h: '', r: '', b: '', angle: '' });
-    const [result, setResult] = useState<number | null>(null);
-
-    const calculate = () => {
-        const { w, h, r, b, angle } = values;
-        const width = parseFloat(w);
-        const height = parseFloat(h);
-        const radius = parseFloat(r);
-        const base = parseFloat(b);
-        const theta = parseFloat(angle);
-
-        let area = 0;
-
-        switch (shape) {
-            case 'rectangle':
-                if (width && height) area = width * height;
-                break;
-            case 'square':
-                if (width) area = width * width;
-                break;
-            case 'triangle':
-                if (width && height) area = 0.5 * width * height;
-                break;
-            case 'circle':
-                if (radius) area = Math.PI * radius * radius;
-                break;
-            case 'trapezoid':
-                if (width && base && height) area = ((width + base) / 2) * height; // w=top, b=bottom
-                break;
-            case 'parallelogram':
-                if (base && height) area = base * height;
-                break;
-            case 'rhombus':
-                if (width && height) area = 0.5 * width * height; // diagonals
-                break;
-            case 'sector':
-                if (radius && theta) area = 0.5 * radius * radius * (theta * (Math.PI / 180)); // degrees
-                break;
-        }
-        setResult(parseFloat(area.toFixed(4)));
-    };
-
+export default function AreaPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Area Calculator</h1>
                 <p className="text-muted-foreground">Calculate surface area for various 2D shapes.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
-                    {(['rectangle', 'square', 'triangle', 'circle', 'trapezoid', 'parallelogram', 'rhombus', 'sector'] as Shape[]).map(s => (
-                        <button
-                            key={s}
-                            onClick={() => { setShape(s); setValues({ w: '', h: '', r: '', b: '', angle: '' }); setResult(null); }}
-                            className={`px-4 py-2 rounded-full text-sm font-medium capitalize whitespace-nowrap transition-colors ${shape === s ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/80'
-                                }`}
-                        >
-                            {s}
-                        </button>
-                    ))}
-                </div>
+            <AreaCalculatorClient />
 
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="space-y-4">
-                        {(shape === 'rectangle' || shape === 'triangle' || shape === 'trapezoid' || shape === 'parallelogram') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">{shape === 'trapezoid' ? 'Top Base' : 'Width / Base'}</label>
-                                <input
-                                    type="number"
-                                    value={values.w}
-                                    onChange={e => setValues({ ...values, w: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
-                        {(shape === 'trapezoid') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">Bottom Base</label>
-                                <input
-                                    type="number"
-                                    value={values.b}
-                                    onChange={e => setValues({ ...values, b: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
-                        {(shape === 'rhombus') && (
-                            <>
-                                <div>
-                                    <label className="text-sm font-semibold mb-1 block">Diagonal 1</label>
-                                    <input
-                                        type="number"
-                                        value={values.w}
-                                        onChange={e => setValues({ ...values, w: e.target.value })}
-                                        className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="text-sm font-semibold mb-1 block">Diagonal 2</label>
-                                    <input
-                                        type="number"
-                                        value={values.h}
-                                        onChange={e => setValues({ ...values, h: e.target.value })}
-                                        className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                    />
-                                </div>
-                            </>
-                        )}
-                        {(shape === 'rectangle' || shape === 'triangle' || shape === 'trapezoid' || shape === 'parallelogram') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">Height</label>
-                                <input
-                                    type="number"
-                                    value={values.h}
-                                    onChange={e => setValues({ ...values, h: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
-                        {(shape === 'square') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">Side Length</label>
-                                <input
-                                    type="number"
-                                    value={values.w}
-                                    onChange={e => setValues({ ...values, w: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
-                        {(shape === 'circle' || shape === 'sector') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">Radius</label>
-                                <input
-                                    type="number"
-                                    value={values.r}
-                                    onChange={e => setValues({ ...values, r: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
-                        {(shape === 'sector') && (
-                            <div>
-                                <label className="text-sm font-semibold mb-1 block">Angle (Degrees)</label>
-                                <input
-                                    type="number"
-                                    value={values.angle}
-                                    onChange={e => setValues({ ...values, angle: e.target.value })}
-                                    className="w-full bg-secondary/50 p-3 rounded-xl outline-none focus:ring-2 ring-primary/20"
-                                />
-                            </div>
-                        )}
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Mastering 2D Geometry</h2>
+                <p>
+                    Area is the quantity that expresses the extent of a two-dimensional region, shape, or planar lamina, in the plane.
+                    From buying the right amount of paint for a wall to calculating the size of a pizza, area is one of the most practical math concepts.
+                </p>
 
-                        <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold mt-4 hover:opacity-90 transition-opacity">
-                            Calculate Area
-                        </button>
-                    </div>
+                <h3>Common Area Formulas</h3>
+                <p className="text-muted-foreground mb-8">
+                    Select a shape above to see its specific formula and calculation details.
+                </p>
 
-                    <div className="bg-secondary/20 rounded-3xl p-8 flex flex-col items-center justify-center min-h-[200px] text-center border-2 border-dashed border-border">
-                        {result !== null ? (
-                            <>
-                                <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Calculated Area</div>
-                                <div className="text-5xl font-extrabold text-primary">{result}</div>
-                                <div className="text-sm text-muted-foreground mt-2">sq. units</div>
-                            </>
-                        ) : (
-                            <div className="text-muted-foreground opacity-50">Enter dimensions to see result</div>
-                        )}
-                    </div>
-                </div>
+                <h3>Real World Examples</h3>
+                <p>
+                    <strong>Land Area:</strong> Measured in Acres or Hectares. 1 Acre ≈ 43,560 square feet.
+                    <br />
+                    <strong>Flooring:</strong> Sold by the square foot (sq ft) or square meter (sq m). Always buy 10% extra for waste!
+                </p>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>What is the difference between Area and Perimeter?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>Perimeter</strong> is the total length of the boundary (the fence around the yard).
+                                    <br />
+                                    <strong>Area</strong> is the space inside the boundary (the grass in the yard).
+                                    <br />
+                                    They use different units (ft vs. sq ft).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How many square feet in a square yard?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    There are <strong>9</strong> square feet in 1 square yard.
+                                    <br />
+                                    Why? Because 1 yard = 3 feet. So, 1 sq yard = 3 ft × 3 ft = 9 sq ft.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the formula for area of a circle?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'The area of a circle is calculated as A = πr², where r is the radius and π is approximately 3.14159.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do you calculate acreage?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To calculate acres, find the area in square feet and divide by 43,560. For example, a 100,000 sq ft lot is 100,000 / 43,560 = 2.29 acres.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

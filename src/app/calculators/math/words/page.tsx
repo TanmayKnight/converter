@@ -1,58 +1,98 @@
-'use client';
+import type { Metadata } from 'next';
+import WordsConverterClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Numbers to Words Converter - Check Writing Helper | UnitMaster',
+    description: 'Convert numerical digits to written words instantly (e.g. 100 -> One Hundred). Useful for check writing and legal documents.',
+    keywords: ['numbers to words', 'check writer', 'number converter', 'write number as text', 'digits to text'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/words',
+    },
+};
 
-export default function WordsConverter() {
-    const [number, setNumber] = useState<string>('12345');
-
-    const toWords = (n: any): string => {
-        const num = parseInt(n, 10);
-        if (isNaN(num)) return '';
-        if (num === 0) return 'Zero';
-
-        const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
-        const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-
-        // Simple implementation for < 1 Million for demo, assuming simple needs based on screenshot. 
-        // Or I can write a recursive one.
-        const regex = /^(\d{1,2})(\d{2})$/;
-
-        // Let's use a quick recursive function
-        const convert = (num: number): string => {
-            if ((num = num.valueOf()) < 20) return a[num];
-            if (num < 100) return b[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + a[num % 10] : '');
-            if (num < 1000) return a[Math.floor(num / 100)] + 'Hundred ' + (num % 100 !== 0 ? convert(num % 100) : '');
-            if (num < 1000000) return convert(Math.floor(num / 1000)) + 'Thousand ' + (num % 1000 !== 0 ? convert(num % 1000) : '');
-            if (num < 1000000000) return convert(Math.floor(num / 1000000)) + 'Million ' + (num % 1000000 !== 0 ? convert(num % 1000000) : '');
-            return 'Number too large';
-        };
-
-        return convert(num);
-    };
-
+export default function WordsPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Number to Words</h1>
                 <p className="text-muted-foreground">Convert numerical digits into written words.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm text-center">
-                <input
-                    type="number"
-                    value={number}
-                    onChange={(e) => setNumber(e.target.value)}
-                    className="w-full max-w-md mx-auto block bg-background border-2 border-primary/20 focus:border-primary rounded-xl p-4 text-3xl font-mono text-center outline-none transition-all mb-8"
-                    placeholder="123"
-                />
+            <WordsConverterClient />
 
-                <div className="text-sm text-muted-foreground mb-4 font-semibold tracking-wider uppercase">Written Form</div>
-                <div className="text-3xl font-medium text-primary capitalize leading-relaxed">
-                    {toWords(number) || '...'}
-                </div>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Why Write Numbers as Words?</h2>
+                <p>
+                    Writing numbers as words is often required in formal situations to prevent fraud or confusion.
+                    Digits (1, 2, 3) are easy to alter. An extra zero can change $100 to $1000.
+                    Words (&quot;One Hundred&quot;) are much harder to forge.
+                </p>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li><strong>Bank Checks</strong>: Just below the &quot;Pay to the Order of&quot; line, you must write the amount in words.</li>
+                    <li><strong>Legal Contracts</strong>: To ensure there is no ambiguity about dates or dollar amounts.</li>
+                    <li><strong>Formal Invitations</strong>: &quot;The Fourth of July&quot; looks more elegant than &quot;July 4&quot;.</li>
+                </ul>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How do you write cents on a check?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Cents are usually written as a fraction over 100.
+                                    <br />
+                                    <em>Example:</em> $150.25 is written as &quot;One Hundred Fifty and 25/100&quot;.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Should I use &quot;And&quot;?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    In formal British English, you might say &quot;One Hundred <strong>and</strong> Fifty&quot;.
+                                    In American Math, &quot;And&quot; technically denotes a decimal point. So 150 should be &quot;One Hundred Fifty&quot;, not &quot;One Hundred and Fifty&quot;.
+                                    However, in casual use, both are accepted.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How do you write 1000 in words?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'One Thousand.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Why do we write out numbers on checks?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Writing out the number in words prevents fraud. It is much harder to alter written text (e.g., changing &quot;One&quot; to &quot;One Thousand&quot;) than it is to add zeros to digits.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

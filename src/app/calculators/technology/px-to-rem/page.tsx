@@ -1,105 +1,100 @@
-'use client';
+import type { Metadata } from 'next';
+import PxRemConverterClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { ArrowLeftRight, Check, Copy, Code } from 'lucide-react';
-import { AffiliateCard } from '@/components/AffiliateCard';
+export const metadata: Metadata = {
+    title: 'PX to REM Converter - CSS Unit Calculator',
+    description: 'Instantly convert Pixels (px) to REM units. The best tool for responsive web design and accessible CSS development.',
+    keywords: ['px to rem', 'rem to px', 'css converter', 'web design calculator', 'css units', 'responsive typography'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/technology/px-to-rem',
+    },
+};
 
-export default function PxRemConverter() {
-    const [baseSize, setBaseSize] = useState('16');
-    const [px, setPx] = useState('16');
-    const [rem, setRem] = useState('1');
-
-    const handlePxChange = (val: string) => {
-        setPx(val);
-        const p = parseFloat(val);
-        const b = parseFloat(baseSize);
-        if (!isNaN(p) && !isNaN(b) && b !== 0) {
-            setRem((p / b).toFixed(3).replace(/\.?0+$/, ''));
-        }
-    };
-
-    const handleRemChange = (val: string) => {
-        setRem(val);
-        const r = parseFloat(val);
-        const b = parseFloat(baseSize);
-        if (!isNaN(r) && !isNaN(b)) {
-            setPx((r * b).toFixed(0));
-        }
-    };
-
+export default function PxRemPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">PX to REM Converter</h1>
                 <p className="text-muted-foreground">Essential tool for responsive web design.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-10 shadow-lg max-w-2xl mx-auto relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Code className="w-32 h-32" />
-                </div>
+            <PxRemConverterClient />
 
-                {/* Base Size Setting */}
-                <div className="mb-8 flex justify-center items-center gap-2">
-                    <label className="text-sm font-medium text-muted-foreground">Base Font Size (px):</label>
-                    <input
-                        type="number"
-                        value={baseSize}
-                        onChange={(e) => setBaseSize(e.target.value)}
-                        className="w-16 bg-secondary text-center rounded-md border border-border py-1 font-semibold"
-                    />
-                </div>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>Why use REM instead of PX?</h2>
+                <p>
+                    <strong>REM (Root EM)</strong> is a relative unit that scales based on the user&apos;s browser font size settings.
+                    <strong>PX (Pixel)</strong> is an absolute unit that does not scale.
+                </p>
+                <p>
+                    Using REM improves <strong>Accessibility</strong>. If a user with visual impairment increases their browser&apos;s base font size, your website will scale up proportionally.
+                    If you use PX, your text will likely stay small and unreadable.
+                </p>
 
-                <div className="flex flex-col md:flex-row items-center gap-4">
-                    <div className="flex-1 w-full">
-                        <label className="block text-center text-sm font-bold mb-2 text-primary">PIXELS</label>
-                        <input
-                            type="number"
-                            value={px}
-                            onChange={(e) => handlePxChange(e.target.value)}
-                            className="w-full bg-secondary/50 border-2 border-transparent focus:border-primary rounded-2xl p-6 text-4xl text-center font-bold outline-none transition-all"
-                        />
-                    </div>
+                <h3>How it works</h3>
+                <p>
+                    The conversion depends on the <strong>Base Font Size</strong> (usually 16px).
+                    <br />
+                    <code>REM = PX / Base Size</code>
+                </p>
+                <p>
+                    <em>Example:</em> If base is 16px, then 32px = 2rem.
+                </p>
 
-                    <div className="bg-primary/10 p-3 rounded-full text-primary">
-                        <ArrowLeftRight className="h-6 w-6" />
-                    </div>
-
-                    <div className="flex-1 w-full">
-                        <label className="block text-center text-sm font-bold mb-2 text-primary">REM</label>
-                        <input
-                            type="number"
-                            value={rem}
-                            onChange={(e) => handleRemChange(e.target.value)}
-                            className="w-full bg-secondary/50 border-2 border-transparent focus:border-primary rounded-2xl p-6 text-4xl text-center font-bold outline-none transition-all"
-                        />
-                    </div>
-                </div>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Why is 16px the default?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Most modern browsers have a default font size of 16px. This is the industry standard starting point for web typography.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Should I use REM for padding and margins?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Yes! Using REM for spacing (margins/padding) ensures that your layout breathes and scales correctly along with the text content.
+                                    Using PX for spacing can lead to crowded layouts when text size increases.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
-            {/* Affiliate Section Paused for SEO Focus
-            <div className="mt-12">
-                <h3 className="text-xl font-bold mb-6 text-center">Web Development Tools</h3>
-                <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                    <AffiliateCard 
-                        title="Hostinger"
-                        description="Premium Shared Hosting + Free Domain. Everything you need to launch a website."
-                        ctaText="Get Started"
-                        href="https://www.hostinger.com/" 
-                        badge="75% OFF"
-                    />
-                     <AffiliateCard 
-                        title="Udemy"
-                        description="Learn React, Next.js and TypeScript from industry experts."
-                        ctaText="Find Courses"
-                        href="https://www.udemy.com/" 
-                        badge="Best Seller"
-                    />
-                </div>
-            </div>
-            */}
-        </div>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is a REM unit?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'REM stands for Root EM. It is a CSS unit relative to the font-size of the root element (HTML tag).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do you convert px to rem?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Divide the pixel value by the root font size (usually 16px). For example, 16px / 16 = 1rem.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

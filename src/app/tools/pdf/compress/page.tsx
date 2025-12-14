@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Minimize2, Loader2, CheckCircle, FileText } from 'lucide-react';
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function CompressPDFPage() {
     const [file, setFile] = useState<File | null>(null);
@@ -186,36 +187,99 @@ export default function CompressPDFPage() {
                     <strong>UnitMaster PDF Compressor</strong> solves these problems by intelligently optimizing the internal structure of your PDF files to reduce their size without destroying their readability.
                 </p>
 
-                <h3>How Does PDF Compression Work?</h3>
-                <p>
-                    A PDF file is more than just text and images; it's a complex database of objects, fonts, and metadata. Our compression engine focuses on <strong>structural optimization</strong>:
-                </p>
-                <ul>
-                    <li><strong>Object Streams</strong>: We group small PDF objects together into compressed streams.</li>
-                    <li><strong>Metadata Stripping</strong>: We remove unnecessary editing history, thumbnails, and bloated metadata that doesn't affect the visual content.</li>
-                    <li><strong>Font Subsetting</strong>: (In supported files) We ensure only the characters actually used in the document are embedded.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How Does PDF Compression Work?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    A PDF file is more than just text and images; it's a complex database of objects, fonts, and metadata. Our compression engine focuses on <strong>structural optimization</strong>:
+                                </p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Object Streams</strong>: We group small PDF objects together into compressed streams.</li>
+                                    <li><strong>Metadata Stripping</strong>: We remove unnecessary editing history, thumbnails, and bloated metadata that doesn't affect the visual content.</li>
+                                    <li><strong>Font Subsetting</strong>: (In supported files) We ensure only the characters actually used in the document are embedded.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Lossless vs. Lossy Compression</h3>
-                <p>
-                    Most online tools rely on heavy <em>lossy</em> compression—they take your crisp images and blur them to save space.
-                    UnitMaster prioritizes <strong>integrity</strong>. Our default mode is "Safe Compression," which focuses on reducing file overhead while keeping your text sharp and your images clear.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Lossless vs. Lossy Compression</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Most online tools rely on heavy <em>lossy</em> compression—they take your crisp images and blur them to save space.
+                                    UnitMaster prioritizes <strong>integrity</strong>. Our default mode is "Safe Compression," which focuses on reducing file overhead while keeping your text sharp and your images clear.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Best Practices for Small PDFs</h3>
-                <ol>
-                    <li><strong>Scan at Lower DPI</strong>: If you are scanning text documents, 150 DPI is usually sufficient. 300+ DPI bloats file size massively.</li>
-                    <li><strong>Avoid "Print to PDF"</strong>: If possible, "Save as PDF" directly from Word or Google Docs. It creates much cleaner, smaller code than the "Print" driver.</li>
-                    <li><strong>Vector Graphics</strong>: Use SVG or vector logos instead of high-res PNGs where possible.</li>
-                </ol>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Best Practices for Small PDFs</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ol className="list-decimal pl-6 space-y-2">
+                                    <li><strong>Scan at Lower DPI</strong>: If you are scanning text documents, 150 DPI is usually sufficient. 300+ DPI bloats file size massively.</li>
+                                    <li><strong>Avoid "Print to PDF"</strong>: If possible, "Save as PDF" directly from Word or Google Docs. It creates much cleaner, smaller code than the "Print" driver.</li>
+                                    <li><strong>Vector Graphics</strong>: Use SVG or vector logos instead of high-res PNGs where possible.</li>
+                                </ol>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Secure & Client-Side</h3>
-                <p>
-                    Just like all our tools, this compressor runs <strong>locally in your browser</strong>.
-                    We do not upload your sensitive financial reports or legal contracts to any server to compress them.
-                    You get the speed of a native desktop app with the convenience of the web.
-                </p>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Is my data secure?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Yes. Just like all our tools, this compressor runs <strong>locally in your browser</strong>.
+                                    We do not upload your sensitive financial reports or legal contracts to any server to compress them.
+                                    You get the speed of a native desktop app with the convenience of the web.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How does UnitMaster compress PDFs?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'We use structural optimization, including object stream compression, metadata stripping, and font subsetting, to reduce file size without compromising quality.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Is PDF compression lossy or lossless?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'UnitMaster uses "Safe Compression" (lossless/near-lossless) by default, optimizing file structure rather than degrading image quality.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Is it safe to compress sensitive PDFs here?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes. All compression happens locally in your browser. Your files are never uploaded to our servers, ensuring 100% privacy.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

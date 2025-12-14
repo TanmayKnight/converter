@@ -5,6 +5,7 @@ import { removeBackground } from '@imgly/background-removal';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
 import { Loader2, Download, AlertTriangle, Layers, X } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function RemoveBackgroundPage() {
@@ -138,40 +139,95 @@ export default function RemoveBackgroundPage() {
                     <strong>UnitMaster AI</strong> changes the game. We use state-of-the-art machine learning models to instantly detect the subject of your photo—whether it's a person, car, or product—and surgically remove the background.
                 </p>
 
-                <h3>How It Works (The Tech)</h3>
-                <p>
-                    This tool runs a neural network called <strong>U-2-Net</strong> directly inside your web browser.
-                    Traditionally, AI this powerful required expensive GPU servers in the cloud.
-                    We have optimized these models to run on <strong>WebAssembly (WASM)</strong>, essentially turning your browser into a mini AI supercomputer.
-                </p>
-                <p>
-                    <strong>The Result:</strong> You get professional-grade "Magic Wand" functionality without ever sending your photo to a third party.
-                </p>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How does the AI work in the browser?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    This tool runs a neural network called <strong>U-2-Net</strong> directly inside your web browser using <strong>WebAssembly (WASM)</strong>.
+                                    Essentially, it turns your browser into a mini AI supercomputer, allowing you to process images locally without uploading them to the cloud.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Perfect for E-Commerce</h3>
-                <p>
-                    Online marketplaces like Amazon, eBay, and Shopify require product photos to have a pure white (or transparent) background.
-                </p>
-                <ul>
-                    <li><strong>Consistency</strong>: Make all your product shots look uniform.</li>
-                    <li><strong>Focus</strong>: Remove distracting messy rooms or outdoor backgrounds.</li>
-                    <li><strong>Marketing</strong>: Easily overlay your product onto promotional banners or ad creatives.</li>
-                </ul>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Why is it better for E-Commerce?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Consistency</strong>: Make all your product shots look uniform with white/transparent backgrounds.</li>
+                                    <li><strong>Focus</strong>: Remove distracting messy rooms or outdoor backgrounds.</li>
+                                    <li><strong>Marketing</strong>: Easily overlay your product onto promotional banners.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Tips for Best Results</h3>
-                <ol>
-                    <li><strong>Contrast is Key</strong>: The AI works best when the subject stands out from the background (e.g., a dark product on a light table).</li>
-                    <li><strong>Good Lighting</strong>: Avoid heavy shadows crossing over the subject, as the AI might mistake a shadow for part of the object.</li>
-                    <li><strong>Focus</strong>: Ensure the subject is sharp. Blurry edges can lead to a "soft" cutout.</li>
-                </ol>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Tips for the best results?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ol className="list-decimal pl-6 space-y-2">
+                                    <li><strong>Contrast is Key</strong>: The AI works best when the subject stands out from the background (e.g., a dark product on a light table).</li>
+                                    <li><strong>Good Lighting</strong>: Avoid heavy shadows crossing over the subject.</li>
+                                    <li><strong>Focus</strong>: Ensure the subject is sharp. Blurry edges can lead to a "soft" cutout.</li>
+                                </ol>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>100% Free & Unlimited</h3>
-                <p>
-                    Most background remover sites charge you "credits" per image or only let you download a low-res preview for free.
-                    <strong>UnitMaster is different.</strong> Because you are using your own computer's processing power, we don't have to pay for expensive servers.
-                    That means we can offer this tool for free, with no daily limits and no watermarks.
-                </p>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Is it really free and unlimited?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Yes. Because you are using your own computer's processing power, we don't need expensive servers.
+                                    We pass those savings to you by offering this tool for free, with no daily limits and no watermarks.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'Is this background remover free?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes, UnitMaster Background Remover is 100% free and unlimited because it runs locally on your device using your own processor.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' Are my photos uploaded to a server?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'No. The AI model (U-2-Net) runs entirely within your browser via WebAssembly. Your photos never leave your computer.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I download a transparent PNG?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'After the AI removes the background, simply click the "Download PNG" button. The resulting image will have an alpha channel (transparency) ready for use in any design tool.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

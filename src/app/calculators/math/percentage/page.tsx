@@ -1,79 +1,30 @@
-'use client';
+import type { Metadata } from 'next';
+import PercentageCalculatorClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Percentage Calculator - Calculate % Increase, Decrease & Difference',
+    description: 'Free Percentage Calculator. Find percentage difference, increase/decrease, or what percentage one number is of another instantly.',
+    keywords: ['percentage calculator', 'percent difference', 'percentage increase calculator', 'how to calculate percentage', 'percent change formula'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/percentage',
+    },
+};
 
-export default function PercentageCalculator() {
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
-    const [res1, setRes1] = useState<string>(''); // What is X% of Y?
-    const [res2, setRes2] = useState<string>(''); // X is what % of Y?
-    const [res3, setRes3] = useState<string>(''); // Decrease/Increase
-
-    const calculate = (e: any) => {
-        const v1 = parseFloat(val1);
-        const v2 = parseFloat(val2);
-
-        if (!isNaN(v1) && !isNaN(v2)) {
-            // 1. What is X% of Y?
-            setRes1(((v1 / 100) * v2).toFixed(2));
-            // 2. X is what % of Y?
-            if (v2 !== 0) setRes2(((v1 / v2) * 100).toFixed(2));
-            // 3. Increase/Decrease
-            setRes3((((v2 - v1) / v1) * 100).toFixed(2));
-        } else {
-            setRes1(''); setRes2(''); setRes3('');
-        }
-    };
-
+export default function PercentagePage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Percentage Calculator</h1>
                 <p className="text-muted-foreground">Calculate percentages, increases, and decreases easily.</p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-                {/* Input Panel */}
-                <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                    <h3 className="font-bold mb-4 text-lg">Enter Values</h3>
-                    <div className="space-y-4">
-                        <div className="flex gap-4 items-center">
-                            <span className="w-8 font-bold text-muted-foreground">A</span>
-                            <input type="number" value={val1} onChange={e => { setVal1(e.target.value); }} placeholder="Value A" className="flex-1 bg-secondary/50 p-3 rounded-xl outline-none" />
-                        </div>
-                        <div className="flex gap-4 items-center">
-                            <span className="w-8 font-bold text-muted-foreground">B</span>
-                            <input type="number" value={val2} onChange={e => { setVal2(e.target.value); }} placeholder="Value B" className="flex-1 bg-secondary/50 p-3 rounded-xl outline-none" />
-                        </div>
-                        <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold mt-4">Calculate All</button>
-                    </div>
-                </div>
+            <PercentageCalculatorClient />
 
-                {/* Results Panel */}
-                <div className="space-y-4">
-                    <div className="bg-secondary/10 border border-border/50 rounded-2xl p-6">
-                        <div className="text-sm text-muted-foreground mb-1">What is <span className="font-bold text-foreground">{val1 || 'A'}%</span> of <span className="font-bold text-foreground">{val2 || 'B'}</span>?</div>
-                        <div className="text-3xl font-bold text-primary">{res1 || '-'}</div>
-                    </div>
-                    <div className="bg-secondary/10 border border-border/50 rounded-2xl p-6">
-                        <div className="text-sm text-muted-foreground mb-1"><span className="font-bold text-foreground">{val1 || 'A'}</span> is what % of <span className="font-bold text-foreground">{val2 || 'B'}</span>?</div>
-                        <div className="text-3xl font-bold text-blue-600">{res2 || '-'}<span className="text-lg">%</span></div>
-                    </div>
-                    <div className="bg-secondary/10 border border-border/50 rounded-2xl p-6">
-                        <div className="text-sm text-muted-foreground mb-1">Change from <span className="font-bold text-foreground">{val1 || 'A'}</span> to <span className="font-bold text-foreground">{val2 || 'B'}</span></div>
-                        <div className={`text-3xl font-bold ${parseFloat(res3) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                            {parseFloat(res3) > 0 ? '+' : ''}{res3 || '-'}<span className="text-lg">%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* SEO Content */}
-            <div className="mt-16 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
                 <h2>The Ultimate Guide to Percentages in Real Life</h2>
                 <p>
-                    Percentages are everywhere. From the "30% OFF" sale at the mall to the 20% tip at dinner, understanding how to calculate them quickly is a superpower.
+                    Percentages are everywhere. From the &quot;30% OFF&quot; sale at the mall to the 20% tip at dinner, understanding how to calculate them quickly is a superpower.
                     <strong>UnitMaster</strong> makes the complex math simple, but learning the tricks can help you do it in your head.
                 </p>
 
@@ -86,13 +37,13 @@ export default function PercentageCalculator() {
                     <li><strong>The 20% Tip</strong>: Find 10% and verify double it. (Meal is $40 &rarr; 10% is $4 &rarr; Tip is $8).</li>
                     <li><strong>The Swap Trick</strong>: <br /><strong>x% of y</strong> is exactly the same as <strong>y% of x</strong>.<br />
                         <em>Example:</em> You need to find 8% of 25. That sounds hard.<br />
-                        <em>Swap it:</em> Find 25% of 8. That's easy (it's one-quarter). The answer is 2.
+                        <em>Swap it:</em> Find 25% of 8. That&apos;s easy (it&apos;s one-quarter). The answer is 2.
                     </li>
                 </ul>
 
                 <h3>Visualizing Percentage Change</h3>
                 <p>
-                    One of the most common confusion points is the difference between "Percentage Of" and "Percentage Change".
+                    One of the most common confusion points is the difference between &quot;Percentage Of&quot; and &quot;Percentage Change&quot;.
                 </p>
                 <ul>
                     <li><strong>Percentage Of</strong> tells you a portion. (50 is 50% of 100).</li>
@@ -103,13 +54,84 @@ export default function PercentageCalculator() {
                 <p>
                     For those who like algebra, the universal formula for percentage increase/decrease is:
                 </p>
-                <blockquote className="not-italic font-mono bg-card p-4 rounded-lg">
+                <div className="not-prose bg-secondary/20 p-4 rounded-lg font-mono text-center my-4">
                     (New Value - Old Value) / Old Value × 100
-                </blockquote>
+                </div>
                 <p>
-                    If the result is positive, it's an increase. If negative, it's a decrease.
+                    If the result is positive, it&apos;s an increase. If negative, it&apos;s a decrease.
                 </p>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>How do I calculate a discount?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    To calculate a 20% discount on a $50 item:
+                                    <br />
+                                    1. Convert percentage to decimal (20% = 0.20).
+                                    <br />
+                                    2. Multiply price by decimal ($50 * 0.20 = $10 discount).
+                                    <br />
+                                    3. Subtract discount from original price ($50 - $10 = $40 final price).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>What is the reverse percentage formula?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    To calculate a price BEFORE tax (e.g., you paid $110 including 10% tax):
+                                    <br />
+                                    <code>Original = Final / (1 + Tax_Rate)</code>
+                                    <br />
+                                    $110 / 1.10 = $100.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How do I calculate percentage increase?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Subtract the original value from the new value, divide the result by the original value, and multiply by 100. Formula: ((New - Old) / Old) * 100.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is 20% of a number?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To find 20%, you can divide the number by 5. Alternatively, find 10% by moving the decimal one place to the left, then double it.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do you reverse calculate a percentage?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To find the original value before a percentage increase (like tax), divide the final amount by (1 + percentage as decimal). For example, Value / 1.20 for a 20% tax.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

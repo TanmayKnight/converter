@@ -1,69 +1,109 @@
-'use client';
+import type { Metadata } from 'next';
+import AsciiConverterClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'ASCII Converter - Text to Hex, Binary, Decimal | UnitMaster',
+    description: 'Convert text to ASCII codes instantly. Translate strings to Hexadecimal, Binary (0s and 1s), and Decimal formats locally in your browser.',
+    keywords: ['ascii converter', 'text to binary', 'text to hex', 'ascii table', 'character encoding', 'string to ascii'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/ascii',
+    },
+};
 
-export default function AsciiConverter() {
-    const [text, setText] = useState('Hello');
-    const [hex, setHex] = useState('');
-    const [binary, setBinary] = useState('');
-    const [decimal, setDecimal] = useState('');
-
-    useEffect(() => {
-        if (!text) {
-            setHex('');
-            setBinary('');
-            setDecimal('');
-            return;
-        }
-
-        const chars = text.split('');
-
-        setHex(chars.map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' '));
-        setBinary(chars.map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' '));
-        setDecimal(chars.map(c => c.charCodeAt(0).toString(10)).join(' '));
-    }, [text]);
-
+export default function AsciiPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">ASCII Text Converter</h1>
                 <p className="text-muted-foreground">Convert text to Binary, Hexadecimal, and Decimal ASCII codes.</p>
             </div>
 
-            <div className="grid gap-8">
-                <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
-                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">Input Text</label>
-                    <textarea
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        className="w-full bg-secondary/30 border border-primary/20 focus:border-primary rounded-xl p-4 min-h-[100px] outline-none transition-all"
-                        placeholder="Type text here..."
-                    />
+            <AsciiConverterClient />
+
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>What is ASCII?</h2>
+                <p>
+                    <strong>ASCII</strong> (American Standard Code for Information Interchange) is a character encoding standard for electronic communication.
+                    Computers don&apos;t understand letters like &apos;A&apos; or &apos;z&apos;. They only understand numbers (specifically, 0s and 1s).
+                    ASCII assigns a unique number to every character.
+                </p>
+
+                <h3>Common ASCII Codes</h3>
+                <div className="not-prose overflow-x-auto">
+                    <table className="min-w-full text-sm text-left border rounded-lg">
+                        <thead className="bg-secondary/50 font-bold">
+                            <tr>
+                                <th className="p-2 border">Char</th>
+                                <th className="p-2 border">Decimal</th>
+                                <th className="p-2 border">Hex</th>
+                                <th className="p-2 border">Binary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td className="p-2 border">&apos;A&apos;</td><td className="p-2 border">65</td><td className="p-2 border">41</td><td className="p-2 border">01000001</td></tr>
+                            <tr><td className="p-2 border">&apos;B&apos;</td><td className="p-2 border">66</td><td className="p-2 border">42</td><td className="p-2 border">01000010</td></tr>
+                            <tr><td className="p-2 border">&apos;a&apos;</td><td className="p-2 border">97</td><td className="p-2 border">61</td><td className="p-2 border">01100001</td></tr>
+                            <tr><td className="p-2 border">&apos; &apos; (Space)</td><td className="p-2 border">32</td><td className="p-2 border">20</td><td className="p-2 border">00100000</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
-                        <label className="text-sm font-semibold text-primary mb-2 block">Hexadecimal</label>
-                        <div className="font-mono text-sm break-all leading-relaxed bg-secondary/20 p-4 rounded-xl">
-                            {hex || '...'}
-                        </div>
-                    </div>
-                    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
-                        <label className="text-sm font-semibold text-primary mb-2 block">Binary</label>
-                        <div className="font-mono text-sm break-all leading-relaxed bg-secondary/20 p-4 rounded-xl">
-                            {binary || '...'}
-                        </div>
-                    </div>
-                    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm md:col-span-2">
-                        <label className="text-sm font-semibold text-primary mb-2 block">Decimal Codes</label>
-                        <div className="font-mono text-sm break-all leading-relaxed bg-secondary/20 p-4 rounded-xl">
-                            {decimal || '...'}
-                        </div>
-                    </div>
-                </div>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Why are there separate uppercase and lowercase codes?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Computers treat &apos;A&apos; and &apos;a&apos; as completely different characters. In ASCII, &apos;A&apos; starts at 65, while &apos;a&apos; starts at 97.
+                                    The difference between them is exactly 32 (or the 6th bit in binary), which allows for easy case conversion in software.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>How many characters does ASCII support?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Standard ASCII uses 7 bits, allowing for 128 characters (0-127).
+                                    Extended ASCII uses 8 bits (1 byte), allowing for 256 characters (0-255). Modern systems use Unicode (UTF-8), which is backward compatible with ASCII but supports millions of characters (emojis, Chinese, etc.).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What does ASCII stand for?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'ASCII stands for American Standard Code for Information Interchange. It is the most common format for text files in computers and on the Internet.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do computers store text?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Computers store text as numbers. Under the hood, every letter is converted to a binary number (sequence of 0s and 1s) based on an encoding standard like ASCII.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

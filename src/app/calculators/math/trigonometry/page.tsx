@@ -1,97 +1,103 @@
-'use client';
+import type { Metadata } from 'next';
+import TrigCalculatorClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Trigonometry Calculator - Sin, Cos, Tan Online',
+    description: 'Calculate Sine, Cosine, Tangent and their Inverse functions (Arcsin, Arccos, Arctan) instantly. Supports degrees.',
+    keywords: ['trigonometry calculator', 'sin calculator', 'cos calculator', 'tan calculator', 'inverse sine', 'trig functions'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/trigonometry',
+    },
+};
 
-type Mode = 'sin' | 'cos' | 'tan' | 'asin' | 'acos' | 'atan';
-
-export default function TrigCalculator() {
-    const [mode, setMode] = useState<Mode>('cos');
-    const [val, setVal] = useState('');
-    const [result, setResult] = useState<string | null>(null);
-
-    const calculate = () => {
-        const v = parseFloat(val);
-        if (isNaN(v)) {
-            setResult(null);
-            return;
-        }
-
-        let res = 0;
-        switch (mode) {
-            case 'sin':
-                res = Math.sin(v * (Math.PI / 180)); // deg to rad
-                break;
-            case 'cos':
-                res = Math.cos(v * (Math.PI / 180));
-                break;
-            case 'tan':
-                res = Math.tan(v * (Math.PI / 180));
-                break;
-            case 'asin':
-                res = Math.asin(v) * (180 / Math.PI); // rad to deg
-                break;
-            case 'acos':
-                res = Math.acos(v) * (180 / Math.PI);
-                break;
-            case 'atan':
-                res = Math.atan(v) * (180 / Math.PI);
-                break;
-        }
-        setResult(res.toFixed(6));
-    };
-
-    const getLabel = () => {
-        if (['sin', 'cos', 'tan'].includes(mode)) return 'Angle (Degrees)';
-        return 'Value';
-    };
-
+export default function TrigPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Trigonometry Calculator</h1>
                 <p className="text-muted-foreground">Calculate Sine, Cosine, Tangent and their inverses.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="flex justify-center flex-wrap gap-2 mb-8">
-                    {(['sin', 'cos', 'tan', 'asin', 'acos', 'atan'] as Mode[]).map(m => (
-                        <button
-                            key={m}
-                            onClick={() => { setMode(m); setResult(null); }}
-                            className={`px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-colors ${mode === m ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/80'
-                                }`}
-                        >
-                            {m}
-                        </button>
-                    ))}
-                </div>
+            <TrigCalculatorClient />
 
-                <div className="max-w-md mx-auto space-y-6">
-                    <div>
-                        <label className="text-sm font-semibold mb-2 block">{getLabel()}</label>
-                        <input
-                            type="number"
-                            value={val}
-                            onChange={e => setVal(e.target.value)}
-                            className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                            placeholder={mode.startsWith('a') ? "Enter value (e.g. 0.5)" : "Enter angle (e.g. 45)"}
-                        />
-                    </div>
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                <h2>The Triangle Math</h2>
+                <p>
+                    Trigonometry studies relationships between side lengths and angles of triangles.
+                    It is fundamental to engineering, physics, and video game development (rotation!).
+                </p>
 
-                    <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-opacity">
-                        Calculate
-                    </button>
+                <h3>SOH CAH TOA</h3>
+                <p>
+                    The classic mnemonic for right-angled triangles:
+                </p>
+                <ul>
+                    <li><strong>SOH</strong>: <strong>S</strong>ine = <strong>O</strong>pposite / <strong>H</strong>ypotenuse</li>
+                    <li><strong>CAH</strong>: <strong>C</strong>osine = <strong>A</strong>djacent / <strong>H</strong>ypotenuse</li>
+                    <li><strong>TOA</strong>: <strong>T</strong>angent = <strong>O</strong>pposite / <strong>A</strong>djacent</li>
+                </ul>
 
-                    {result && (
-                        <div className="bg-secondary/20 p-6 rounded-2xl text-center border-2 border-dashed border-border mt-6">
-                            <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Result</div>
-                            <div className="text-4xl font-extrabold text-foreground">{result} {mode.startsWith('a') ? '°' : ''}</div>
-                        </div>
-                    )}
-                </div>
+                <h3>Inverse Functions (Arc)</h3>
+                <p>
+                    If you know the ratio of the sides but want to find the <strong>Angle</strong>, you use the Inverse functions: Arcsin (sin⁻¹), Arccos, and Arctan.
+                </p>
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Does this calculator use Degrees or Radians?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    This calculator assumes inputs are in <strong>Degrees</strong>.
+                                    Common calculators toggle between DEG/RAD, but everyday problems usually state angles in degrees (e.g., 90°, 45°).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Why is Tan(90°) undefined?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Tan = Sin/Cos.
+                                    At 90 degrees, Cos is 0. Dividing by zero is mathematically undefined (it approaches infinity).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is SOH CAH TOA?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'SOH CAH TOA is a mnemonic to remember the trig definitions. Sine = Opposite/Hypotenuse, Cosine = Adjacent/Hypotenuse, Tangent = Opposite/Adjacent.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I convert Degrees to Radians?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Multiply the degree value by Pi/180. For example, 180° * (π/180) = π radians.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }

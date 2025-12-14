@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Layers, Loader2, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function MergePDFPage() {
     const [files, setFiles] = useState<File[]>([]);
@@ -144,39 +145,102 @@ export default function MergePDFPage() {
                     <strong>UnitMaster PDF Merger</strong> allows you to combine an unlimited number of PDF files securely in your browser.
                 </p>
 
-                <h3>Why Privacy Matters for PDF Tools</h3>
-                <p>
-                    Most online PDF tools require you to upload your sensitive documents (tax returns, legal contracts, medical records) to a remote server.
-                    Even if they promise to delete them, there is always a risk of data breaches or transmission leaks.
-                </p>
-                <p>
-                    We take a radically different approach. Our tool runs <strong>entirely on your device</strong>. The merging engine is downloaded to your browser,
-                    meaning your files never leave your computer. It is physically impossible for us to view your documents.
-                </p>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Why is this tool safer than others?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Most online PDF tools require you to upload your sensitive documents (tax returns, legal contracts) to a remote server.
+                                    This creates a risk of data breaches.
+                                </p>
+                                <p>
+                                    We take a radically different approach. Our tool runs <strong>entirely on your device</strong>. The merging engine is downloaded to your browser,
+                                    meaning your files never leave your computer. It is physically impossible for us to view your documents.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Features of Our PDF Combiner</h3>
-                <ul>
-                    <li><strong>Unlimited Files</strong>: Merge 2 or 200 files. We don't impose artificial limits.</li>
-                    <li><strong>Drag & Drop Reordering</strong>: Easily arrange your documents in the exact order you need.</li>
-                    <li><strong>Instant Processing</strong>: No upload wait times. A 50MB merge takes milliseconds, not minutes.</li>
-                    <li><strong>Clean Output</strong>: We don't add watermarks to your professional documents.</li>
-                </ul>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Key Features</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Unlimited Files</strong>: Merge 2 or 200 files. We don't impose artificial limits.</li>
+                                    <li><strong>Drag & Drop Reordering</strong>: Easily arrange your documents in the exact order you need.</li>
+                                    <li><strong>Instant Processing</strong>: No upload wait times. A 50MB merge takes milliseconds, not minutes.</li>
+                                    <li><strong>Clean Output</strong>: We don't add watermarks to your professional documents.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Step-by-Step Instructions</h3>
-                <ol>
-                    <li><strong>Select Files</strong>: Drop your PDFs into the upload zone or click to select from your computer.</li>
-                    <li><strong>Arrange</strong>: Drag the file thumbnails to reorder them. The top-left file will be the first pages of your new document.</li>
-                    <li><strong>Merge</strong>: Click the "Merge PDF Files" button.</li>
-                    <li><strong>Save</strong>: Your new document is ready instantly. Click "Download PDF" to save it.</li>
-                </ol>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>How do I combine files?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ol className="list-decimal pl-6 space-y-2">
+                                    <li><strong>Select Files</strong>: Drop your PDFs into the upload zone or click to select from your computer.</li>
+                                    <li><strong>Arrange</strong>: Drag the file thumbnails to reorder them. The top-left file will be the first pages of your new document.</li>
+                                    <li><strong>Merge</strong>: Click the "Merge PDF Files" button.</li>
+                                    <li><strong>Save</strong>: Your new document is ready instantly. Click "Download PDF" to save it.</li>
+                                </ol>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Common Use Cases</h3>
-                <ul>
-                    <li><strong>Job Applications</strong>: Combine your Resume and Cover Letter into one professional attachment.</li>
-                    <li><strong>Invoices & Receipts</strong>: Merge monthly expense receipts into a single file for your accountant.</li>
-                    <li><strong>Project Reports</strong>: Combine individual chapter PDFs into a final thesis or report.</li>
-                </ul>
+                    <AccordionItem value="item-4">
+                        <AccordionTrigger>Who needs to merge PDFs?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Job Applications</strong>: Combine your Resume and Cover Letter into one professional attachment.</li>
+                                    <li><strong>Invoices & Receipts</strong>: Merge monthly expense receipts into a single file for your accountant.</li>
+                                    <li><strong>Project Reports</strong>: Combine individual chapter PDFs into a final thesis or report.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'Is UnitMaster PDF Merger safe for sensitive documents?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Yes, it is 100% safe. The merging process runs locally in your browser, meaning your files are never uploaded to any server.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: ' Is there a limit to how many PDFs I can merge?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'No. You can merge an unlimited number of PDF files at once, free of charge.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I rearrange the order of my PDFs?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Simply drag and drop the file thumbnails in the list to change their sequence before clicking Merge.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </div>
     );
 }

@@ -1,133 +1,85 @@
-'use client';
+import type { Metadata } from 'next';
+import StatsCalculatorClient from './client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-import { useState } from 'react';
-import Link from 'next/link';
+export const metadata: Metadata = {
+    title: 'Statistics Calculator - Permutations, Combinations & Probability',
+    description: 'Solve statistics problems online. Calculate Mean (Average), Permutations (nPr), Combinations (nCr), and Factorials instanty.',
+    keywords: ['statistics calculator', 'permutation calculator', 'combination calculator', 'npr calculator', 'ncr calculator', 'probability calculator'],
+    alternates: {
+        canonical: 'https://unitmaster.io/calculators/math/statistics',
+    },
+};
 
-type Mode = 'perm' | 'comb' | 'fact' | 'avg' | 'prob';
-
-export default function StatsCalculator() {
-    const [mode, setMode] = useState<Mode>('perm');
-    const [val1, setVal1] = useState(''); // n or list
-    const [val2, setVal2] = useState(''); // r
-    const [result, setResult] = useState<string | null>(null);
-
-    const factorial = (n: number): number => {
-        if (n < 0) return -1;
-        if (n === 0) return 1;
-        let res = 1;
-        for (let i = 2; i <= n; i++) res *= i;
-        return res;
-    };
-
-    const calculate = () => {
-        let res = '';
-
-        if (mode === 'avg') {
-            const nums = val1.split(/[\s,]+/).map(Number).filter(n => !isNaN(n));
-            if (nums.length === 0) return;
-            const sum = nums.reduce((a, b) => a + b, 0);
-            res = (sum / nums.length).toFixed(4);
-        } else {
-            const n = parseInt(val1);
-            const r = parseInt(val2);
-
-            switch (mode) {
-                case 'fact':
-                    if (!isNaN(n)) res = factorial(n).toString();
-                    break;
-                case 'perm': // nPr = n! / (n-r)!
-                    if (!isNaN(n) && !isNaN(r) && n >= r) {
-                        res = (factorial(n) / factorial(n - r)).toString();
-                    }
-                    break;
-                case 'comb': // nCr = n! / (r! * (n-r)!)
-                    if (!isNaN(n) && !isNaN(r) && n >= r) {
-                        res = (factorial(n) / (factorial(r) * factorial(n - r))).toString();
-                    }
-                    break;
-                case 'prob': // P(A) = r/n
-                    if (!isNaN(n) && !isNaN(r)) {
-                        res = (r / n).toFixed(4); // r events / n total
-                    }
-                    break;
-            }
-        }
-        setResult(res);
-    };
-
+export default function StatisticsPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
+        <>
+            <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Statistics Calculator</h1>
                 <p className="text-muted-foreground">Permutations, Combinations, Factorials & More.</p>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar justify-center">
-                    {(['perm', 'comb', 'fact', 'prob', 'avg'] as Mode[]).map(m => (
-                        <button
-                            key={m}
-                            onClick={() => { setMode(m); setVal1(''); setVal2(''); setResult(null); }}
-                            className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${mode === m ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/80'
-                                }`}
-                        >
-                            {m === 'perm' ? 'Permutation (nPr)' : m === 'comb' ? 'Combination (nCr)' : m === 'fact' ? 'Factorial (!)' : m === 'prob' ? 'Probability' : 'Average'}
-                        </button>
-                    ))}
-                </div>
+            <StatsCalculatorClient />
 
-                <div className="max-w-md mx-auto space-y-6">
-                    {mode === 'avg' ? (
-                        <div>
-                            <label className="text-sm font-semibold mb-2 block">Numbers (comma separated)</label>
-                            <input
-                                type="text"
-                                value={val1}
-                                onChange={e => setVal1(e.target.value)}
-                                className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                                placeholder="10, 20, 30..."
-                            />
-                        </div>
-                    ) : (
-                        <>
-                            <div>
-                                <label className="text-sm font-semibold mb-2 block">{mode === 'prob' ? 'Total Outcomes (n)' : 'Total Items (n)'}</label>
-                                <input
-                                    type="number"
-                                    value={val1}
-                                    onChange={e => setVal1(e.target.value)}
-                                    className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                                    placeholder="e.g. 52"
-                                />
+            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
+                {/* Dynamic explanations moved to client component */}
+
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>What does n and r stand for?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>n</strong> = Total number of items in the set.
+                                    <br />
+                                    <strong>r</strong> = Number of items you are choosing/selecting.
+                                </p>
                             </div>
-                            {mode !== 'fact' && (
-                                <div>
-                                    <label className="text-sm font-semibold mb-2 block">{mode === 'prob' ? 'Favorable Outcomes (r)' : 'Selected Items (r)'}</label>
-                                    <input
-                                        type="number"
-                                        value={val2}
-                                        onChange={e => setVal2(e.target.value)}
-                                        className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                                        placeholder="e.g. 5"
-                                    />
-                                </div>
-                            )}
-                        </>
-                    )}
+                        </AccordionContent>
+                    </AccordionItem>
 
-                    <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-opacity">
-                        Calculate result
-                    </button>
-
-                    {result && (
-                        <div className="bg-secondary/20 p-6 rounded-2xl text-center border-2 border-dashed border-border mt-6">
-                            <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">Calculated Result</div>
-                            <div className="text-4xl font-extrabold text-foreground">{result}</div>
-                        </div>
-                    )}
-                </div>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>What is the probability of winning the lottery?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    This is a Combination problem. If you need to choose 6 numbers out of 49, it is <code>49 C 6</code>.
+                                    That equals 13,983,816. The probability is <strong>1 in 13.9 million</strong>.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
-        </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between Permutation and Combination?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'In Permutations, the order of items matters (like a lock code). In Combinations, order does not matter (like ingredients in a salad).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is 0 factorial (0!)?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: '0! is defined as 1. This convention makes many mathematical formulas work correctly.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
+        </>
     );
 }
