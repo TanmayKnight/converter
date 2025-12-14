@@ -135,7 +135,7 @@ export function MortgageCalculatorClient() {
                 </div>
                 <button
                     onClick={() => setCompareMode(!compareMode)}
-                    className="hidden sm:flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg text-sm font-medium transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg text-sm font-medium transition-colors"
                 >
                     <ArrowRightLeft className="h-4 w-4" />
                     {compareMode ? 'Disable Comparison' : 'Compare Loans'}
