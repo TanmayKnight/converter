@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, Receipt, Calculator, Store, BadgeDollarSign } from 'lucide-react';
+import { Download, Receipt, Calculator, Store, BadgeDollarSign, DollarSign, Percent } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
