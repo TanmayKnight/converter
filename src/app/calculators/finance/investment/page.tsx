@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { InvestmentCalculatorClient } from '@/components/calculators/InvestmentCalculatorClient';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
     title: 'Investment Calculator - Wealth Growth Charts & PDF Reports',
@@ -27,34 +28,53 @@ export default function InvestmentPage() {
                     The <strong>UnitMaster Investment Calculator</strong> helps you translate raw numbers into actionable growth metrics.
                 </p>
 
-                <h3>ROI (Return on Investment)</h3>
-                <p>
-                    ROI is the simplest metric. It answers: <em>"For every dollar I put in, how many did I get back?"</em>
-                    <br />
-                    <strong>Formula:</strong> <code>(Net Profit / Total Investment) * 100</code>
-                </p>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>ROI vs. CAGR: What's the difference?</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    ROI is the simplest metric. It answers: <em>"For every dollar I put in, how many did I get back?"</em>
+                                    <br />
+                                    <strong>Formula:</strong> <code>(Net Profit / Total Investment) * 100</code>
+                                </p>
+                                <p>
+                                    ROI can be misleading for long-term investments. A 50% ROI looks great, but if it took 10 years to achieve, that's actually a terrible return (only ~4% per year).
+                                    <strong>CAGR (Compound Annual Growth Rate)</strong> smooths out the volatility and tells you the <em>annual</em> growth rate you effectively earned.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>CAGR (Compound Annual Growth Rate)</h3>
-                <p>
-                    ROI can be misleading for long-term investments. A 50% ROI looks great, but if it took 10 years to achieve, that's actually a terrible return (only ~4% per year).
-                    <strong>CAGR</strong> smooths out the volatility and tells you the <em>annual</em> growth rate you effectively earned.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Types of Investments</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Fixed Deposits (CDs)</strong>: Low risk, guaranteed returns, but often barely beat inflation.</li>
+                                    <li><strong>Equities (Stocks)</strong>: High risk, high potential return. Historically average 8-10% (S&P 500) over long periods.</li>
+                                    <li><strong>Real Estate</strong>: Offers both rental yield (cash flow) and capital appreciation (growth).</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Types of Investments</h3>
-                <ul>
-                    <li><strong>Fixed Deposits (CDs)</strong>: Low risk, guaranteed returns, but often barely beat inflation.</li>
-                    <li><strong>Equities (Stocks)</strong>: High risk, high potential return. Historically average 8-10% (S&P 500) over long periods.</li>
-                    <li><strong>Real Estate</strong>: Offers both rental yield (cash flow) and capital appreciation (growth).</li>
-                </ul>
-
-                <h3>The Rule of 72</h3>
-                <p>
-                    Want to know how fast your money will double? Divide 72 by your interest rate.
-                </p>
-                <ul>
-                    <li>At 6% return: 72 / 6 = 12 years to double.</li>
-                    <li>At 12% return: 72 / 12 = 6 years to double.</li>
-                </ul>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>The Rule of 72</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Want to know how fast your money will double? Divide 72 by your interest rate.
+                                </p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li>At 6% return: 72 / 6 = 12 years to double.</li>
+                                    <li>At 12% return: 72 / 12 = 6 years to double.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
             <script

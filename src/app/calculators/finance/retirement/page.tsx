@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { RetirementCalculatorClient } from '@/components/calculators/RetirementCalculatorClient';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
     title: 'Retirement Planner - Create Your Financial Freedom Roadmap (PDF)',
@@ -26,24 +27,45 @@ export default function RetirementPage() {
                     Retirement isn't an age; it's a financial number. The <strong>UnitMaster Retirement Planner</strong> helps you calculate exactly how big your "Nest Egg" needs to be to support your lifestyle indefinitely.
                 </p>
 
-                <h3>The 4% Rule (Safe Withdrawal Rate)</h3>
-                <p>
-                    The "4% Rule" is a common rule of thumb in retirement planning. It states that you can withdraw 4% of your portfolio in the first year of retirement (adjusted for inflation thereafter) and have a very high probability of never running out of money over a 30-year period.
-                    <br />
-                    <strong>Formula:</strong> <code>Financial Freedom Number = Annual Expenses × 25</code>.
-                </p>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>The 4% Rule (Safe Withdrawal Rate)</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    The "4% Rule" is a common rule of thumb in retirement planning. It states that you can withdraw 4% of your portfolio in the first year of retirement (adjusted for inflation thereafter) and have a very high probability of never running out of money over a 30-year period.
+                                    <br />
+                                    <strong>Formula:</strong> <code>Financial Freedom Number = Annual Expenses × 25</code>.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>FIRE Movement (Financial Independence, Retire Early)</h3>
-                <p>
-                    FIRE is a lifestyle movement with the goal of gaining financial independence and retiring early.
-                    By aggressively saving (often 50-70% of income) and investing in low-cost index funds, followers of FIRE aim to retire in their 30s or 40s.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>FIRE Movement (Financial Independence, Retire Early)</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    FIRE is a lifestyle movement with the goal of gaining financial independence and retiring early.
+                                    By aggressively saving (often 50-70% of income) and investing in low-cost index funds, followers of FIRE aim to retire in their 30s or 40s.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Inflation: The Silent Killer</h3>
-                <p>
-                    $1 million today will not have the same purchasing power in 20 years.
-                    Our calculator automatically adjusts for inflation (typically 2-3%), showing you the <em>future value</em> you need to target.
-                </p>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Inflation: The Silent Killer</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    $1 million today will not have the same purchasing power in 20 years.
+                                    Our calculator automatically adjusts for inflation (typically 2-3%), showing you the <em>future value</em> you need to target.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
             <script

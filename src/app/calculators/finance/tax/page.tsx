@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { TaxCalculatorClient } from '@/components/calculators/TaxCalculatorClient';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
     title: 'Tax & Invoice Generator - GST, VAT & Legal Invoices',
@@ -28,31 +29,52 @@ export default function TaxPage() {
                     Create compliant PDF invoices, validate Tax IDs (GSTIN/VAT) automatically, and send professional estimates to clients.
                 </p>
 
-                <h3>The Difference Between VAT and GST</h3>
-                <p>
-                    Functionally, they are very similar (consumption taxes), but they generally apply to different regions:
-                </p>
-                <ul>
-                    <li><strong>GST (Goods and Services Tax)</strong>: Common in Canada, Australia, New Zealand, and India. It is a single tax on the supply of goods and services.</li>
-                    <li><strong>VAT (Value Added Tax)</strong>: Common in the UK and European Union. It is charged at each stage of production.</li>
-                    <li><strong>Sales Tax</strong>: Common in the USA. It is usually only charged at the final point of sale to the consumer.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>The Difference Between VAT and GST</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    Functionally, they are very similar (consumption taxes), but they generally apply to different regions:
+                                </p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>GST (Goods and Services Tax)</strong>: Common in Canada, Australia, New Zealand, and India. It is a single tax on the supply of goods and services.</li>
+                                    <li><strong>VAT (Value Added Tax)</strong>: Common in the UK and European Union. It is charged at each stage of production.</li>
+                                    <li><strong>Sales Tax</strong>: Common in the USA. It is usually only charged at the final point of sale to the consumer.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Inclusive vs. Exclusive Tax</h3>
-                <p>
-                    <strong>Exclusive</strong>: The price is $100 + 10% Tax = Bill is $110. (Common in US/Canada).
-                    <br />
-                    <strong>Inclusive</strong>: The bill is $110. You need to "back-calculate" to find the tax.
-                    <br />
-                    <em>Formula:</em> <code>Tax Amount = Total Price - (Total Price / (1 + Tax Rate))</code>.
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Inclusive vs. Exclusive Tax</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>Exclusive</strong>: The price is $100 + 10% Tax = Bill is $110. (Common in US/Canada).
+                                    <br />
+                                    <strong>Inclusive</strong>: The bill is $110. You need to "back-calculate" to find the tax.
+                                    <br />
+                                    <em>Formula:</em> <code>Tax Amount = Total Price - (Total Price / (1 + Tax Rate))</code>.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Input Tax Credit (ITC)</h3>
-                <p>
-                    For business owners, GST/VAT is not a cost; it is a flow-through.
-                    You collect tax from customers and pay tax to suppliers. You only pay the government the <em>difference</em>.
-                    Keeping accurate calculations is essential to avoid overpaying your liability.
-                </p>
+                    <AccordionItem value="item-3">
+                        <AccordionTrigger>Input Tax Credit (ITC)</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    For business owners, GST/VAT is not a cost; it is a flow-through.
+                                    You collect tax from customers and pay tax to suppliers. You only pay the government the <em>difference</em>.
+                                    Keeping accurate calculations is essential to avoid overpaying your liability.
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
             <script

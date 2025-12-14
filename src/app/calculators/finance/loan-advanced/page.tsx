@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { LoanCalculatorClient } from '@/components/calculators/LoanCalculatorClient';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
@@ -28,21 +29,36 @@ export default function AdvancedLoanPage() {
                     The <strong>UnitMaster Advanced Loan Calculator</strong> helps you make smarter borrowing decisions.
                 </p>
 
-                <h3>Features</h3>
-                <ul>
-                    <li><strong>Comparison Mode</strong>: Enter two different loan scenarios (e.g., Dealer Financing vs. Bank Loan) to see which one costs less over time.</li>
-                    <li><strong>Amortization Chart</strong>: Visualize how fast your balance drops.</li>
-                    <li><strong>PDF Reports</strong>: Download a professional schedule to keep for your records.</li>
-                </ul>
+                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                <Accordion type="single" collapsible className="w-full not-prose">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Features of the Advanced Loan Calculator</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Comparison Mode</strong>: Enter two different loan scenarios (e.g., Dealer Financing vs. Bank Loan) to see which one costs less over time.</li>
+                                    <li><strong>Amortization Chart</strong>: Visualize how fast your balance drops.</li>
+                                    <li><strong>PDF Reports</strong>: Download a professional schedule to keep for your records.</li>
+                                </ul>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
 
-                <h3>Types of Loans</h3>
-                <p>
-                    <strong>Personal Loans</strong>: Unsecured loans often used for debt consolidation. Rates vary widely based on credit score.
-                    <br />
-                    <strong>Auto Loans</strong>: Secured by the vehicle. Often have lower rates but shorter terms (3-7 years).
-                    <br />
-                    <strong>Payday Loans</strong>: Extremely high-interest, short-term loans. Use our calculator to see the true cost of these loans (often 300%+ APR).
-                </p>
+                    <AccordionItem value="item-2">
+                        <AccordionTrigger>Different Types of Loans</AccordionTrigger>
+                        <AccordionContent>
+                            <div className="space-y-4 text-muted-foreground">
+                                <p>
+                                    <strong>Personal Loans</strong>: Unsecured loans often used for debt consolidation. Rates vary widely based on credit score.
+                                    <br />
+                                    <strong>Auto Loans</strong>: Secured by the vehicle. Often have lower rates but shorter terms (3-7 years).
+                                    <br />
+                                    <strong>Payday Loans</strong>: Extremely high-interest, short-term loans. Use our calculator to see the true cost of these loans (often 300%+ APR).
+                                </p>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </div>
 
             <JsonLdBreadcrumb
