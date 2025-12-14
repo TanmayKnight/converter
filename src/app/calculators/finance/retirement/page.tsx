@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import { RetirementCalculatorClient } from '@/components/calculators/RetirementCalculatorClient';
 
 export const metadata: Metadata = {
-    title: 'Retirement Planner & Calculator - Financial Freedom Roadmap',
-    description: 'Calculate how much you need to retire. Visualize your savings growth and find your "Financial Freedom Number".',
+    title: 'Retirement Planner - Create Your Financial Freedom Roadmap (PDF)',
+    description: 'Calculate your "Financial Freedom Number". Visualize your nest egg growth and download a personalized Retirement Roadmap PDF.',
     alternates: {
         canonical: 'https://unitmaster.io/calculators/finance/retirement',
     },
     openGraph: {
-        title: 'Retirement Planner | UnitMaster',
-        description: 'Will you have enough to retire? Calculate your nest egg now.',
+        title: 'Retirement Roadmap Planner | UnitMaster',
+        description: 'Download your personalized Financial Freedom Roadmap PDF.',
         url: 'https://unitmaster.io/calculators/finance/retirement',
         type: 'website',
     },

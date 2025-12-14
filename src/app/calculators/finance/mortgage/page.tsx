@@ -5,14 +5,14 @@ import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 export const metadata: Metadata = {
     // ... existing metadata ...
     // Note: I will keep the existing metadata block intact in the real file, I'm just showing context here
-    title: 'Free Mortgage Calculator - Estimate Monthly Payments & Interest',
-    description: 'Calculate your monthly mortgage payments with our free, highly accurate tool. Visualize amortization, interest rates, and loan terms instantly.',
+    title: 'Mortgage Calculator with Real-Time Rates & PDF Reports',
+    description: 'Calculate monthly payments with live mortgage rates. Features: Extra payments impact, Amortization PDF export, and Loan Comparison tool.',
     alternates: {
         canonical: 'https://unitmaster.io/calculators/finance/mortgage',
     },
     openGraph: {
-        title: 'Mortgage Calculator | UnitMaster',
-        description: 'Plan your home purchase with our precision mortgage calculator.',
+        title: 'Mortgage Calculator (Real-Time) | UnitMaster',
+        description: 'Plan smarter with live rates, extra payment analysis, and PDF reports.',
         url: 'https://unitmaster.io/calculators/finance/mortgage',
         type: 'website',
     },
@@ -29,10 +29,10 @@ export default function MortgagePage() {
             <MortgageCalculatorClient />
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
-                <h2>Understanding Your Mortgage: Amortization & Strategies</h2>
+                <h2>Smart Mortgage Planning: Real-Time Rates & Analysis</h2>
                 <p>
-                    A mortgage is likely the biggest debt you will ever take on. Understanding how it works can save you tens of thousands of dollars in interest.
-                    The <strong>UnitMaster Mortgage Calculator</strong> doesn't just show you a monthly payment; it helps you visualize the long-term cost of borrowing.
+                    Don't just calculate your payment; optimize it. The <strong>UnitMaster Mortgage Calculator</strong> connects to live market data to give you accurate estimates.
+                    Use our <strong>Comparison Mode</strong> to shop lenders, or generate a <strong>PDF Amortization Schedule</strong> to see how extra payments save you thousands.
                 </p>
 
                 <h3>The Truth About Amortization</h3>

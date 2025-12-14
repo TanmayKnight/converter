@@ -15,11 +15,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         // Static Calculator Pages
         { url: `${BASE_URL}/calculators/finance/mortgage`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/calculators/finance/loan`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-        { url: `${BASE_URL}/calculators/finance/investment`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/calculators/finance/tax`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/calculators/finance/retirement`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/calculators/finance/roi`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-        { url: `${BASE_URL}/calculators/finance/loan-advanced`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+        { url: `${BASE_URL}/calculators/finance/investment`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/finance/tax`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/finance/retirement`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/finance/roi`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/finance/loan-advanced`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
 
         { url: `${BASE_URL}/calculators/math/percentage`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
         { url: `${BASE_URL}/calculators/math/statistics`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },

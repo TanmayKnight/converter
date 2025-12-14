@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import { InvestmentCalculatorClient } from '@/components/calculators/InvestmentCalculatorClient';
 
 export const metadata: Metadata = {
-    title: 'Investment Calculator - Calculate Compound Interest & Growth',
-    description: 'Visualize your wealth growth with our Investment Calculator. Supports Compound Interest, Recurring Deposits, CDs, and NPV calculations.',
+    title: 'Investment Calculator - Wealth Growth Charts & PDF Reports',
+    description: 'Visualize your compound interest with interactive charts. Download professional Wealth Growth PDF reports. Supports SIP, Lumpsum, and Inflation adjustment.',
     alternates: {
         canonical: 'https://unitmaster.io/calculators/finance/investment',
     },
     openGraph: {
-        title: 'Investment Calculator | UnitMaster',
-        description: 'Calculate compound interest and investment returns instantly.',
+        title: 'Investment Growth Visualizer | UnitMaster',
+        description: 'See your money grow with interactive charts and PDF reports.',
         url: 'https://unitmaster.io/calculators/finance/investment',
         type: 'website',
     },

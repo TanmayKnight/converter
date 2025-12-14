@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import { TaxCalculatorClient } from '@/components/calculators/TaxCalculatorClient';
 
 export const metadata: Metadata = {
-    title: 'GST & VAT Calculator - Calculate Tax Instantly',
-    description: 'Free online Goods and Services Tax (GST) and Value Added Tax (VAT) calculator. Accurate for USA, UK, India, and Australia.',
+    title: 'Tax & Invoice Generator - GST, VAT & Legal Invoices',
+    description: 'Calculate GST/VAT and generate professional PDF invoices instantly. Features automatic Tax ID validation (GSTIN/VAT) and legal invoice templates.',
     alternates: {
         canonical: 'https://unitmaster.io/calculators/finance/tax',
     },
     openGraph: {
-        title: 'Tax Calculator | UnitMaster',
-        description: 'Calculate GST and VAT totals in seconds.',
+        title: 'Tax & Invoice Generator | UnitMaster',
+        description: 'Create legal PDF invoices and calculate taxes with ID validation.',
         url: 'https://unitmaster.io/calculators/finance/tax',
         type: 'website',
     },
@@ -21,10 +21,11 @@ export default function TaxPage() {
             <TaxCalculatorClient />
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
-                <h2>GST, VAT, and Sales Tax: A Global Guide</h2>
+                <h2>Professional Invoice Generator & Tax Calculator</h2>
                 <p>
-                    Whether you are a freelancer issuing an invoice or a traveler trying to figure out a refund, tax calculations can be confusing.
-                    <strong>UnitMaster Tax Calculator</strong> handles the two most common scenarios: "Adding Tax" and "Removing Tax".
+                    Freelancers and small businesses need more than just a calculator.
+                    <strong>UnitMaster</strong> combines a powerful GST/VAT calculator with a <strong>Legal Invoice Generator</strong>.
+                    Create compliant PDF invoices, validate Tax IDs (GSTIN/VAT) automatically, and send professional estimates to clients.
                 </p>
 
                 <h3>The Difference Between VAT and GST</h3>
@@ -60,8 +61,8 @@ export default function TaxPage() {
                     __html: JSON.stringify({
                         '@context': 'https://schema.org',
                         '@type': 'FinancialProduct',
-                        name: 'Tax Calculator',
-                        description: 'A tool to calculate GST and VAT.',
+                        name: 'Tax & Invoice Generator',
+                        description: 'A tool to calculate taxes and generate legal invoices.',
                         brand: {
                             '@type': 'Brand',
                             name: 'UnitMaster'
