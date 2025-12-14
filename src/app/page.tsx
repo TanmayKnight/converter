@@ -168,12 +168,12 @@ export default async function Home() {
           {/* 3. Finance & Business (Emerald) - LOCKED */}
           <BentoCard
             title="Finance & Business"
-            description="Crucial tools for mortgages, loans, and taxes."
+            description="Professional Suite: Real-Time Rates, PDF Reports & Analysis."
             icon={<DollarSign />}
             colorTheme="emerald"
             locked={isLocked}
             items={[
-              { title: "Mortgage Calc", href: "/calculators/finance/mortgage", icon: <DollarSign />, featured: true, type: 'calculator' },
+              { title: "Mortgage (Pro)", href: "/calculators/finance/mortgage", icon: <DollarSign />, featured: true, type: 'calculator' },
               { title: "Loan Calculator", href: "/calculators/finance/loan", icon: <Wallet />, featured: true, type: 'calculator' },
               { title: "Investment / ROI", href: "/calculators/finance/investment", icon: <TrendingUp />, type: 'calculator' },
               { title: "Tax (GST/VAT)", href: "/calculators/finance/tax", icon: <Receipt />, type: 'calculator' },

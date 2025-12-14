@@ -18,9 +18,14 @@ export const metadata: Metadata = {
     },
 };
 
+import { MarketRates } from '@/components/calculators/finance/MarketRates';
+
 export default function MortgagePage() {
     return (
         <>
+            <div className="container mx-auto px-4 max-w-4xl pt-8">
+                <MarketRates />
+            </div>
             <MortgageCalculatorClient />
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
