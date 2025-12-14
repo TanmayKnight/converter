@@ -1,202 +1,224 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { AffiliateCard } from '@/components/AffiliateCard';
+import { useState, useEffect } from 'react';
+import { DollarSign, Percent, TrendingUp, Download, PieChart, Coins } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
+import { toast } from 'sonner';
 
-type Mode = 'simple' | 'compound' | 'cd' | 'recurring' | 'depreciation' | 'npv' | 'roi';
+type ChartData = {
+    year: number;
+    principal: number;
+    interest: number;
+    total: number;
+}[];
 
 export function InvestmentCalculatorClient() {
-    const [mode, setMode] = useState<Mode>('simple');
+    // Inputs
+    const [principal, setPrincipal] = useState<string>('10000');
+    const [monthlyContribution, setMonthlyContribution] = useState<string>('500');
+    const [rate, setRate] = useState<string>('8'); // 8% avg market return
+    const [years, setYears] = useState<string>('10');
 
-    // Generic values: p=principal, r=rate, t=time, f=frequency/future, c=contribution
-    const [p, setP] = useState('');
-    const [r, setR] = useState('');
-    const [t, setT] = useState('');
-    const [c, setC] = useState(''); // Extra contribution or scrap value
-    const [result, setResult] = useState<string | null>(null);
+    // Results
+    const [totalValue, setTotalValue] = useState<number>(0);
+    const [totalInterest, setTotalInterest] = useState<number>(0);
+    const [totalPrincipal, setTotalPrincipal] = useState<number>(0);
+    const [chartData, setChartData] = useState<ChartData>([]);
 
-    const calculate = () => {
-        const principal = parseFloat(p);
-        const rate = parseFloat(r) / 100;
-        const time = parseFloat(t);
-        const extra = parseFloat(c) || 0;
+    useEffect(() => {
+        const p = parseFloat(principal) || 0;
+        const c = parseFloat(monthlyContribution) || 0;
+        const r = parseFloat(rate) || 0;
+        const y = parseFloat(years) || 0;
 
-        let res = 0;
+        if (y <= 0) return;
 
-        if (isNaN(principal) || isNaN(rate) || isNaN(time)) return;
+        const data: ChartData = [];
+        let balance = p;
+        let totalContrib = p;
+        const r_monthly = r / 100 / 12;
 
-        switch (mode) {
-            case 'simple':
-                // A = P(1 + rt)
-                res = principal * (1 + rate * time);
-                break;
-            case 'compound':
-                // A = P(1 + r/n)^(nt) ... assume annual (n=1) for simplicity unless specified
-                // Let's use Annual compounding default
-                res = principal * Math.pow((1 + rate), time);
-                break;
-            case 'cd':
-                // Certificate of Deposit roughly same as compound
-                res = principal * Math.pow((1 + rate), time);
-                break;
-            case 'recurring':
-                // RD (Monthly) -> P * n + P * n(n+1)/2 * r/12/100 ... simplified
-                // A = P * (((1+r)^n - 1) / r) * (1+r) ... for monthly deposits
-                // Let's do: monthly deposit 'principal' for 'time' years at 'rate'
-                const n = time * 12; // months
-                const r_mo = rate / 12;
-                res = principal * ((Math.pow(1 + r_mo, n) - 1) / r_mo) * (1 + r_mo);
-                break;
-            case 'depreciation':
-                // V = P * (1 - r)^t
-                res = principal * Math.pow((1 - rate), time);
-                break;
-            case 'npv':
-                // NPV = CashFlow / (1+r)^t - Initial
-                // This is complex for a single field, let's simplify:
-                // PV of a future sum: P / (1+r)^t
-                res = principal / Math.pow((1 + rate), time);
-                break;
+        for (let i = 1; i <= y; i++) {
+            // Calculate for each month in this year
+            for (let m = 0; m < 12; m++) {
+                balance += c;
+                balance *= (1 + r_monthly);
+                totalContrib += c;
+            }
+
+            data.push({
+                year: i,
+                principal: Math.round(totalContrib),
+                interest: Math.round(balance - totalContrib),
+                total: Math.round(balance)
+            });
         }
 
-        setResult(res.toFixed(2));
-    };
+        setChartData(data);
+        setTotalValue(balance);
+        setTotalPrincipal(totalContrib);
+        setTotalInterest(balance - totalContrib);
 
-    const getLabels = () => {
-        switch (mode) {
-            case 'recurring': return { p: 'Monthly Deposit', r: 'Annual Rate (%)', t: 'Years' };
-            case 'depreciation': return { p: 'Asset Value', r: 'Depreciation Rate (%)', t: 'Years' };
-            case 'npv': return { p: 'Future Value', r: 'Discount Rate (%)', t: 'Years' };
-            default: return { p: 'Principal Amount', r: 'Annual Interest Rate (%)', t: 'Time Period (Years)' };
-        }
+    }, [principal, monthlyContribution, rate, years]);
+
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+
+        doc.setFillColor(99, 102, 241); // Indigo-500
+        doc.rect(0, 0, 210, 20, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(16);
+        doc.text('UnitMaster - Wealth Growth Report', 14, 13);
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(12);
+        doc.text(`Initial Investment: $${parseFloat(principal).toLocaleString()}`, 14, 30);
+        doc.text(`Monthly Contribution: $${parseFloat(monthlyContribution).toLocaleString()}`, 14, 38);
+        doc.text(`Annual Rate: ${rate}%`, 14, 46);
+        doc.text(`Total Value: $${totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, 14, 54);
+
+        const tableData = chartData.map(row => [
+            `Year ${row.year}`,
+            `$${row.principal.toLocaleString()}`,
+            `$${row.interest.toLocaleString()}`,
+            `$${row.total.toLocaleString()}`
+        ]);
+
+        autoTable(doc, {
+            startY: 65,
+            head: [['Year', 'Principal invested', 'Interest Earned', 'Total Value']],
+            body: tableData,
+            theme: 'grid',
+            headStyles: { fillColor: [99, 102, 241] }
+        });
+
+        doc.save('UnitMaster_Investment_Report.pdf');
+        toast.success("Investment Report Downloaded");
     };
-    const labels = getLabels();
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-
-            <div className="text-center mb-10">
-                <h1 className="text-3xl font-bold mb-2">Investment Calculator</h1>
-                <p className="text-muted-foreground">Calculate interest, depreciation, and investment growth.</p>
+        <div className="container mx-auto px-4 py-8 max-w-5xl">
+            <div className="flex justify-between items-end mb-8">
+                <div>
+                    <h1 className="text-3xl font-bold mb-2">Investment Calculator</h1>
+                    <p className="text-muted-foreground">Visualize the power of compound interest.</p>
+                </div>
             </div>
 
-            <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <div className="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
-                    {(['simple', 'compound', 'cd', 'recurring', 'depreciation', 'npv'] as Mode[]).map(m => (
-                        <button
-                            key={m}
-                            onClick={() => { setMode(m); setP(''); setR(''); setT(''); setResult(null); }}
-                            className={`px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${mode === m ? 'bg-primary text-primary-foreground' : 'bg-secondary hover:bg-secondary/80'
-                                }`}
-                        >
-                            {m === 'cd' ? 'Certificate of Deposit' : m === 'npv' ? 'PV Calculator' : m === 'recurring' ? 'Recurring Deposit' : m + ' Interest'}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="max-w-md mx-auto space-y-6">
-                    <div>
-                        <label className="text-sm font-semibold mb-2 block">{labels.p}</label>
-                        <input
-                            type="number"
-                            value={p}
-                            onChange={e => setP(e.target.value)}
-                            className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                            placeholder="0.00"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-sm font-semibold mb-2 block">{labels.r}</label>
-                        <input
-                            type="number"
-                            value={r}
-                            onChange={e => setR(e.target.value)}
-                            className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                            placeholder="5.0"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-sm font-semibold mb-2 block">{labels.t}</label>
-                        <input
-                            type="number"
-                            value={t}
-                            onChange={e => setT(e.target.value)}
-                            className="w-full bg-secondary/50 p-4 rounded-xl text-lg outline-none focus:ring-2 ring-primary/20"
-                            placeholder="1"
-                        />
-                    </div>
-
-                    <button onClick={calculate} className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-opacity">
-                        Calculate Result
-                    </button>
-
-                    {result && (
-                        <div className="bg-secondary/20 p-6 rounded-2xl text-center border-2 border-dashed border-border mt-6">
-                            <div className="text-sm text-muted-foreground uppercase tracking-wider mb-2">
-                                {mode === 'depreciation' ? 'Remaining Value' : mode === 'npv' ? 'Present Value' : 'Final Amount'}
+            <div className="grid lg:grid-cols-3 gap-8">
+                {/* Inputs */}
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
+                        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Strategy Parameters</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm font-medium">Starting Amount ($)</label>
+                                <div className="relative mt-1">
+                                    <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={principal} onChange={e => setPrincipal(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                                </div>
                             </div>
-                            <div className="text-4xl font-extrabold text-foreground">${result}</div>
+                            <div>
+                                <label className="text-sm font-medium">Monthly Contribution ($)</label>
+                                <div className="relative mt-1">
+                                    <Coins className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={monthlyContribution} onChange={e => setMonthlyContribution(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium">Annual Return Rate (%)</label>
+                                <div className="relative mt-1">
+                                    <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={rate} onChange={e => setRate(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium">Time Period (Years)</label>
+                                <div className="relative mt-1">
+                                    <TrendingUp className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-indigo-500/20" />
+                                </div>
+                            </div>
                         </div>
-                    )}
+                    </div>
+
+                    <div className="bg-gradient-to-br from-indigo-500/10 to-purple-600/10 border border-indigo-500/20 rounded-3xl p-6 text-center">
+                        <div className="text-sm text-indigo-600 font-semibold uppercase mb-1">Future Value</div>
+                        <div className="text-4xl font-extrabold text-foreground">
+                            ${totalValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-indigo-500/20 grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                                <div className="text-muted-foreground">Total Invested</div>
+                                <div className="font-bold text-base">${totalPrincipal.toLocaleString()}</div>
+                            </div>
+                            <div>
+                                <div className="text-muted-foreground">Interest Earned</div>
+                                <div className="font-bold text-green-500 text-base">+${totalInterest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Visuals */}
+                <div className="lg:col-span-2 space-y-6">
+
+                    <div className="bg-card border border-border rounded-3xl p-6 h-[450px]">
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-lg font-semibold">Growth Curve</h3>
+                            <button onClick={downloadPDF} className="flex items-center gap-2 text-sm text-indigo-500 font-medium hover:underline">
+                                <Download className="h-4 w-4" /> Download Report
+                            </button>
+                        </div>
+
+                        <ResponsiveContainer width="100%" height="85%">
+                            <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="colorPrincipal" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#6366f1" stopOpacity={0.5} />
+                                        <stop offset="95%" stopColor="#6366f1" stopOpacity={0.1} />
+                                    </linearGradient>
+                                    <linearGradient id="colorInterest" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#22c55e" stopOpacity={0.5} />
+                                        <stop offset="95%" stopColor="#22c55e" stopOpacity={0.1} />
+                                    </linearGradient>
+                                </defs>
+                                <XAxis dataKey="year" />
+                                <YAxis />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} strokeOpacity={0.2} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: 'var(--background)', borderRadius: '12px', border: '1px solid var(--border)' }}
+                                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                                />
+                                <Legend />
+                                <Area type="monotone" dataKey="principal" stackId="1" name="Your Contributions" stroke="#6366f1" fill="url(#colorPrincipal)" />
+                                <Area type="monotone" dataKey="interest" stackId="1" name="Compound Interest" stroke="#22c55e" fill="url(#colorInterest)" />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    <div className="p-4 bg-indigo-500/5 rounded-2xl border border-indigo-500/10">
+                        <div className="flex gap-4 items-start">
+                            <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-600 mt-1">
+                                <TrendingUp className="h-5 w-5" />
+                            </div>
+                            <div>
+                                <h4 className="font-semibold text-indigo-900 dark:text-indigo-200">The 8th Wonder of the World</h4>
+                                <p className="text-sm text-muted-foreground mt-1">
+                                    Notice how the green area (Interest) starts small but eventually becomes larger than the purple area (Principal).
+                                    This is exponential growth. In Year {Math.round(parseInt(years) / 2)}, you earn interest on your interest.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {/* Affiliate Section Paused for SEO Focus
-            <div className="mt-12">
-                <h3 className="text-xl font-bold mb-6">Grow Your Wealth</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                    <AffiliateCard
-                        title="Robinhood"
-                        description="Commission-free investing. Get your first stock for free when you sign up."
-                        ctaText="Claim Free Stock"
-                        href="https://robinhood.com/"
-                        badge="Free Stock"
-                    />
-                    <AffiliateCard
-                        title="Webull"
-                        description="Advanced trading tools and extended hours trading. 0 commisions."
-                        ctaText="Open Account"
-                        href="https://www.webull.com/"
-                        badge="Pro Tools"
-                    />
-                </div>
-            </div>
-            */}
-
-            <CalculatorContent title="Mastering Investment Growth">
-                <h3>The Power of Compound Interest</h3>
-                <p>
-                    Compound interest is often called the "eighth wonder of the world." Unlike simple interest, where you earn money only on your initial principal,
-                    compound interest allows you to earn interest on your interest. Over long periods (10+ years), this exponential growth can turn modest monthly contributions
-                    into substantial wealth. This calculator helps you visualize that curve.
-                </p>
-
-                <h3>Investment Vehicles Explained</h3>
-                <p>
-                    <strong>Mutual Funds & ETFs:</strong> Baskets of stocks that offer instant diversification. Historically, the S&P 500 has returned about 10% annually before inflation.
-                </p>
-                <p>
-                    <strong>High-Yield Savings:</strong> These accounts pay higher interest rates than traditional checking accounts, making them ideal for emergency funds or short-term goals.
-                </p>
-                <p>
-                    <strong>CDs (Certificate of Deposit):</strong> You lock your money away for a set term (e.g., 1 year) in exchange for a guaranteed interest rate.
-                    They are extremely safe but offer lower returns than stocks.
-                </p>
-
-                <h3>Inflation and Real Returns</h3>
-                <p>
-                    When calculating long-term growth, it's important to remember inflation (the rising cost of goods).
-                    If your investment grows by 7% but inflation is 3%, your "real" return (purchasing power increase) is only about 4%.
-                    Our advanced modes help you account for depreciation and net present value (NPV) to make smarter decisions.
-                </p>
-
-                <h3>Start Early, Invest Consistently</h3>
-                <p>
-                    Time is your biggest asset. Investing $500/month starting at age 25 yields significantly more at age 60 than starting at age 35,
-                    even if you invest double the amount later. Use the "Recurring Deposit" mode to see how consistent habits impact your financial future.
-                </p>
+            <CalculatorContent title="Investment Guide">
+                <p>Consistent monthly contributions are more important than timing the market. Use this tool to set a realistic goal and stick to it.</p>
             </CalculatorContent>
         </div>
     );

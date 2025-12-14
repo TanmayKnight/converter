@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft, Home, PiggyBank, Clock } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line } from 'recharts';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
-import { Button } from '@/components/ui/button'; // Assuming we have a Button component, or we use standard button
 import { toast } from 'sonner';
 
 // Define types for amortization data
@@ -16,46 +15,96 @@ type AmortizationData = {
     interest: number;
     principal: number;
     totalInterest: number;
+    balanceAccelerated?: number;
 }[];
 
 export function MortgageCalculatorClient() {
-    // Inputs (Scenario A)
-    const [principal, setPrincipal] = useState<string>('300000');
+    // Inputs
+    const [homePrice, setHomePrice] = useState<string>('375000');
+    const [downPayment, setDownPayment] = useState<string>('75000');
+    const [downPaymentPercent, setDownPaymentPercent] = useState<string>('20');
     const [rate, setRate] = useState<string>('6.85');
     const [years, setYears] = useState<string>('30');
+    const [extraPayment, setExtraPayment] = useState<string>('0');
 
-    // Comparison Mode
-    const [compareMode, setCompareMode] = useState(false);
-    const [rateB, setRateB] = useState<string>('5.5');
-    const [yearsB, setYearsB] = useState<string>('15');
+    // Derived Logic State
+    const [loanAmount, setLoanAmount] = useState<number>(300000);
 
     // Outputs
     const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
-    const [monthlyPaymentB, setMonthlyPaymentB] = useState<number>(0);
     const [totalInterest, setTotalInterest] = useState<number>(0);
+    const [payoffDate, setPayoffDate] = useState<string>('');
+
+    // Savings Logic
+    const [interestSaved, setInterestSaved] = useState<number>(0);
+    const [timeSaved, setTimeSaved] = useState<string>('');
     const [chartData, setChartData] = useState<AmortizationData>([]);
 
-    const calculateMortgage = (p: number, r: number, y: number) => {
-        if (p <= 0 || r <= 0 || y <= 0) return { payment: 0, totalInterest: 0, schedule: [] };
+    // Handle Down Payment Sync
+    const handleHomePriceChange = (val: string) => {
+        setHomePrice(val);
+        const price = parseFloat(val) || 0;
+        const dpPct = parseFloat(downPaymentPercent) || 0;
+        const newDp = (price * dpPct) / 100;
+        setDownPayment(newDp.toFixed(0));
+    };
+
+    const handleDownPaymentChange = (val: string) => {
+        setDownPayment(val);
+        const dp = parseFloat(val) || 0;
+        const price = parseFloat(homePrice) || 0;
+        if (price > 0) {
+            setDownPaymentPercent(((dp / price) * 100).toFixed(1));
+        }
+    };
+
+    // On update
+    useEffect(() => {
+        const hp = parseFloat(homePrice) || 0;
+        const dp = parseFloat(downPayment) || 0;
+        const l = Math.max(0, hp - dp);
+        setLoanAmount(l);
+    }, [homePrice, downPayment]);
+
+    const calculateMortgage = (p: number, r: number, y: number, extra: number) => {
+        if (p <= 0 || r <= 0 || y <= 0) return { payment: 0, totalInterest: 0, schedule: [], payoffMonths: 0 };
 
         const monthlyRate = r / 100 / 12;
-        const n = y * 12;
+        const n = y * 12; // Standard months
+        // Standard Payment Formula
         const payment = (p * monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
 
-        // Generate Schedule
+        // Simulation
         let balance = p;
         let totalInt = 0;
+        let actualMonths = 0;
         const schedule: AmortizationData = [];
 
+        // We simulate up to standard term, but break early if paid off
         for (let i = 1; i <= n; i++) {
+            if (balance <= 0) break;
+
             const interestPayment = balance * monthlyRate;
-            const principalPayment = payment - interestPayment;
+            let principalPayment = payment - interestPayment;
+
+            // Add extra payment to principal
+            let totalMonthlyPay = payment + extra;
+
+            // Cap payment at remaining balance
+            if (balance + interestPayment < totalMonthlyPay) {
+                principalPayment = balance;
+                totalMonthlyPay = balance + interestPayment;
+            } else {
+                principalPayment += extra;
+            }
+
             balance -= principalPayment;
             totalInt += interestPayment;
+            actualMonths++;
 
-            if (i % 12 === 0) {
+            if (i % 12 === 0 || balance <= 0) {
                 schedule.push({
-                    year: i / 12,
+                    year: parseFloat((i / 12).toFixed(1)),
                     balance: Math.max(0, balance),
                     interest: totalInt,
                     principal: p - Math.max(0, balance),
@@ -63,67 +112,101 @@ export function MortgageCalculatorClient() {
                 });
             }
         }
-        return { payment, totalInterest: totalInt, schedule };
+        return { payment, totalInterest: totalInt, schedule, payoffMonths: actualMonths };
     };
 
     useEffect(() => {
-        const p = parseFloat(principal);
+        const p = loanAmount;
         const r = parseFloat(rate);
         const y = parseFloat(years);
+        const extra = parseFloat(extraPayment) || 0;
 
-        const resultA = calculateMortgage(p, r, y);
-        setMonthlyPayment(resultA.payment);
-        setTotalInterest(resultA.totalInterest);
-        setChartData(resultA.schedule);
+        // 1. Standard Scenario (No Extra)
+        const standard = calculateMortgage(p, r, y, 0);
 
-        if (compareMode) {
-            const rB = parseFloat(rateB);
-            const yB = parseFloat(yearsB);
-            const resultB = calculateMortgage(p, rB, yB);
-            setMonthlyPaymentB(resultB.payment);
+        // 2. Accelerated Scenario (With Extra)
+        const accelerated = calculateMortgage(p, r, y, extra);
+
+        setMonthlyPayment(standard.payment);
+        setTotalInterest(accelerated.totalInterest); // Show ACTUAL interest paid (accelerated)
+
+        // Merge Data for Chart
+        const mergedData = standard.schedule.map((point, index) => {
+            // Find matching year in accelerated data
+            const accPoint = accelerated.schedule.find(a => Math.abs(a.year - point.year) < 0.1);
+            return {
+                ...point,
+                balanceAccelerated: accPoint ? accPoint.balance : 0 // If not found, it's 0 (paid off)
+            };
+        });
+
+        // Clean up tail of chart (if accelerated finishes way early, standard continues)
+        // Correct logic: Standard continues to year 30. Accelerated drops to 0 at year X.
+        setChartData(mergedData);
+
+        // Savings
+        if (extra > 0) {
+            const intSaved = standard.totalInterest - accelerated.totalInterest;
+            setInterestSaved(Math.max(0, intSaved));
+
+            const monthsSaved = (y * 12) - accelerated.payoffMonths;
+            const yearsSavedVal = (monthsSaved / 12).toFixed(1);
+            setTimeSaved(yearsSavedVal);
+
+            const today = new Date();
+            today.setMonth(today.getMonth() + accelerated.payoffMonths);
+            setPayoffDate(today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+        } else {
+            setInterestSaved(0);
+            setTimeSaved('');
+            const today = new Date();
+            today.setFullYear(today.getFullYear() + y);
+            setPayoffDate(today.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
         }
 
-    }, [principal, rate, years, compareMode, rateB, yearsB]);
+    }, [loanAmount, rate, years, extraPayment]);
 
     const downloadPDF = () => {
         const doc = new jsPDF();
 
-        // Header
-        doc.setFillColor(16, 185, 129); // Emerald Color to match theme
+        doc.setFillColor(16, 185, 129); // Emerald
         doc.rect(0, 0, 210, 20, 'F');
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(16);
-        doc.text('UnitMaster - Mortgage Amortization Schedule', 14, 13);
+        doc.text('UnitMaster - Mortgage Plan', 14, 13);
 
-        // Info
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(12);
-        doc.text(`Loan Amount: $${parseFloat(principal).toLocaleString()}`, 14, 30);
-        doc.text(`Interest Rate: ${rate}%`, 14, 38);
-        doc.text(`Term: ${years} Years`, 14, 46);
+        doc.text(`Home Price: $${parseFloat(homePrice).toLocaleString()}`, 14, 30);
+        doc.text(`Down Payment: $${parseFloat(downPayment).toLocaleString()} (${downPaymentPercent}%)`, 14, 38);
+        doc.text(`Loan Amount: $${loanAmount.toLocaleString()}`, 14, 46);
         doc.text(`Monthly Payment: $${monthlyPayment.toFixed(2)}`, 14, 54);
 
-        doc.setFontSize(10);
-        doc.text(`Generated on ${new Date().toLocaleDateString()}`, 14, 65);
+        if (parseFloat(extraPayment) > 0) {
+            doc.setTextColor(22, 163, 74); // Green
+            doc.text(`Extra Payment: $${extraPayment}/mo`, 14, 62);
+            doc.text(`Interest Saved: $${interestSaved.toLocaleString(undefined, { maximumFractionDigits: 0 })}`, 14, 70);
+            doc.text(`Time Saved: ${timeSaved} Years`, 14, 78);
+        }
 
         // Table
         const tableData = chartData.map(row => [
             `Year ${row.year}`,
-            `$${row.interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
-            `$${row.principal.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
-            `$${row.balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+            `$${row.balance.toLocaleString(undefined, { maximumFractionDigits: 0 })}`,
+            // If accelerated exists and is different, show it? simpler to just show standard balance vs accelerated
+            `$${row.balanceAccelerated?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || '$0'}`
         ]);
 
         autoTable(doc, {
-            startY: 70,
-            head: [['Year', 'Total Interest Paid', 'Principal Paid', 'Remaining Balance']],
+            startY: 85,
+            head: [['Year', 'Standard Balance', 'Accelerated Balance']],
             body: tableData,
             theme: 'grid',
             headStyles: { fillColor: [16, 185, 129] }
         });
 
-        doc.save('UnitMaster_Mortgage_Schedule.pdf');
-        toast.success("Amortization Schedule Downloaded");
+        doc.save('UnitMaster_Mortgage_Plan.pdf');
+        toast.success("Mortgage Plan Downloaded");
     };
 
     return (
@@ -131,114 +214,117 @@ export function MortgageCalculatorClient() {
             <div className="flex justify-between items-end mb-8">
                 <div>
                     <h1 className="text-3xl font-bold mb-2">Mortgage Calculator</h1>
-                    <p className="text-muted-foreground">Premium visualization and professional PDF reports.</p>
+                    <p className="text-muted-foreground">Advanced planner with down payment & extra payment analysis.</p>
                 </div>
-                <button
-                    onClick={() => setCompareMode(!compareMode)}
-                    className="flex items-center gap-2 px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg text-sm font-medium transition-colors"
-                >
-                    <ArrowRightLeft className="h-4 w-4" />
-                    {compareMode ? 'Disable Comparison' : 'Compare Loans'}
-                </button>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-8">
-                {/* Left Column: Inputs */}
+                {/* Inputs */}
                 <div className="lg:col-span-1 space-y-6">
                     <div className="bg-card border border-border rounded-3xl p-6 shadow-sm">
-                        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Loan Parameters</h2>
+                        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">Loan Details</h2>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="text-sm font-medium">Loan Amount</label>
+                                <label className="text-sm font-medium">Home Price ($)</label>
                                 <div className="relative mt-1">
-                                    <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <input type="number" value={principal} onChange={e => setPrincipal(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-primary/20" />
+                                    <Home className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={homePrice} onChange={e => handleHomePriceChange(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-emerald-500/20" />
                                 </div>
                             </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="text-sm font-medium">Down Pay ($)</label>
+                                    <input type="number" value={downPayment} onChange={e => handleDownPaymentChange(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 px-3 outline-none mt-1 text-sm" />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Percent (%)</label>
+                                    <input type="number" value={downPaymentPercent} onChange={e => {
+                                        setDownPaymentPercent(e.target.value);
+                                        const pct = parseFloat(e.target.value) || 0;
+                                        const hp = parseFloat(homePrice) || 0;
+                                        setDownPayment(((hp * pct) / 100).toFixed(0));
+                                    }} className="w-full bg-secondary/50 rounded-xl py-2 px-3 outline-none mt-1 text-sm" />
+                                </div>
+                            </div>
+
                             <div>
-                                <label className="text-sm font-medium">Interest Rate (%)</label>
+                                <label className="text-sm font-medium">Rate (%)</label>
                                 <div className="relative mt-1">
                                     <Percent className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <input type="number" value={rate} onChange={e => setRate(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-primary/20" />
+                                    <input type="number" value={rate} onChange={e => setRate(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-emerald-500/20" />
                                 </div>
                             </div>
                             <div>
-                                <label className="text-sm font-medium">Loan Term (Years)</label>
+                                <label className="text-sm font-medium">Term (Years)</label>
                                 <div className="relative mt-1">
                                     <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-primary/20" />
+                                    <input type="number" value={years} onChange={e => setYears(e.target.value)} className="w-full bg-secondary/50 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-emerald-500/20" />
                                 </div>
                             </div>
                         </div>
 
-                        {/* Comparison Inputs */}
-                        {compareMode && (
-                            <div className="mt-8 pt-6 border-t border-border animate-in fade-in slide-in-from-top-4">
-                                <h2 className="text-sm font-semibold text-orange-500 uppercase tracking-wider mb-4">Scenario B (Comparison)</h2>
-                                <div className="space-y-4">
-                                    <div>
-                                        <label className="text-sm font-medium">Rate (%)</label>
-                                        <input type="number" value={rateB} onChange={e => setRateB(e.target.value)} className="w-full bg-orange-500/10 border border-orange-500/20 rounded-xl py-2 px-3 outline-none" />
-                                    </div>
-                                    <div>
-                                        <label className="text-sm font-medium">Term (Years)</label>
-                                        <input type="number" value={yearsB} onChange={e => setYearsB(e.target.value)} className="w-full bg-orange-500/10 border border-orange-500/20 rounded-xl py-2 px-3 outline-none" />
-                                    </div>
+                        <div className="mt-8 pt-6 border-t border-border">
+                            <h2 className="text-sm font-semibold text-emerald-600 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                <PiggyBank className="h-4 w-4" /> Save More
+                            </h2>
+                            <div>
+                                <label className="text-sm font-medium">Extra Monthly Payment ($)</label>
+                                <div className="relative mt-1">
+                                    <DollarSign className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                                    <input type="number" value={extraPayment} onChange={e => setExtraPayment(e.target.value)} className="w-full bg-emerald-500/10 border border-emerald-500/20 rounded-xl py-2 pl-9 pr-3 outline-none focus:ring-2 focus:ring-emerald-500/40" placeholder="0" />
                                 </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
 
-                {/* Right Column: Visualization & Results */}
+                {/* Results */}
                 <div className="lg:col-span-2 space-y-6">
-                    {/* Primary Result Card */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="bg-gradient-to-br from-emerald-500/10 to-teal-600/10 border border-emerald-500/20 rounded-3xl p-6 text-center">
                             <div className="text-sm text-emerald-600 font-semibold uppercase mb-1">Monthly Payment</div>
                             <div className="text-4xl font-extrabold text-foreground">
                                 ${monthlyPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                             </div>
-                            <div className="text-xs text-muted-foreground mt-2">Principal & Interest</div>
+                            <div className="text-xs text-muted-foreground mt-2">Principal & Interest (Loan: ${loanAmount.toLocaleString()})</div>
                         </div>
 
-                        {compareMode && (
-                            <div className="bg-gradient-to-br from-orange-500/10 to-red-600/10 border border-orange-500/20 rounded-3xl p-6 text-center">
-                                <div className="text-sm text-orange-600 font-semibold uppercase mb-1">Scenario B Payment</div>
-                                <div className="text-4xl font-extrabold text-foreground">
-                                    ${monthlyPaymentB.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                        {interestSaved > 0 ? (
+                            <div className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-3xl p-6 text-center animate-in fade-in zoom-in-95">
+                                <div className="text-sm text-green-700 dark:text-green-400 font-bold uppercase mb-1 flex items-center justify-center gap-2">
+                                    <TrendingUp className="h-4 w-4" /> Impact
                                 </div>
-                                <div className="text-xs text-muted-foreground mt-2">
-                                    Difference: <span className="font-bold">{monthlyPaymentB > monthlyPayment ? '+' : ''}${(monthlyPaymentB - monthlyPayment).toFixed(0)}</span>
+                                <div className="text-3xl font-extrabold text-foreground">
+                                    -${interestSaved.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                                </div>
+                                <div className="text-xs text-muted-foreground mt-2 font-medium">
+                                    Interest Saved & {timeSaved} Years Faster
                                 </div>
                             </div>
-                        )}
-
-                        {!compareMode && (
+                        ) : (
                             <div className="bg-card border border-border rounded-3xl p-6 flex flex-col justify-center items-center cursor-pointer hover:border-emerald-500/50 transition-colors group" onClick={downloadPDF}>
                                 <div className="h-12 w-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-600 mb-2 group-hover:scale-110 transition-transform">
                                     <Download className="h-6 w-6" />
                                 </div>
                                 <div className="font-semibold">Download Report</div>
-                                <div className="text-xs text-muted-foreground">Official PDF Schedule</div>
+                                <div className="text-xs text-muted-foreground">Detailed PDF Schedule</div>
                             </div>
                         )}
                     </div>
 
-                    {/* Chart */}
                     <div className="bg-card border border-border rounded-3xl p-6 h-[400px]">
-                        <h3 className="text-lg font-semibold mb-6">Amortization Schedule</h3>
+                        <h3 className="text-lg font-semibold mb-6 flex justify-between">
+                            <span>Balance Payoff Logic</span>
+                            {interestSaved > 0 && <span className="text-xs font-normal text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" /> Debt Free: {payoffDate}</span>}
+                        </h3>
                         <ResponsiveContainer width="100%" height="85%">
                             <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                                 <defs>
                                     <linearGradient id="colorPrincipal" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
                                         <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                                    </linearGradient>
-                                    <linearGradient id="colorInterest" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
-                                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
                                     </linearGradient>
                                 </defs>
                                 <XAxis dataKey="year" />
@@ -249,28 +335,18 @@ export function MortgageCalculatorClient() {
                                     formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
                                 />
                                 <Legend />
-                                <Area type="monotone" dataKey="principal" name="Cumulative Principal" stroke="#10b981" fillOpacity={1} fill="url(#colorPrincipal)" />
-                                <Area type="monotone" dataKey="totalInterest" name="Total Interest Paid" stroke="#ef4444" fillOpacity={1} fill="url(#colorInterest)" />
+                                <Area type="monotone" dataKey="balance" name="Standard Balance" stroke="#94a3b8" fillOpacity={1} fill="url(#colorPrincipal)" />
+                                {interestSaved > 0 && (
+                                    <Area type="monotone" dataKey="balanceAccelerated" name="Accelerated Balance" stroke="#16a34a" strokeWidth={2} fillOpacity={0} />
+                                )}
                             </AreaChart>
                         </ResponsiveContainer>
-                    </div>
-
-                    {/* Summary Stats */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-secondary/30 rounded-2xl">
-                            <div className="text-sm text-muted-foreground mb-1">Total Interest</div>
-                            <div className="text-xl font-bold text-red-500">${totalInterest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
-                        </div>
-                        <div className="p-4 bg-secondary/30 rounded-2xl">
-                            <div className="text-sm text-muted-foreground mb-1">Total Cost</div>
-                            <div className="text-xl font-bold">${(parseFloat(principal) + totalInterest).toLocaleString(undefined, { maximumFractionDigits: 0 })}</div>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <CalculatorContent title="Mortgage Guide">
-                <p>Use the chart above to visualize how your equity grows over time. In the early years (red area), most of your money goes to interest. Over time (green area), you start paying off the house itself.</p>
+                <p>Making extra payments goes directly towards your Principal balance. This reduces the amount of interest charged in all future months, creating a compounding "Snowball Effect" that kills debt faster.</p>
             </CalculatorContent>
         </div>
     );
