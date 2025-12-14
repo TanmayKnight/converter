@@ -77,6 +77,41 @@ export default function InvestmentPage() {
                     }),
                 }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between ROI and CAGR?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'ROI calculates total return (Net Profit / Total Investment), which can be misleading for long periods. CAGR (Compound Annual Growth Rate) calculates the effective annual growth rate, smoothing out volatility.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is the Rule of 72?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'The Rule of 72 is a quick way to estimate doubling time. Divide 72 by your interest rate to find years to double. For example, at 8% return, money doubles in 9 years (72/8).'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is a safe average return for stocks?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Historically, the S&P 500 has returned approximately 8-10% annually over long periods before inflation adjustment.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </>
     );
 }

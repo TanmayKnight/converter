@@ -98,6 +98,7 @@ export default function RootLayout({
               name: 'UnitMaster',
               url: 'https://unitmaster.io',
               logo: 'https://unitmaster.io/logo.png',
+              image: 'https://unitmaster.io/opengraph-image.png',
               sameAs: [
                 'https://twitter.com/unitmaster'
               ],

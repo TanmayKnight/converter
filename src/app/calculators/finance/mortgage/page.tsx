@@ -99,6 +99,41 @@ export default function MortgagePage() {
                     }),
                 }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'How does an extra mortgage payment help?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Making just one extra mortgage payment per year towards your principal can shorten a 30-year loan term by roughly 4-5 years and save tens of thousands of dollars in interest.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between Fixed-Rate and ARM mortgages?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'A Fixed-Rate Mortgage locks in your interest rate for the life of the loan, offering stability. An Adjustable-Rate Mortgage (ARM) starts with a lower rate for a set period (e.g., 5 years) but fluctuates with the market afterwards.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is PMI?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Private Mortgage Insurance (PMI) is an extra fee charged if your down payment is less than 20%. It protects the lender, not the borrower. You can remove it once you build 20% equity.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </>
     );
 }

@@ -72,6 +72,41 @@ export default function AdvancedLoanPage() {
                     }),
                 }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between Personal and Auto loans?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Personal loans are unsecured and can be used for any purpose, often with higher rates. Auto loans are secured by the vehicle, usually offering lower rates but with stricter terms.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'Are Payday loans worth it?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Payday loans are extremely high-interest short-term loans (often 300%+ APR). They should be avoided if possible. Use our calculator to see the true cost before borrowing.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How does Loan Comparison help?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'Looking at just the monthly payment is misleading. Loan Comparison shows the total interest paid over the life of two different loans (e.g., Dealer Financing vs. Bank Loan).'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </>
     );
 }

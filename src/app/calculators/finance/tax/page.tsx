@@ -75,6 +75,41 @@ export default function TaxPage() {
                     }),
                 }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: [
+                            {
+                                '@type': 'Question',
+                                name: 'What is the difference between GST and VAT?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'GST (Goods and Services Tax) is a single tax on the supply of goods and services (common in Australia, India, Canada). VAT (Value Added Tax) is charged at each stage of production (common in UK/EU). Functionally, they are very similar.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'How do I calculate tax-inclusive prices?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'To find the tax amount in a total price, use the formula: Tax = Total Note - (Total / (1 + Rate)). For example, if Total is $110 and tax is 10%, Tax = 110 - (110/1.1) = $10.'
+                                }
+                            },
+                            {
+                                '@type': 'Question',
+                                name: 'What is Input Tax Credit (ITC)?',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: 'ITC allows businesses to claim credit for the taxes paid on purchases. You subtract the tax you paid to suppliers from the tax you collected from customers, paying only the difference to the government.'
+                                }
+                            }
+                        ]
+                    }),
+                }}
+            />
         </>
     );
 }
