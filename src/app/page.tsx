@@ -86,6 +86,17 @@ const iconMap: Record<UnitCategory, any> = {
   radiation: Radio,
 };
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'UnitMaster - The All-in-One Unit Converter & Digital Toolkit',
+  description: 'Free online Unit Converter, Financial Calculators, PDF Tools, and Developer Utilities. Professional, privacy-first, and ad-free.',
+  keywords: ['unit converter', 'pdf tools', 'financial calculator', 'developer tools', 'json formatter', 'video trimmer'],
+  alternates: {
+    canonical: 'https://unitmaster.io',
+  },
+};
+
 export default async function Home() {
   const supabase = await createClient();
 
