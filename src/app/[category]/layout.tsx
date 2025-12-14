@@ -39,10 +39,19 @@ export default async function CategoryLayout({
                                     <Link href="/temperature" className="text-sm text-muted-foreground hover:text-primary transition-colors">Temperature</Link>
                                     <div className="h-px bg-border/50 my-1" />
                                     <Link href="/tools/image/passport" className="text-sm font-medium text-primary hover:underline">Try Passport Photo ✨</Link>
+                                    <p className="text-[10px] text-muted-foreground text-center mt-2">
+                                        🔒 All tools run locally in browser.
+                                    </p>
                                 </nav>
                             </div>
 
-                            <AdUnit className="h-[600px]" slotId={AD_SLOTS.SIDEBAR_UNIT} />
+                            {/* Spacer & Divider */}
+                            <div className="pt-8">
+                                <div className="h-px w-full bg-border/30" />
+                                <p className="text-[10px] text-center text-muted-foreground/40 mt-2 uppercase tracking-widest">Sponsored</p>
+                            </div>
+
+                            <AdUnit className="h-[600px] min-h-[600px] shadow-none bg-transparent border-none" slotId={AD_SLOTS.SIDEBAR_UNIT} />
                         </div>
                     </aside>
                 </div>

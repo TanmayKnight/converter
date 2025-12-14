@@ -73,7 +73,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-background antialiased`}>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-background antialiased`} suppressHydrationWarning>
         <div className="fixed inset-0 -z-10 bg-mesh opacity-50 pointer-events-none" />
         <Navbar />
         <main className="flex-1">
