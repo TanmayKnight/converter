@@ -9,6 +9,7 @@ import { Loader2, Upload, Play, Download, Music, Volume2, X, Plus } from 'lucide
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 
+
 interface AudioTrack {
     id: string;
     file: File;
@@ -231,6 +232,8 @@ export default function AudioMixerClient() {
                 )}
 
             </div>
+
+
         </div>
     );
 }

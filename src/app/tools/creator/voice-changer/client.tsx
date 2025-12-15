@@ -8,6 +8,7 @@ import { Loader2, Mic, Upload, Play, Download, Square, Music, Wand2 } from 'luci
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 
+
 const PRESETS = [
     { id: 'chipmunk', name: 'Chipmunk', icon: '🐿️', filter: 'asetrate=44100*1.5,aresample=44100,atempo=1' },
     { id: 'robot', name: 'Robot', icon: '🤖', filter: 'asetrate=44100*0.8,aresample=44100,atempo=1.25,aecho=0.8:0.9:1000:0.3' },
@@ -238,6 +239,8 @@ export default function VoiceChangerClient() {
 
                 </Card>
             </div >
+
+
 
         </div>
     );

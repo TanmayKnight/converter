@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { InvestmentCalculatorClient } from '@/components/calculators/InvestmentCalculatorClient';
+import { BankOfferList } from '@/components/monetization/BankOfferList';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
@@ -20,6 +21,32 @@ export default function InvestmentPage() {
     return (
         <>
             <InvestmentCalculatorClient />
+
+            <div className="container mx-auto px-4 max-w-4xl mt-12 mb-8">
+                <BankOfferList
+                    title="Maximize Your Lazy Money"
+                    subtitle="Don't let inflation eat your cash. Top High-Yield Savings Accounts (HYSA)."
+                    offers={[
+                        {
+                            id: 'sofi-savings',
+                            bankName: 'SoFi Checking & Savings',
+                            description: 'Get up to $300 bonus. No account fees. FDIC Insured.',
+                            rateHighlight: '4.60% APY',
+                            ctaText: 'Open Account',
+                            affiliateLink: '#', // Replace with link
+                            featured: true
+                        },
+                        {
+                            id: 'ally-bank',
+                            bankName: 'Ally Bank',
+                            description: 'A customer favorite. Great mobile app, buckets for savings goals.',
+                            rateHighlight: '4.20% APY',
+                            ctaText: 'Start Saving',
+                            affiliateLink: '#'
+                        }
+                    ]}
+                />
+            </div>
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
                 <h2>Measuring Investment Success: ROI vs. CAGR</h2>

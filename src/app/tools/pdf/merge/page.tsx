@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+
 export default function MergePDFPage() {
     const [files, setFiles] = useState<File[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -136,6 +137,8 @@ export default function MergePDFPage() {
                     </div>
                 )}
             </div>
+
+
 
             {/* Content / SEO Section */}
             <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">

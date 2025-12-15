@@ -17,15 +17,15 @@ import {
   Percent,
   Receipt,
   Umbrella,
-  PiggyBank,
+  // PiggyBank, // Removed unused
   Wallet,
   FunctionSquare,
   Triangle,
   Sigma,
   BoxSelect,
-  Box,
+  // Box, // Removed unused
   Binary,
-  Hash,
+  // Hash, // Removed unused
   Code,
   Banknote,
   FileText,
@@ -41,10 +41,10 @@ import {
   Image as ImageIcon,
   Mic,
   Crop,
-  Maximize2,
+  //   Maximize2, // Removed
   Minimize2,
   Eraser,
-  Sparkles,
+  //   Sparkles, // Removed
   User,
   QrCode,
   Video,
@@ -52,12 +52,14 @@ import {
   Code2,
   Shield,
   Wand2,
-  Music
+  Music,
+  Split,
+  PenTool
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
 import { createClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers'; // Unused
 
 // Map icons for unit categories
 const iconMap: Record<UnitCategory, any> = {
@@ -160,8 +162,9 @@ export default async function Home() {
               { title: "Split PDF", href: "/tools/pdf/split", icon: <Scissors />, featured: true, type: 'tool' },
               { title: "Compress PDF", href: "/tools/pdf/compress", icon: <Files />, featured: true, type: 'tool' },
               { title: "PDF to Image", href: "/tools/pdf/pdf-to-image", icon: <ImageIcon />, type: 'tool' },
-              { title: "Image to PDF", href: "/tools/pdf/image-to-pdf", icon: <ImageIcon />, type: 'tool' },
-              { title: "Sign PDF", href: "/tools/pdf/sign", icon: <FileText />, type: 'tool' },
+              { title: "Split PDF", href: "/tools/pdf/split", icon: <Split />, type: 'tool' },
+              { title: "PDF to Word (OCR)", href: "/tools/pdf/to-word", icon: <FileText className="text-orange-500" />, featured: true, type: 'tool' },
+              { title: "Sign PDF", href: "/tools/pdf/sign", icon: <PenTool />, type: 'tool' },
             ]}
           />
 
@@ -192,7 +195,7 @@ export default async function Home() {
               { title: "Crop Image", href: "/tools/image/crop", icon: <Crop />, featured: true, type: 'tool' },
               { title: "Remove BG", href: "/tools/image/remove-bg", icon: <Eraser />, featured: true, type: 'tool' },
               { title: "Passport Photo", href: "/tools/image/passport", icon: <User />, featured: true, type: 'tool' },
-              { title: "Convert to JPG", href: "/tools/image/converter", icon: <ImageIcon />, type: 'tool' },
+              { title: "Image Converter", href: "/tools/image/converter", icon: <ImageIcon />, type: 'tool' },
               { title: "Compress Image", href: "/tools/image/converter", icon: <Minimize2 />, type: 'tool' },
               { title: "Studio Headshot", href: "/tools/image/headshot", icon: <User />, type: 'tool' },
             ]}

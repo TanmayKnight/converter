@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Upload, Music, Download, FileAudio, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 export default function AudioExtractorClient() {
     const [loaded, setLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -236,6 +237,8 @@ export default function AudioExtractorClient() {
                     UnitMaster runs entirely in your browser using <strong>WebAssembly</strong>. Your CPU handles the extraction. This means your private voice recordings or unreleased music never leave your machine, and you don't need to depend on slow upload speeds.
                 </p>
             </div>
+
+
 
         </div>
     );

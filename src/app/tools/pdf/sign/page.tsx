@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+
 const PDFSigner = dynamic(() => import('@/components/pdf/PDFSigner'), {
     loading: () => (
         <div className="flex flex-col items-center justify-center min-h-[400px]">
@@ -46,6 +47,9 @@ export default function SignPDFPage() {
                                 <p>
                                     Most "free" tools upload your files to their servers. We do not.
                                 </p>
+
+
+                                {/* Content / SEO Section */}
                                 <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-2">
                                     <p className="text-sm font-medium text-foreground">
                                         🔒 Private by Design: UnitMaster loads the PDF engine into your browser's local memory.

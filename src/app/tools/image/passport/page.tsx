@@ -9,6 +9,7 @@ import { Download, X, Globe, User, CheckCircle2 } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
+
 // Passport Standards Database
 const PASSPORT_STANDARDS = [
     { id: 'us', name: 'United States', dimensions: '2x2 inch', width: 600, height: 600, aspect: 1, guide: "Head must constitute 50-69% of image height." },
@@ -249,8 +250,10 @@ export default function PassportPhotoPage() {
                     </div>
                 </div>
             )}
+
+
             {/* SEO Content */}
-            <div className="prose prose-neutral dark:prose-invert max-w-none mt-16 bg-secondary/10 p-8 rounded-2xl border border-border/50">
+            <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
                 <h2>The Ultimate Guide to DIY Passport Photos</h2>
                 <p>
                     Why pay $15 at a drug store for a grainy photo? With a smartphone and <strong>UnitMaster</strong>, you can take a compliant passport photo at home for free.

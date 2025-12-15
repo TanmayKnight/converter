@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Download, Search, Image as ImageIcon, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 export default function ThumbnailClient() {
     const [url, setUrl] = useState('');
     const [videoId, setVideoId] = useState<string | null>(null);
@@ -197,6 +198,8 @@ export default function ThumbnailClient() {
 
                 </div>
             )}
+
+
 
         </div>
     );

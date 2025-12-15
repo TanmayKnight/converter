@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { MortgageCalculatorClient } from '@/components/calculators/MortgageCalculatorClient';
+import { BankOfferList } from '@/components/monetization/BankOfferList';
 import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
@@ -28,6 +29,32 @@ export default function MortgagePage() {
                 <MarketRates />
             </div>
             <MortgageCalculatorClient />
+
+            <div className="container mx-auto px-4 max-w-4xl mt-12 mb-8">
+                <BankOfferList
+                    title="Today's Best Mortgage Rates"
+                    subtitle="Based on national averages for 740+ credit score. Compare personalized offers."
+                    offers={[
+                        {
+                            id: 'better',
+                            bankName: 'Better.com',
+                            description: '100% online process. No commission fees, faster closings.',
+                            rateHighlight: '6.45%',
+                            ctaText: 'Get Rate Quote',
+                            affiliateLink: '#', // Replace with link
+                            featured: true
+                        },
+                        {
+                            id: 'rocket',
+                            bankName: 'Rocket Mortgage',
+                            description: 'America’s largest mortgage lender. Highly rated app experience.',
+                            rateHighlight: '6.52%',
+                            ctaText: 'See Personalized Rates',
+                            affiliateLink: '#'
+                        }
+                    ]}
+                />
+            </div>
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
                 <h2>Smart Mortgage Planning: Real-Time Rates & Analysis</h2>

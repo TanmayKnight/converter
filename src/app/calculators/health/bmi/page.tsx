@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import BMICalculatorClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+
 export const metadata: Metadata = {
     title: 'BMI Calculator - Body Mass Index (Metric & Imperial) | UnitMaster',
     description: 'Free BMI Calculator for Men, Women, and Kids. Check your Body Mass Index score, learn about healthy weight ranges, and track your fitness goals.',
@@ -20,6 +21,8 @@ export default function BMIPage() {
             </div>
 
             <BMICalculatorClient />
+
+
 
             <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
                 <h2>What is Body Mass Index (BMI)?</h2>

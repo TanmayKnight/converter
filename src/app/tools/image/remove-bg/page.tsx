@@ -8,6 +8,7 @@ import { Loader2, Download, AlertTriangle, Layers, X } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
+
 export default function RemoveBackgroundPage() {
     const [originalSrc, setOriginalSrc] = useState<string>('');
     const [processedSrc, setProcessedSrc] = useState<string>('');
@@ -131,12 +132,14 @@ export default function RemoveBackgroundPage() {
                 </div>
             )}
 
+
+
             {/* SEO Content */}
             <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
                 <h2>Free AI Background Remover</h2>
                 <p>
-                    Manually cutting out an object from a photo using Photoshop's lasso tool used to take hours of tedious clicking.
-                    <strong>UnitMaster AI</strong> changes the game. We use state-of-the-art machine learning models to instantly detect the subject of your photo—whether it's a person, car, or product—and surgically remove the background.
+                    Manually cutting out an object from a photo using Photoshop&apos;s lasso tool used to take hours of tedious clicking.
+                    <strong>UnitMaster AI</strong> changes the game. We use state-of-the-art machine learning models to instantly detect the subject of your photo—whether it&apos;s a person, car, or product—and surgically remove the background.
                 </p>
 
                 <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
@@ -145,10 +148,12 @@ export default function RemoveBackgroundPage() {
                         <AccordionTrigger>How does the AI work in the browser?</AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    This tool runs a neural network called <strong>U-2-Net</strong> directly inside your web browser using <strong>WebAssembly (WASM)</strong>.
-                                    Essentially, it turns your browser into a mini AI supercomputer, allowing you to process images locally without uploading them to the cloud.
-                                </p>
+                                <ul className="list-disc pl-6 space-y-2">
+                                    <li><strong>Introduction</strong>: U-2-Net is a deep network architecture designed for salient object detection (SOD). It&apos;s capable of separating the main object from the background with high precision.</li>
+                                    <li><strong>Architecture</strong>: It consists of a two-level nested U-structure. This allows it to capture more contextual information from different scales without significantly increasing the computational cost.</li>
+                                    <li><strong>Training</strong>: The model is trained on DUTS-TR, a large dataset for salient object detection.</li>
+                                    <li><strong>Performance</strong>: U-2-Net achieves competitive performance on SOD benchmarks while maintaining a small model size (176.3 MB for the full model, and significantly less for the quantized version used here).</li>
+                                </ul>
                             </div>
                         </AccordionContent>
                     </AccordionItem>
@@ -173,7 +178,7 @@ export default function RemoveBackgroundPage() {
                                 <ol className="list-decimal pl-6 space-y-2">
                                     <li><strong>Contrast is Key</strong>: The AI works best when the subject stands out from the background (e.g., a dark product on a light table).</li>
                                     <li><strong>Good Lighting</strong>: Avoid heavy shadows crossing over the subject.</li>
-                                    <li><strong>Focus</strong>: Ensure the subject is sharp. Blurry edges can lead to a "soft" cutout.</li>
+                                    <li><strong>Focus</strong>: Ensure the subject is sharp. Blurry edges can lead to a &quot;soft&quot; cutout.</li>
                                 </ol>
                             </div>
                         </AccordionContent>
@@ -184,7 +189,7 @@ export default function RemoveBackgroundPage() {
                         <AccordionContent>
                             <div className="space-y-4 text-muted-foreground">
                                 <p>
-                                    Yes. Because you are using your own computer's processing power, we don't need expensive servers.
+                                    Yes. Because you are using your own computer&apos;s processing power, we don&apos;t need expensive servers.
                                     We pass those savings to you by offering this tool for free, with no daily limits and no watermarks.
                                 </p>
                             </div>

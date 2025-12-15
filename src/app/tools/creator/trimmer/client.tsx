@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Upload, Scissors, Download, FileVideo, AlertCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 export default function VideoTrimmerClient() {
     const [loaded, setLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -402,6 +403,8 @@ export default function VideoTrimmerClient() {
 
                 </div>
             )}
+
+
 
         </div>
     );
