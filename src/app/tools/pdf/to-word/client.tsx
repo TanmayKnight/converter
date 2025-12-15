@@ -6,10 +6,13 @@ import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card } from '@/components/ui/card';
-import { Download, Loader2, FileText, Copy, RefreshCw, FileType, Check, AlignLeft } from 'lucide-react';
-
+import { Download, Loader2, Copy, RefreshCw, FileType, AlignLeft, Check } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { pdfjs } from 'react-pdf';
+
+// Configure PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export default function PdfToWordClient() {
     const [file, setFile] = useState<File | null>(null);
@@ -33,7 +36,6 @@ export default function PdfToWordClient() {
     }, []);
 
     const onSelectFile = useCallback((selectedFile: File) => {
-        // Basic validation
         if (!selectedFile.type.includes('image') && selectedFile.type !== 'application/pdf') {
             setError("Please upload an image (PNG, JPG) or PDF file.");
             return;
@@ -45,17 +47,54 @@ export default function PdfToWordClient() {
         setProgress(0);
         setStatus('Ready');
 
-        // Create preview
         if (selectedFile.type.includes('image')) {
             const reader = new FileReader();
             reader.onload = (e) => setPreviewSrc(e.target?.result as string);
             reader.readAsDataURL(selectedFile);
         } else {
-            // For PDF, we might need a different preview strategy or just show an icon
-            // For now, let's just show an icon for PDF
+            // PDF Preview (Use icon for now, rendering first page as preview is optional/advanced)
             setPreviewSrc(null);
         }
     }, []);
+
+    const processPdf = async (pdfFile: File, worker: Tesseract.Worker) => {
+        const arrayBuffer = await pdfFile.arrayBuffer();
+        const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
+        let fullText = '';
+        const totalPages = pdf.numPages;
+
+        for (let i = 1; i <= totalPages; i++) {
+            setStatus(`Processing Page ${i} of ${totalPages}...`);
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 2.0 }); // 2.0 scale for better OCR accuracy
+
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            const context = canvas.getContext('2d');
+
+            if (context) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await page.render({ canvasContext: context, viewport } as any).promise;
+
+                // Convert canvas to blob for Tesseract
+                const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
+
+                if (blob) {
+                    const ret = await worker.recognize(blob);
+
+                    // Add Page break marker if multiple pages
+                    if (totalPages > 1) {
+                        fullText += `--- Page ${i} ---\n\n`;
+                    }
+                    fullText += ret.data.text + '\n\n';
+                }
+            }
+            // Update pseudo-progress for PDF
+            setProgress(Math.round((i / totalPages) * 100));
+        }
+        return fullText;
+    };
 
     const handleOCR = async () => {
         if (!file) return;
@@ -65,18 +104,14 @@ export default function PdfToWordClient() {
         setExtractedText('');
 
         try {
-            // Initialize worker if not already done
-            // Note: We create a new worker for each task to ensure clean state, or we could reuse.
-            // Reusing is better for performance (loading language data once).
             if (!workerRef.current) {
                 setStatus('Loading OCR Engine...');
                 const worker = await createWorker('eng', 1, {
                     logger: m => {
-                        if (m.status === 'recognizing text') {
+                        // Only log progress for Image OCR. For PDF, we manage progress manually.
+                        if (file.type.includes('image') && m.status === 'recognizing text') {
                             setProgress(Math.round(m.progress * 100));
                             setStatus(`Scanning... ${Math.round(m.progress * 100)}%`);
-                        } else {
-                            setStatus(m.status);
                         }
                     }
                 });
@@ -84,29 +119,22 @@ export default function PdfToWordClient() {
             }
 
             setStatus('Processing...');
+            let text = '';
 
-            // Determine if it's image or PDF
-            // Tesseract.js handles images natively. For PDF, it needs pdf.js usually, 
-            // but recent versions verify support.
-            // If PDF support is complex, we might start with Image-to-Text first as "OCR Tool".
-            // Let's assume Image for now as it's 100% safe, and try PDF.
-            // Actually, tesseract.js primarily works on images. Passing a PDF file directly might fail unless built-in PDF handling is active.
-            // Strategy: Convert PDF to Image first? Or just support Images for V1?
-            // The Task says "PDF to Word (OCR)". Users expect PDF support.
-            // However, client-side PDF rendering to Canvas for Tesseract is non-trivial without 'pdfjs-dist'.
-            // Let's implement IMAGE support first to verify the pipeline, then look at PDF rendering if needed.
-            // Actually, let's stick to "Image to Text" behavior if PDF fails, or handle it.
-            // The task was "Pro Tool: PDF to Word (OCR)".
-            // For now, allow regular execution.
+            if (file.type === 'application/pdf') {
+                text = await processPdf(file, workerRef.current);
+            } else {
+                const ret = await workerRef.current.recognize(file);
+                text = ret.data.text;
+            }
 
-            const ret = await workerRef.current.recognize(file);
-            setExtractedText(ret.data.text);
+            setExtractedText(text);
             setStatus('Completed');
             toast.success("Text extracted successfully!");
 
         } catch (err) {
             console.error(err);
-            const errorMessage = err instanceof Error ? err.message : "Failed to extract text. Please ensure the file is a clear image.";
+            const errorMessage = err instanceof Error ? err.message : "Failed to extract text.";
             setError(errorMessage);
         } finally {
             setIsProcessing(false);
@@ -132,7 +160,7 @@ export default function PdfToWordClient() {
             {/* Header */}
             <div className="text-center space-y-4">
                 <div className="inline-flex items-center justify-center p-3 bg-orange-500/10 rounded-2xl mb-4">
-                    <FileText className="w-10 h-10 text-orange-600 dark:text-orange-400" />
+                    <AlignLeft className="w-10 h-10 text-orange-600 dark:text-orange-400" />
                 </div>
                 <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-400 dark:to-amber-400">
                     PDF to Word (OCR)
@@ -184,7 +212,7 @@ export default function PdfToWordClient() {
                                     ) : (
                                         <div className="text-center p-8 text-muted-foreground">
                                             <FileType className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                                            <p>Document File Loaded</p>
+                                            <p>{file.type === 'application/pdf' ? 'PDF Document Ready' : 'Image Ready'}</p>
                                         </div>
                                     )}
 
@@ -206,7 +234,7 @@ export default function PdfToWordClient() {
                                 )}
 
                                 <Button size="lg" className="w-full" onClick={handleOCR} disabled={isProcessing}>
-                                    {isProcessing ? 'Extracting Text...' : 'Start OCR Extraction'}
+                                    {isProcessing ? 'Processing Document...' : 'Start Extraction'}
                                 </Button>
                             </div>
                         )}

@@ -7,6 +7,7 @@ import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const pdfTools = [
+    { name: 'PDF to Word (OCR)', href: '/tools/pdf/to-word' },
     { name: 'Merge PDF', href: '/tools/pdf/merge' },
     { name: 'Split PDF', href: '/tools/pdf/split' },
     { name: 'Compress PDF', href: '/tools/pdf/compress' },

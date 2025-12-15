@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Menu, X, Calculator } from 'lucide-react';
+import { Calculator } from 'lucide-react';
 import { Search } from './Search';
 import { UserMenu } from '@/components/auth/UserMenu';
 import { createClient } from '@/lib/supabase/server';

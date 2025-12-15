@@ -45,6 +45,10 @@ export default function PDFToolsLayout({
                                     Explore More
                                 </h4>
                                 <nav className="grid gap-2">
+                                    <Link href="/tools/pdf/to-word" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
+                                        <span>PDF to Word</span>
+                                        <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </Link>
                                     <Link href="/tools/pdf/merge" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group">
                                         <span>Merge PDF</span>
                                         <ArrowLeft className="h-3 w-3 rotate-180 opacity-0 group-hover:opacity-100 transition-opacity" />
