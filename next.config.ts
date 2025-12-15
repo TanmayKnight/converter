@@ -27,6 +27,9 @@ export default withPWA({
   disable: process.env.NODE_ENV === "development",
   register: true,
   // Exclude Google Ads and Analytics from Service Worker caching
-  // Default PWA configuration will handle caching automatically
-  // Specific exclusions removed to prevent 'NetworkOnly' errors with AdBlockers
+  // Force Service Worker to update immediately
+  workboxOptions: {
+    skipWaiting: true,
+    clientsClaim: true,
+  },
 })(nextConfig);
