@@ -185,7 +185,17 @@ export default function PdfToWordClient() {
                     <Card className="p-6 border-2 border-dashed border-border/50 shadow-sm min-h-[400px] flex flex-col">
                         {!file ? (
                             <div className="space-y-4">
-                                <ImageDropzone onImageSelect={onSelectFile} description="Drag & drop document (Image or PDF)" />
+                                <ImageDropzone
+                                    onImageSelect={onSelectFile}
+                                    description="Drag & drop document (Image or PDF)"
+                                    accept={{
+                                        'image/jpeg': [],
+                                        'image/png': [],
+                                        'image/webp': [],
+                                        'application/pdf': ['.pdf']
+                                    }}
+                                    supportedFileTypes="Supports PDF, JPG, PNG, WEBP"
+                                />
                                 {error && (
                                     <Alert className="border-red-500/50 bg-red-500/10 text-red-500">
                                         <AlertTitle>Error</AlertTitle>

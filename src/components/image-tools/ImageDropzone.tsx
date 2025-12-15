@@ -9,9 +9,21 @@ interface ImageDropzoneProps {
     onImageSelect: (file: File) => void;
     className?: string;
     description?: string;
+    accept?: Record<string, string[]>;
+    supportedFileTypes?: string;
 }
 
-export function ImageDropzone({ onImageSelect, className, description = "Drag & drop an image here, or click to select" }: ImageDropzoneProps) {
+export function ImageDropzone({
+    onImageSelect,
+    className,
+    description = "Drag & drop an image here, or click to select",
+    accept = {
+        'image/jpeg': [],
+        'image/png': [],
+        'image/webp': [],
+    },
+    supportedFileTypes = "Supports JPG, PNG, WEBP"
+}: ImageDropzoneProps) {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles?.[0]) {
             onImageSelect(acceptedFiles[0]);
@@ -20,11 +32,7 @@ export function ImageDropzone({ onImageSelect, className, description = "Drag & 
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: {
-            'image/jpeg': [],
-            'image/png': [],
-            'image/webp': [],
-        },
+        accept,
         maxFiles: 1,
     });
 
@@ -54,7 +62,7 @@ export function ImageDropzone({ onImageSelect, className, description = "Drag & 
 
             <div className="space-y-1">
                 <p className="text-lg font-medium">
-                    {isDragActive ? "Drop it like it's hot!" : "Upload Image"}
+                    {isDragActive ? "Drop it like it's hot!" : "Upload File"}
                 </p>
                 <p className="text-sm text-muted-foreground max-w-xs mx-auto">
                     {description}
@@ -62,7 +70,7 @@ export function ImageDropzone({ onImageSelect, className, description = "Drag & 
             </div>
 
             <div className="text-xs text-muted-foreground mt-2 px-3 py-1 rounded-full bg-secondary/50 border border-border/50">
-                Supports JPG, PNG, WEBP
+                {supportedFileTypes}
             </div>
         </div>
     );
