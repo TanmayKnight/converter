@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import VoiceChangerClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Mic, UserCog, Lock, Upload, Play, Download } from 'lucide-react';
+import { PrivacyShield } from '@/components/common/PrivacyShield';
 
 export const metadata: Metadata = {
     title: 'Voice Changer Studio - Free Online Voice Effects | UnitMaster',
@@ -77,15 +78,7 @@ export default function VoiceChangerPage() {
                         </p>
                     </div>
 
-                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                        <div className="h-12 w-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6">
-                            <Lock className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">100% Private</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                            All audio processing happens locally on your device. Your voice recordings are never sent to a server.
-                        </p>
-                    </div>
+                    <PrivacyShield />
                 </div>
             </div>
 

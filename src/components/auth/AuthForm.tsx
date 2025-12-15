@@ -4,25 +4,13 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { Loader2, Mail, Phone, AlertCircle } from 'lucide-react'
-import { LocationSelector } from '@/components/common/LocationSelector'
-import { parsePhoneNumber, CountryCode } from 'libphonenumber-js'
+import { Loader2, Mail, AlertCircle } from 'lucide-react'
 
 export function AuthForm() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-
-    // Address & Phone State
-    const [phone, setPhone] = useState('')
-    const [street, setStreet] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [zipCode, setZipCode] = useState('')
-    const [country, setCountry] = useState('')
-    const [countryIso, setCountryIso] = useState('')
-    const [phoneCode, setPhoneCode] = useState('')
 
     const [loading, setLoading] = useState(false)
     const [mode, setMode] = useState<'signin' | 'signup'>('signin')
@@ -35,15 +23,6 @@ export function AuthForm() {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
 
-    const validateZipCode = (zip: string, country: string) => {
-        // Simplified check: Ensure numeric and reasonable length for most countries
-        // For US, we want exactly 5 digits for now (or 5-4)
-        if (country === 'United States') {
-            return /^\d{5}(-\d{4})?$/.test(zip)
-        }
-        return zip.length >= 3 && zip.length <= 10
-    }
-
     const handleEmailAuth = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -54,22 +33,6 @@ export function AuthForm() {
                 // Strict Validation
                 if (!validateEmail(email)) throw new Error("Please enter a valid email address.")
 
-                // Phone Validation
-                try {
-                    const phoneNumber = parsePhoneNumber(phone, countryIso as CountryCode)
-                    if (!phoneNumber || !phoneNumber.isValid()) {
-                        throw new Error(`Invalid phone number for ${country}.`)
-                    }
-                } catch (err) {
-                    // If libphonenumber fails to parse, it's invalid
-                    throw new Error(`Invalid phone number format for ${country}.`)
-                }
-
-                // Zip Validation
-                if (!validateZipCode(zipCode, country)) {
-                    throw new Error(`Invalid Zip/Postal Code for ${country}.`)
-                }
-
                 const { error } = await supabase.auth.signUp({
                     email,
                     password,
@@ -78,16 +41,17 @@ export function AuthForm() {
                         data: {
                             first_name: firstName,
                             last_name: lastName,
-                            phone: `${phoneCode}${phone}`, // Save with country code
-                            street: street,
-                            city: city,
-                            state: state,
-                            zip_code: zipCode,
-                            country: country
+                            phone: '',
+                            street: '',
+                            city: '',
+                            state: '',
+                            zip_code: '',
+                            country: '',
+                            country_iso: '',
+                            phone_code: '',
                         }
                     },
                 })
-                if (error) throw error
                 if (error) throw error
                 // Redirect to verification page
                 router.push(`/auth/verify-email?email=${encodeURIComponent(email)}`)
@@ -173,72 +137,6 @@ export function AuthForm() {
                                 />
                             </div>
                         </div>
-
-                        <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800">
-                            <div className="flex items-center gap-2 mb-3">
-                                <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Location Settings</span>
-                                {country && <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary rounded-full">{country}</span>}
-                            </div>
-
-                            <LocationSelector
-                                onChange={(val) => {
-                                    setCountry(val.country)
-                                    setState(val.state)
-                                    setCity(val.city)
-                                    setPhoneCode(val.phoneCode)
-                                    setCountryIso(val.isoCode)
-                                }}
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="col-span-1">
-                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Postal Code</label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={zipCode}
-                                    onChange={(e) => setZipCode(e.target.value)}
-                                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 bg-white dark:bg-zinc-800 dark:text-white ${zipCode && country && !validateZipCode(zipCode, country)
-                                        ? 'border-red-500 focus:ring-red-500'
-                                        : 'border-zinc-300 dark:border-zinc-700 focus:ring-primary'
-                                        }`}
-                                    placeholder="ZIP Code"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Phone Number</label>
-                            <div className="relative flex">
-                                <div className="flex items-center justify-center px-3 border border-r-0 border-zinc-300 dark:border-zinc-700 rounded-l-lg bg-zinc-50 dark:bg-zinc-800 text-zinc-500 font-mono text-sm min-w-[3.5rem]">
-                                    {phoneCode || '--'}
-                                </div>
-                                <input
-                                    type="tel"
-                                    required
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    className="flex-1 w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-r-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-zinc-800 dark:text-white"
-                                    placeholder="(555) 000-0000"
-                                    disabled={!country}
-                                />
-                            </div>
-                            {!country && <p className="text-xs text-zinc-500 mt-1">Select a country first</p>}
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Street Address</label>
-                            <input
-                                type="text"
-                                required
-                                value={street}
-                                onChange={(e) => setStreet(e.target.value)}
-                                className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-zinc-800 dark:text-white"
-                                placeholder="123 Main St"
-                            />
-                        </div>
-
                     </div>
                 )}
 

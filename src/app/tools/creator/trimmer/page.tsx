@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import VideoTrimmerClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Shield, Zap, Video, CheckCircle, Smartphone, Scissors, Download, Upload } from 'lucide-react';
+import { PrivacyShield } from '@/components/common/PrivacyShield';
 
 export const metadata: Metadata = {
     title: 'Video Trimmer - Cut & Crop Videos Online | UnitMaster',
@@ -58,15 +59,7 @@ export default function VideoTrimmerPage() {
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
-                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                        <div className="h-12 w-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6">
-                            <Shield className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">100% Private & Secure</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                            Your videos never leave your device. All processing happens locally in your browser, so you don't need to trust a server with your personal files.
-                        </p>
-                    </div>
+                    <PrivacyShield />
 
                     <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
                         <div className="h-12 w-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 mb-6">

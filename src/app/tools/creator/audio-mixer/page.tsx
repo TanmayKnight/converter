@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import AudioMixerClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Sliders, Music, Lock, Upload, Volume2, Save } from 'lucide-react';
+import { PrivacyShield } from '@/components/common/PrivacyShield';
 
 export const metadata: Metadata = {
     title: 'Audio Mixer Online - Merge & Combine MP3 Tracks | UnitMaster',
@@ -77,15 +78,7 @@ export default function AudioMixerPage() {
                         </p>
                     </div>
 
-                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                        <div className="h-12 w-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6">
-                            <Lock className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">Private & Secure</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                            No uploads. No waiting. Your audio is processed locally using WebAssembly, ensuring your projects stay private.
-                        </p>
-                    </div>
+                    <PrivacyShield />
                 </div>
             </div>
 

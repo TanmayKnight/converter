@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import AudioExtractorClient from './client';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Music, Zap, Lock, FileAudio, Upload, MousePointerClick, Download } from 'lucide-react';
+import { PrivacyShield } from '@/components/common/PrivacyShield';
 
 export const metadata: Metadata = {
     title: 'Audio Extractor - Convert Video to MP3 Online | UnitMaster',
@@ -77,15 +78,7 @@ export default function AudioExtractorPage() {
                         </p>
                     </div>
 
-                    <div className="bg-card border border-border p-8 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                        <div className="h-12 w-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6">
-                            <Lock className="h-6 w-6" />
-                        </div>
-                        <h3 className="text-xl font-bold mb-3">100% Private</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                            Your files never leave your computer. Extract audio from sensitive personal videos without worrying about privacy leaks.
-                        </p>
-                    </div>
+                    <PrivacyShield />
                 </div>
             </div>
 

@@ -29,10 +29,6 @@ export default function PxRemConverterClient() {
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
             <div className="bg-card border border-border rounded-3xl p-10 shadow-lg max-w-2xl mx-auto relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Code className="w-32 h-32" />
-                </div>
-
                 {/* Base Size Setting */}
                 <div className="mb-8 flex justify-center items-center gap-2">
                     <label className="text-sm font-medium text-muted-foreground">Base Font Size (px):</label>
