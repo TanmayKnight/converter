@@ -27,20 +27,6 @@ export default withPWA({
   disable: process.env.NODE_ENV === "development",
   register: true,
   // Exclude Google Ads and Analytics from Service Worker caching
-  workboxOptions: {
-    runtimeCaching: [
-      {
-        urlPattern: /^https:\/\/pagead2\.googlesyndication\.com\/.*/i,
-        handler: 'NetworkOnly',
-      },
-      {
-        urlPattern: /^https:\/\/www\.googletagmanager\.com\/.*/i,
-        handler: 'NetworkOnly',
-      },
-      {
-        urlPattern: /^https:\/\/www\.google-analytics\.com\/.*/i,
-        handler: 'NetworkOnly',
-      }
-    ]
-  },
+  // Default PWA configuration will handle caching automatically
+  // Specific exclusions removed to prevent 'NetworkOnly' errors with AdBlockers
 })(nextConfig);
