@@ -9,10 +9,6 @@ import { Card } from '@/components/ui/card';
 import { Download, Loader2, Copy, RefreshCw, FileType, AlignLeft, Check } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { pdfjs } from 'react-pdf';
-
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export default function PdfToWordClient() {
     const [file, setFile] = useState<File | null>(null);
@@ -58,6 +54,15 @@ export default function PdfToWordClient() {
     }, []);
 
     const processPdf = async (pdfFile: File, worker: Tesseract.Worker) => {
+        // Dynamically import PDF.js to avoid build issues with server-side rendering/webpack
+        const pdfjs = await import('pdfjs-dist');
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        if (!(pdfjs as any).GlobalWorkerOptions.workerSrc) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (pdfjs as any).GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+        }
+
         const arrayBuffer = await pdfFile.arrayBuffer();
         const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
         let fullText = '';
