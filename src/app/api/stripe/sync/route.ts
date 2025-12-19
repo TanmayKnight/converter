@@ -54,8 +54,11 @@ export async function GET(req: NextRequest) {
             .eq('id', user.id);
 
         if (error) {
-            console.error('Supabase update failed:', error);
-            return NextResponse.json({ error: 'Database update failed' }, { status: 500 });
+            console.error('Supabase Admin update failed:', error);
+            return NextResponse.json({
+                error: `Database update failed: ${error.message}`,
+                details: error
+            }, { status: 500 });
         }
 
         return NextResponse.json({ success: true });
