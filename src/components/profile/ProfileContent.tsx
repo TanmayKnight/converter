@@ -1,40 +1,59 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LogOut, Save, User as UserIcon, Mail, Phone, Calendar, MapPin, KeyRound, Pencil, CreditCard, Sparkles } from 'lucide-react'
 import { EditProfileForm } from '@/components/profile/EditProfileForm'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-
-type ProfileData = {
-    first_name: string | null
-    last_name: string | null
-    phone: string | null
-    street: string | null
-    city: string | null
-    state: string | null
-    zip_code: string | null
-    country: string | null
-    is_pro?: boolean
-}
+import type { ProfileData } from '@/lib/types/profile'
 
 export function ProfileContent({
     user,
     profile,
-    isPro
+    isPro: initialIsPro
 }: {
     user: any,
     profile: ProfileData,
     isPro: boolean
 }) {
-    const [isEditing, setIsEditing] = useState(false)
     const router = useRouter()
     const supabase = createClient()
+    const [isEditing, setIsEditing] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [userProfile, setUserProfile] = useState(profile)
+    const [isProUser, setIsProUser] = useState(initialIsPro)
 
-    const firstName = profile?.first_name || 'User'
-    const lastName = profile?.last_name || ''
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const sessionId = searchParams.get('session_id');
+
+        if (sessionId) {
+            const syncSubscription = async () => {
+                const toastId = toast.loading("Verifying subscription...");
+                try {
+                    const res = await fetch(`/api/stripe/sync?session_id=${sessionId}`);
+                    if (res.ok) {
+                        toast.success("Subscription Active! You are now Pro.", { id: toastId });
+                        setIsProUser(true);
+                        // Clean URL
+                        window.history.replaceState({}, '', '/profile');
+                        router.refresh();
+                    } else {
+                        const data = await res.json();
+                        toast.error(data.error || "Verification failed.", { id: toastId });
+                    }
+                } catch (e) {
+                    toast.error("Sync error", { id: toastId });
+                }
+            };
+            syncSubscription();
+        }
+    }, [router]);
+
+    const firstName = userProfile?.first_name || 'User'
+    const lastName = userProfile?.last_name || ''
     const fullName = `${firstName} ${lastName}`.trim()
     const initials = (firstName[0] || '') + (lastName[0] || '')
 
@@ -82,7 +101,7 @@ export function ProfileContent({
                 <div className="flex items-center gap-4">
                     <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white text-2xl font-bold border-4 border-white dark:border-zinc-900 shadow-lg relative">
                         {initials || <UserIcon className="h-10 w-10" />}
-                        {isPro && (
+                        {isProUser && (
                             <div className="absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 p-1.5 rounded-full border-2 border-white dark:border-zinc-900" title="Pro Member">
                                 <Sparkles className="h-4 w-4 fill-yellow-900" />
                             </div>
@@ -91,7 +110,7 @@ export function ProfileContent({
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{fullName || 'Welcome!'}</h1>
                         <div className="flex items-center gap-2 mt-1">
-                            {isPro ? (
+                            {isProUser ? (
                                 <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-yellow-400/20 to-orange-400/20 text-yellow-700 dark:text-yellow-400 text-xs font-semibold border border-yellow-200 dark:border-yellow-800 flex items-center gap-1">
                                     <Sparkles className="h-3 w-3" />
                                     Pro Member
@@ -126,13 +145,13 @@ export function ProfileContent({
 
             <div className="grid gap-6">
                 {/* Account Status Card */}
-                <div className={`bg-white dark:bg-zinc-900 border ${isPro ? 'border-yellow-500/50 dark:border-yellow-500/30' : 'border-zinc-200 dark:border-zinc-800'} rounded-xl overflow-hidden shadow-sm`}>
-                    <div className={`px-6 py-4 border-b ${isPro ? 'border-yellow-500/20 bg-yellow-500/5' : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50'} flex items-center justify-between`}>
+                <div className={`bg-white dark:bg-zinc-900 border ${isProUser ? 'border-yellow-500/50 dark:border-yellow-500/30' : 'border-zinc-200 dark:border-zinc-800'} rounded-xl overflow-hidden shadow-sm`}>
+                    <div className={`px-6 py-4 border-b ${isProUser ? 'border-yellow-500/20 bg-yellow-500/5' : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50'} flex items-center justify-between`}>
                         <div className="flex items-center gap-2">
-                            <CreditCard className={`h-5 w-5 ${isPro ? 'text-yellow-600 dark:text-yellow-500' : 'text-zinc-500'}`} />
+                            <CreditCard className={`h-5 w-5 ${isProUser ? 'text-yellow-600 dark:text-yellow-500' : 'text-zinc-500'}`} />
                             <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Subscription & Billing</h2>
                         </div>
-                        {isPro && (
+                        {isProUser && (
                             <span className="text-xs font-medium text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 px-2 py-0.5 rounded-full">Active</span>
                         )}
                     </div>
@@ -141,10 +160,10 @@ export function ProfileContent({
                             <div>
                                 <div className="text-sm font-medium text-zinc-500 mb-1">Current Plan</div>
                                 <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
-                                    {isPro ? 'UnitMaster Pro' : 'Free Starter'}
+                                    {isProUser ? 'UnitMaster Pro' : 'Free Starter'}
                                 </div>
                                 <p className="text-sm text-zinc-500 mt-1 max-w-md">
-                                    {isPro
+                                    {isProUser
                                         ? 'You have access to all premium features, unlimited batch processing, and priority support.'
                                         : 'Upgrade to Pro to unlock unlimited batch processing, high-quality downloads, and ad-free experience.'
                                     }
@@ -152,7 +171,7 @@ export function ProfileContent({
                             </div>
 
                             <div>
-                                {isPro ? (
+                                {isProUser ? (
                                     <Button onClick={handleManageSubscription} variant="outline" className="border-zinc-200 dark:border-zinc-700">
                                         Manage Subscription
                                     </Button>
