@@ -64,7 +64,7 @@ export default function AudioMixerPage() {
                         </div>
                         <h3 className="text-xl font-bold mb-3">Multi-Track Mixing</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Layer up to 4 audio tracks simultaneously. Adjust volume levels independently to get the perfect balance.
+                            Layer up to 2 tracks for free, or unlimited tracks with Pro. Adjust volume levels independently to get the perfect balance.
                         </p>
                     </div>
 
@@ -157,7 +157,7 @@ export default function AudioMixerPage() {
                             <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
                                 <div className="space-y-4">
                                     <p>
-                                        Yes! UnitMaster Audio Mixer is completely free. We don't charge for premium features or limit the number of projects you can create.
+                                        The Free Tier allows you to mix up to 2 tracks simultaneously. To mix unlimited tracks for complex projects, check out our Pro plan.
                                     </p>
                                 </div>
                             </AccordionContent>

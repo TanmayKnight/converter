@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
 
 type ChartData = {
     year: number;
@@ -16,6 +17,7 @@ type ChartData = {
 }[];
 
 export function InvestmentCalculatorClient() {
+    const { isPro } = usePro();
     // Inputs
     const [principal, setPrincipal] = useState<string>('10000');
     const [monthlyContribution, setMonthlyContribution] = useState<string>('500');
@@ -65,6 +67,17 @@ export function InvestmentCalculatorClient() {
     }, [principal, monthlyContribution, rate, years]);
 
     const downloadPDF = () => {
+        if (!isPro) {
+            toast.error("Wealth Growth Report is a Pro Feature", {
+                description: "Upgrade to download detailed PDF reports.",
+                action: {
+                    label: "Upgrade",
+                    onClick: () => window.location.href = '/pricing'
+                }
+            });
+            return;
+        }
+
         const doc = new jsPDF();
 
         doc.setFillColor(99, 102, 241); // Indigo-500

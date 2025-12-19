@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Download, Loader2, Image as ImageIcon, CheckCircle, Settings2 } from 'lucide-react';
 
 // Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Configure PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
 
 type ImageFormat = 'png' | 'jpeg';
 
@@ -44,7 +45,7 @@ export default function PdfToImageConverter() {
             const arrayBuffer = await file.arrayBuffer();
             const loadingTask = pdfjs.getDocument({
                 data: arrayBuffer,
-                cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+                cMapUrl: `https://unpkg.com/pdfjs-dist@4.4.168/cmaps/`,
                 cMapPacked: true,
             });
             const pdfDoc = await loadingTask.promise;
@@ -120,11 +121,11 @@ export default function PdfToImageConverter() {
                                 </div>
                                 <div>
                                     <p className="font-semibold">{file.name}</p>
-                                    <p className="text-sm text-muted-foreground">
+                                    <div className="text-sm text-muted-foreground">
                                         <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
                                             {numPages > 0 && <span>{numPages} Pages</span>}
                                         </Document>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                             <Button

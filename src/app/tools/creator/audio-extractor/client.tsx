@@ -4,11 +4,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { toBlobURL, fetchFile } from '@ffmpeg/util';
 import { Button } from '@/components/ui/button';
-import { Upload, Music, Download, FileAudio, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
+import { Upload, Music, Download, FileAudio, CheckCircle, Loader2, AlertCircle, Lock, Crown } from 'lucide-react';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
 
 
 export default function AudioExtractorClient() {
+    const { isPro } = usePro();
     const [loaded, setLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -16,6 +18,7 @@ export default function AudioExtractorClient() {
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState('');
     const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+    const [quality, setQuality] = useState<'128k' | '320k'>('128k');
 
     const ffmpegRef = useRef<FFmpeg | null>(null);
     const messageRef = useRef<HTMLParagraphElement>(null);
@@ -73,13 +76,12 @@ export default function AudioExtractorClient() {
             const ffmpeg = ffmpegRef.current;
             await ffmpeg.writeFile('input.mp4', await fetchFile(videoFile));
 
-            // Extract audio: -vn (no video), -acodec libmp3lame (MP3), -b:a 192k (High Quality)
-            // -q:a 2 is a VBR setting ~190kbps, but -b:a 192k is more standard CBR.
+            // Extract audio: -vn (no video), -acodec libmp3lame (MP3)
             await ffmpeg.exec([
                 '-i', 'input.mp4',
                 '-vn',
                 '-acodec', 'libmp3lame',
-                '-b:a', '192k',
+                '-b:a', quality,
                 'output.mp3'
             ]);
 
@@ -153,6 +155,34 @@ export default function AudioExtractorClient() {
                         </Button>
                     </div>
 
+                    {/* Quality Selector */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div
+                            onClick={() => setQuality('128k')}
+                            className={`cursor-pointer border rounded-lg p-3 text-center transition-all ${quality === '128k' ? 'bg-primary/5 border-primary ring-1 ring-primary' : 'hover:bg-secondary/50'}`}
+                        >
+                            <div className="font-semibold text-sm">Standard</div>
+                            <div className="text-xs text-muted-foreground">128 kbps</div>
+                        </div>
+                        <div
+                            onClick={() => {
+                                if (isPro) {
+                                    setQuality('320k');
+                                } else {
+                                    window.location.href = '/pricing';
+                                }
+                            }}
+                            className={`relative cursor-pointer border rounded-lg p-3 text-center transition-all ${quality === '320k' ? 'bg-primary/5 border-primary ring-1 ring-primary' : 'hover:bg-secondary/50'} ${!isPro ? 'opacity-70' : ''}`}
+                        >
+                            <div className="font-semibold text-sm flex items-center justify-center gap-1">
+                                High Quality
+                                {!isPro && <Lock className="h-3 w-3 text-amber-500" />}
+                                {isPro && <Crown className="h-3 w-3 text-yellow-500" />}
+                            </div>
+                            <div className="text-xs text-muted-foreground">320 kbps</div>
+                        </div>
+                    </div>
+
                     {!downloadUrl ? (
                         <Button
                             size="lg"
@@ -192,51 +222,7 @@ export default function AudioExtractorClient() {
                 </div>
             )}
 
-            {/* SEO Content */}
-            <div className="mt-16 prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Extract Audio from Video: The Ultimate Guide</h2>
-                <p>
-                    Sometimes the video isn't what matters—it's the sound. Whether it's a speech, a concert recording, or a podcast episode filmed as a video,
-                    <strong>UnitMaster Audio Extractor</strong> lets you isolate the audio track and save it as a high-quality MP3 file in seconds.
-                </p>
 
-                <h3>How Audio Extraction Works</h3>
-                <p>
-                    Video files (like MP4 or MOV) are "containers" that hold both a video stream (visuals) and an audio stream (sound).
-                    Our tool uses a process called <strong>demuxing</strong> and <strong>transcoding</strong>. It effectively ignores the heavy visual data and focuses only on processing the audio stream.
-                </p>
-                <p>
-                    By default, we convert your audio to <strong>MP3 format at 192kbps</strong>. This bitrate offers the perfect balance between crystal-clear sound quality and a manageable file size, suitable for any music player or editing software.
-                </p>
-
-                <h3>Use Cases for Audio Extraction</h3>
-                <ul>
-                    <li><strong>Podcasters</strong>: Convert your video interviews into audio episodes for Spotify or Apple Podcasts.</li>
-                    <li><strong>Musicians</strong>: Extract a sample or backing track from a video recording of a session.</li>
-                    <li><strong>Students</strong>: Turn a recorded lecture video into an MP3 so you can listen to it while commuting/walking.</li>
-                    <li><strong>Transcription</strong>: It's much easier to upload a small MP3 file to transcription services than a massive video file.</li>
-                </ul>
-
-                <h3>Supported Inputs</h3>
-                <p>
-                    We support a wide range of video inputs, including:
-                </p>
-                <ul>
-                    <li><strong>MP4</strong>: The most common video format.</li>
-                    <li><strong>MOV</strong>: Apple's QuickTime format.</li>
-                    <li><strong>WebM</strong>: Common for web-based recordings.</li>
-                    <li><strong>MKV</strong>: High-quality archival format.</li>
-                </ul>
-
-                <h3>Why Choose Client-Side Extraction?</h3>
-                <p>
-                    Processing audio requires significant computing power. Most online converters upload your file to a cloud server to process it.
-                    This creates two problems: <strong>Privacy risk</strong> and <strong>Wait times</strong>.
-                </p>
-                <p>
-                    UnitMaster runs entirely in your browser using <strong>WebAssembly</strong>. Your CPU handles the extraction. This means your private voice recordings or unreleased music never leave your machine, and you don't need to depend on slow upload speeds.
-                </p>
-            </div>
 
 
 

@@ -3,8 +3,15 @@ import type { NextConfig } from "next";
 import withPWA from "@ducanh2912/next-pwa";
 
 const nextConfig: NextConfig = {
+  transpilePackages: ['pdfjs-dist', 'react-pdf'],
   webpack: (config) => {
-    config.resolve.alias.canvas = false;
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      canvas: false,
+      fs: false,
+      path: false,
+      punycode: false,
+    };
     return config;
   },
   async headers() {

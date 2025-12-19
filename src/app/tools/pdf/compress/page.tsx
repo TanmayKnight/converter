@@ -5,13 +5,16 @@ import { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Download, Minimize2, Loader2, CheckCircle, FileText } from 'lucide-react';
+import { ArrowLeft, Download, Minimize2, Loader2, CheckCircle, FileText, Crown, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
+import { usePro } from '@/hooks/usePro';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 
 export default function CompressPDFPage() {
+    const { isPro } = usePro();
+    const [compressionLevel, setCompressionLevel] = useState<'standard' | 'strong'>('standard');
     const [file, setFile] = useState<File | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [processedPdfUrl, setProcessedPdfUrl] = useState<string | null>(null);
@@ -46,7 +49,9 @@ export default function CompressPDFPage() {
             const copiedPages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
             copiedPages.forEach(page => newDoc.addPage(page));
 
-            const pdfBytes = await newDoc.save({ useObjectStreams: true }); // Enable max compression
+            // Freemium Logic: Strong compression uses Object Streams
+            const useStreams = compressionLevel === 'strong';
+            const pdfBytes = await newDoc.save({ useObjectStreams: useStreams });
 
             const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
@@ -167,15 +172,59 @@ export default function CompressPDFPage() {
                             </div>
                         </div>
                     ) : (
-                        <Button
-                            size="lg"
-                            onClick={compressPDF}
-                            disabled={!file}
-                            className="text-lg px-8 h-14 rounded-xl shadow-lg shadow-primary/20 w-full sm:w-auto"
-                        >
-                            <Minimize2 className="w-5 h-5 mr-2" />
-                            Compress PDF
-                        </Button>
+                        <div className="flex flex-col items-center gap-6 w-full max-w-md">
+                            {/* Compression Toggle */}
+                            <div className="grid grid-cols-2 gap-2 p-1 bg-background/50 rounded-2xl border border-border/50 w-full relative">
+                                <button
+                                    onClick={() => setCompressionLevel('standard')}
+                                    className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all ${compressionLevel === 'standard'
+                                        ? 'bg-card text-foreground shadow-sm ring-1 ring-border'
+                                        : 'text-muted-foreground hover:bg-card/50'
+                                        }`}
+                                >
+                                    Standard
+                                </button>
+
+                                {isPro ? (
+                                    <button
+                                        onClick={() => setCompressionLevel('strong')}
+                                        className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all ${compressionLevel === 'strong'
+                                            ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md'
+                                            : 'text-muted-foreground hover:bg-indigo-500/5'
+                                            }`}
+                                    >
+                                        <Crown className="w-4 h-4 text-amber-300" />
+                                        Strong
+                                    </button>
+                                ) : (
+                                    <Link href="/pricing" className="block">
+                                        <button
+                                            className="w-full h-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-medium transition-all text-muted-foreground hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/10 opacity-70"
+                                        >
+                                            <Lock className="w-3.5 h-3.5" />
+                                            Strong
+                                        </button>
+                                    </Link>
+                                )}
+                            </div>
+
+                            <p className="text-xs text-muted-foreground text-center -mt-2">
+                                {compressionLevel === 'standard'
+                                    ? "Fast structural optimization. Good for general use."
+                                    : "Maximum compression. Uses object streams to deeper optimize file structure."
+                                }
+                            </p>
+
+                            <Button
+                                size="lg"
+                                onClick={compressPDF}
+                                disabled={!file}
+                                className="text-lg px-8 h-14 rounded-xl shadow-lg shadow-primary/20 w-full"
+                            >
+                                <Minimize2 className="w-5 h-5 mr-2" />
+                                {compressionLevel === 'strong' ? 'Compress (Strong)' : 'Compress PDF'}
+                            </Button>
+                        </div>
                     )}
                 </div>
             )}

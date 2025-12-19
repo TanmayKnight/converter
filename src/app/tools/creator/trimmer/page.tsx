@@ -54,7 +54,7 @@ export default function VideoTrimmerPage() {
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">Why use UnitMaster Trimmer?</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">
-                        We use advanced WebAssembly technology to process video directly on your device. This means no uploads, no waiting, and 100% privacy.
+                        We use advanced WebAssembly technology to process video directly on your device. Free users can process files up to 100MB instantly.
                     </p>
                 </div>
 
@@ -191,7 +191,7 @@ export default function VideoTrimmerPage() {
                                 Is it free on mobile?
                             </AccordionTrigger>
                             <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
-                                Yes, UnitMaster works on modern mobile browsers (iOS Safari and Android Chrome). However, for very large 4K files, a desktop is recommended for the best performance.
+                                Yes, UnitMaster works on mobile browsers. Note that the Free Tier is limited to 100MB files. For larger files, please upgrade to Pro.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

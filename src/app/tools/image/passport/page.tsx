@@ -5,9 +5,10 @@ import ReactCrop, { Crop, PixelCrop, centerCrop, makeAspectCrop } from 'react-im
 import 'react-image-crop/dist/ReactCrop.css';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
-import { Download, X, Globe, User, CheckCircle2 } from 'lucide-react';
+import { Download, X, Globe, User, CheckCircle2, Lock, Crown } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { usePro } from '@/hooks/usePro';
 
 
 // Passport Standards Database
@@ -49,6 +50,7 @@ const FaceOverlay = () => (
 );
 
 export default function PassportPhotoPage() {
+    const { isPro } = usePro();
     const [imgSrc, setImgSrc] = useState('');
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -78,7 +80,12 @@ export default function PassportPhotoPage() {
         }
     }, [standardId]);
 
-    async function onDownloadClick() {
+    async function onDownloadClick(isOfficial: boolean) {
+        if (isOfficial && !isPro) {
+            window.location.href = '/pricing';
+            return;
+        }
+
         const image = imgRef.current;
         if (!image || !completedCrop) return;
 
@@ -117,11 +124,26 @@ export default function PassportPhotoPage() {
             canvas.height
         );
 
+        if (!isOfficial) {
+            // Add Watermark
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(-Math.PI / 4);
+            ctx.font = `bold ${canvas.width / 10}px sans-serif`;
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('UnitMaster Preview', 0, 0);
+            ctx.fillText('UnitMaster Preview', 0, canvas.height / 3);
+            ctx.fillText('UnitMaster Preview', 0, -canvas.height / 3);
+            ctx.restore();
+        }
+
         canvas.toBlob((blob) => {
             if (!blob) return;
             const url = URL.createObjectURL(blob);
             const anchor = document.createElement('a');
-            anchor.download = `passport-photo-${currentStandard.id}.jpg`;
+            anchor.download = `passport-photo-${currentStandard.id}${!isOfficial ? '-preview' : ''}.jpg`;
             anchor.href = url;
             anchor.click();
             URL.revokeObjectURL(url);
@@ -186,16 +208,20 @@ export default function PassportPhotoPage() {
                                 </AlertDescription>
                             </Alert>
 
-                            <div className="pt-4 border-t border-border/50">
-                                <Button onClick={onDownloadClick} className="w-full" size="lg">
+                            <div className="pt-4 border-t border-border/50 space-y-2">
+                                <Button onClick={() => onDownloadClick(false)} className="w-full" variant="outline" size="sm">
                                     <Download className="h-4 w-4 mr-2" />
-                                    Download Photo
+                                    Download Preview {isPro ? '(Watermarked)' : '(Free)'}
                                 </Button>
-                                <Button variant="ghost" size="sm" onClick={() => setImgSrc('')} className="w-full mt-2">
-                                    <X className="h-4 w-4 mr-2" />
-                                    Start Over
+                                <Button onClick={() => onDownloadClick(true)} className={`w-full ${!isPro ? 'opacity-90' : 'bg-emerald-600 hover:bg-emerald-700'}`} size="lg">
+                                    {!isPro ? <Lock className="h-4 w-4 mr-2 text-amber-200" /> : <Crown className="h-4 w-4 mr-2 text-yellow-300" />}
+                                    Download Official Photo
                                 </Button>
                             </div>
+                            <Button variant="ghost" size="sm" onClick={() => setImgSrc('')} className="w-full mt-2">
+                                <X className="h-4 w-4 mr-2" />
+                                Start Over
+                            </Button>
                         </div>
                     </div>
 
@@ -249,7 +275,8 @@ export default function PassportPhotoPage() {
                         </p>
                     </div>
                 </div>
-            )}
+            )
+            }
 
 
             {/* SEO Content */}
@@ -341,6 +368,6 @@ export default function PassportPhotoPage() {
                     }),
                 }}
             />
-        </div>
+        </div >
     );
 }

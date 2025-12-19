@@ -9,6 +9,9 @@ import { Card } from '@/components/ui/card';
 import { Download, Loader2, Copy, RefreshCw, FileType, AlignLeft, Check } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
+import Link from 'next/link';
+import { ProGate } from '@/components/ui/pro-gate';
 
 export default function PdfToWordClient() {
     const [file, setFile] = useState<File | null>(null);
@@ -18,6 +21,7 @@ export default function PdfToWordClient() {
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState<string>('Ready');
     const [error, setError] = useState<string | null>(null);
+    const { isPro } = usePro();
 
     // Tesseract worker reference
     const workerRef = useRef<Tesseract.Worker | null>(null);
@@ -60,7 +64,7 @@ export default function PdfToWordClient() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (!(pdfjs as any).GlobalWorkerOptions.workerSrc) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (pdfjs as any).GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+            (pdfjs as any).GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
         }
 
         const arrayBuffer = await pdfFile.arrayBuffer();
@@ -68,7 +72,14 @@ export default function PdfToWordClient() {
         let fullText = '';
         const totalPages = pdf.numPages;
 
-        for (let i = 1; i <= totalPages; i++) {
+        // Freemium Limit: Process only 1st page if not Pro
+        const pagesToProcess = isPro ? totalPages : 1;
+
+        if (!isPro && totalPages > 1) {
+            toast.info("Free Mode: Extracting Page 1 only. Upgrade to process full document.");
+        }
+
+        for (let i = 1; i <= pagesToProcess; i++) {
             setStatus(`Processing Page ${i} of ${totalPages}...`);
             const page = await pdf.getPage(i);
             const viewport = page.getViewport({ scale: 2.0 }); // 2.0 scale for better OCR accuracy
@@ -96,8 +107,13 @@ export default function PdfToWordClient() {
                 }
             }
             // Update pseudo-progress for PDF
-            setProgress(Math.round((i / totalPages) * 100));
+            setProgress(Math.round((i / pagesToProcess) * 100));
         }
+
+        if (!isPro && totalPages > 1) {
+            fullText += "\n\n--- [FREE VERSION LIMIT] ---\nOnly the first page was processed.\nUpgrade to UnitMaster Pro to extract text from the entire document.\n";
+        }
+
         return fullText;
     };
 
@@ -282,6 +298,25 @@ export default function PdfToWordClient() {
                         <p className="text-xs text-muted-foreground mt-2 text-center">
                             You can edit the text above before saving.
                         </p>
+
+                        {!isPro && extractedText.includes("[FREE VERSION LIMIT]") && (
+                            <div className="mt-6 p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/5 border border-orange-500/20 rounded-2xl flex flex-col items-center text-center shadow-sm">
+                                <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-3 text-orange-600 dark:text-orange-400">
+                                    <FileType className="w-6 h-6" />
+                                </div>
+                                <h4 className="text-lg font-bold text-foreground mb-2">
+                                    Unlock Full Document Processing
+                                </h4>
+                                <p className="text-sm text-muted-foreground mb-4 max-w-xs">
+                                    The free plan is limited to the first page. Upgrade to Pro to extract text from multi-page PDFs instantly.
+                                </p>
+                                <Link href="/pricing" className="w-full sm:w-auto">
+                                    <Button className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 text-white shadow-md w-full sm:w-auto px-8 py-6 text-lg h-auto">
+                                        Unlock Everything
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
                     </Card>
                 </div>
             </div>

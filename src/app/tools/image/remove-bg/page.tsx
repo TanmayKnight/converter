@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import { removeBackground } from '@imgly/background-removal';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
-import { Loader2, Download, AlertTriangle, Layers, X } from 'lucide-react';
+import { usePro } from '@/hooks/usePro';
+import { Loader2, Download, AlertTriangle, Layers, X, Crown, Lock } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 
 export default function RemoveBackgroundPage() {
+    const { isPro } = usePro();
     const [originalSrc, setOriginalSrc] = useState<string>('');
     const [processedSrc, setProcessedSrc] = useState<string>('');
     const [isProcessing, setIsProcessing] = useState(false);
@@ -56,10 +58,53 @@ export default function RemoveBackgroundPage() {
         }
     }
 
-    function onDownload() {
+    function onDownload(quality: 'hd' | 'standard') {
         if (!processedSrc) return;
+
+        if (quality === 'hd' && !isPro) {
+            window.location.href = '/pricing';
+            return;
+        }
+
+        if (quality === 'standard' && !isPro) {
+            // Downscale for free users
+            const img = new Image();
+            img.src = processedSrc;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_SIZE = 800; // Free limit
+                let width = img.width;
+                let height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_SIZE) {
+                        height *= MAX_SIZE / width;
+                        width = MAX_SIZE;
+                    }
+                } else {
+                    if (height > MAX_SIZE) {
+                        width *= MAX_SIZE / height;
+                        height = MAX_SIZE;
+                    }
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx?.drawImage(img, 0, 0, width, height);
+
+                const dataUrl = canvas.toDataURL('image/png');
+                const anchor = document.createElement('a');
+                anchor.download = 'transparent-standard-unitmaster.png';
+                anchor.href = dataUrl;
+                anchor.click();
+            };
+            return;
+        }
+
+        // Pro or Original
         const anchor = document.createElement('a');
-        anchor.download = 'transparent-background.png';
+        anchor.download = 'transparent-hd-unitmaster.png';
         anchor.href = processedSrc;
         anchor.click();
     }
@@ -93,10 +138,16 @@ export default function RemoveBackgroundPage() {
                         <div className="flex justify-between items-center mb-4">
                             <span className="text-sm font-medium text-muted-foreground">Result</span>
                             {processedSrc && (
-                                <Button size="sm" onClick={onDownload} className="text-xs">
-                                    <Download className="h-3 w-3 mr-1.5" />
-                                    Download PNG
-                                </Button>
+                                <div className="flex items-center gap-2">
+                                    <Button size="sm" variant="outline" onClick={() => onDownload('standard')} className="text-xs h-8">
+                                        <Download className="h-3 w-3 mr-1.5" />
+                                        Standard {isPro ? '(Fast)' : '(Free)'}
+                                    </Button>
+                                    <Button size="sm" onClick={() => onDownload('hd')} className={`text-xs h-8 ${!isPro ? 'opacity-90' : 'bg-emerald-600 hover:bg-emerald-700 text-white'}`}>
+                                        {!isPro ? <Lock className="h-3 w-3 mr-1.5 text-amber-200" /> : <Crown className="h-3 w-3 mr-1.5 text-yellow-300" />}
+                                        Download HD
+                                    </Button>
+                                </div>
                             )}
                         </div>
 

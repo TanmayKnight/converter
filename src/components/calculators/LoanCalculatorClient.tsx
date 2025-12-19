@@ -1,12 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft } from 'lucide-react';
+import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft, Lock, Crown } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
 
 // Define types for chart data
 type AmortizationData = {
@@ -18,6 +19,7 @@ type AmortizationData = {
 }[];
 
 export function LoanCalculatorClient() {
+    const { isPro } = usePro();
     // Scenario A
     const [amount, setAmount] = useState<string>('25000');
     const [rate, setRate] = useState<string>('7.5');
@@ -85,6 +87,17 @@ export function LoanCalculatorClient() {
     }, [amount, rate, years, compareMode, rateB, yearsB]);
 
     const downloadPDF = () => {
+        if (!isPro) {
+            toast.error("Amortization Schedule is a Pro Feature", {
+                description: "Upgrade to download detailed PDF reports.",
+                action: {
+                    label: "Upgrade",
+                    onClick: () => window.location.href = '/pricing'
+                }
+            });
+            return;
+        }
+
         const doc = new jsPDF();
 
         doc.setFillColor(34, 197, 94); // Green-500

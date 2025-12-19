@@ -8,9 +8,11 @@ import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 // Removed: Select imports
-import { Download, RefreshCw, X, FileImage } from 'lucide-react';
+import { Download, RefreshCw, X, FileImage, Crown, Lock } from 'lucide-react';
+import { usePro } from '@/hooks/usePro';
 
 export default function ImageConverterPage() {
+    const { isPro } = usePro();
     const [imgSrc, setImgSrc] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
     const [targetFormat, setTargetFormat] = useState('image/jpeg');
@@ -75,7 +77,15 @@ export default function ImageConverterPage() {
                         className={`px-6 py-2 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${mode === 'batch' ? 'bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20' : 'text-muted-foreground hover:text-foreground'}`}
                     >
                         Batch Mode
-                        <span className="bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5 rounded-full font-bold">PRO</span>
+                        {isPro ? (
+                            <span className="bg-gradient-to-r from-amber-300 to-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <Crown className="w-3 h-3" /> PRO
+                            </span>
+                        ) : (
+                            <span className="bg-muted text-muted-foreground text-[10px] px-1.5 py-0.5 rounded-full font-bold flex items-center gap-1">
+                                <Lock className="w-3 h-3" /> PRO
+                            </span>
+                        )}
                     </button>
                 </div>
             </div>
@@ -148,21 +158,30 @@ export default function ImageConverterPage() {
                         </div>
                     </div>
 
-                    {/* Lock Overlay */}
+                    {/* Lock Overlay or Coming Soon */}
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/60 backdrop-blur-[2px] p-6 text-center">
                         <div className="bg-background rounded-full p-4 shadow-xl border border-border mb-4">
-                            <RefreshCw className="h-8 w-8 text-primary" />
+                            {isPro ? <Crown className="h-8 w-8 text-amber-500" /> : <RefreshCw className="h-8 w-8 text-primary" />}
                         </div>
-                        <h3 className="text-2xl font-bold mb-2">Unlock Batch Processing</h3>
+                        <h3 className="text-2xl font-bold mb-2">{isPro ? "Batch Mode Coming Soon" : "Unlock Batch Processing"}</h3>
                         <p className="text-muted-foreground max-w-sm mb-6">
-                            Convert hundreds of images in seconds. Save hours of manual work with UnitMaster Pro.
+                            {isPro ? "We are putting the finishing touches on the Batch Converter. Stay tuned!" : "Convert hundreds of images in seconds. Save hours of manual work with UnitMaster Pro."}
                         </p>
-                        <Button asChild size="lg" className="h-12 px-8 text-lg font-bold shadow-lg shadow-primary/20">
-                            <a href="/pricing">
-                                Upgrade to Pro - $9/mo
-                            </a>
-                        </Button>
-                        <p className="text-xs text-muted-foreground mt-4">14-day money-back guarantee</p>
+
+                        {!isPro && (
+                            <Button asChild size="lg" className="h-12 px-8 text-lg font-bold shadow-lg shadow-primary/20">
+                                <a href="/pricing">
+                                    Upgrade to Pro - $9/mo
+                                </a>
+                            </Button>
+                        )}
+                        {!isPro && <p className="text-xs text-muted-foreground mt-4">14-day money-back guarantee</p>}
+
+                        {isPro && (
+                            <Button variant="outline" onClick={() => setMode('single')}>
+                                Switch to Single File
+                            </Button>
+                        )}
                     </div>
                 </div>
             )}

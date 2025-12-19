@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { LogOut, Save, User as UserIcon, Mail, Phone, Calendar, MapPin, KeyRound, Pencil } from 'lucide-react'
+import { LogOut, Save, User as UserIcon, Mail, Phone, Calendar, MapPin, KeyRound, Pencil, CreditCard, Sparkles } from 'lucide-react'
 import { EditProfileForm } from '@/components/profile/EditProfileForm'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 type ProfileData = {
     first_name: string | null
@@ -15,14 +17,17 @@ type ProfileData = {
     state: string | null
     zip_code: string | null
     country: string | null
+    is_pro?: boolean
 }
 
 export function ProfileContent({
     user,
-    profile
+    profile,
+    isPro
 }: {
     user: any,
-    profile: ProfileData
+    profile: ProfileData,
+    isPro: boolean
 }) {
     const [isEditing, setIsEditing] = useState(false)
     const router = useRouter()
@@ -39,7 +44,7 @@ export function ProfileContent({
             redirectTo: `${window.location.origin}/profile/update-password`,
         })
         if (!error) {
-            alert('A secure link to change your password has been sent to your email.')
+            toast.success('Password reset email sent.')
         }
     }
 
@@ -49,19 +54,53 @@ export function ProfileContent({
         router.replace('/')
     }
 
+    const handleManageSubscription = async () => {
+        try {
+            toast.loading("Opening billing portal...");
+            const response = await fetch('/api/stripe/portal', {
+                method: 'POST',
+            });
+            const data = await response.json();
+
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                toast.error("Failed to open portal");
+            }
+        } catch (error) {
+            toast.error("Something went wrong");
+        }
+    }
+
+    const handleUpgrade = () => {
+        router.push('/pricing');
+    }
+
     return (
         <>
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
                 <div className="flex items-center gap-4">
-                    <div className="h-20 w-20 rounded-full bg-linear-to-br from-primary to-purple-600 flex items-center justify-center text-white text-2xl font-bold border-4 border-white dark:border-zinc-900 shadow-lg">
+                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white text-2xl font-bold border-4 border-white dark:border-zinc-900 shadow-lg relative">
                         {initials || <UserIcon className="h-10 w-10" />}
+                        {isPro && (
+                            <div className="absolute -bottom-1 -right-1 bg-yellow-400 text-yellow-900 p-1.5 rounded-full border-2 border-white dark:border-zinc-900" title="Pro Member">
+                                <Sparkles className="h-4 w-4 fill-yellow-900" />
+                            </div>
+                        )}
                     </div>
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">{fullName || 'Welcome!'}</h1>
                         <div className="flex items-center gap-2 mt-1">
-                            <span className="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800 flex items-center gap-1">
-                                Verified Member
-                            </span>
+                            {isPro ? (
+                                <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-yellow-400/20 to-orange-400/20 text-yellow-700 dark:text-yellow-400 text-xs font-semibold border border-yellow-200 dark:border-yellow-800 flex items-center gap-1">
+                                    <Sparkles className="h-3 w-3" />
+                                    Pro Member
+                                </span>
+                            ) : (
+                                <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-xs font-semibold border border-zinc-200 dark:border-zinc-700 flex items-center gap-1">
+                                    Free Plan
+                                </span>
+                            )}
                             <span className="text-sm text-zinc-500">{user.email}</span>
                         </div>
                     </div>
@@ -86,11 +125,52 @@ export function ProfileContent({
             </div>
 
             <div className="grid gap-6">
+                {/* Account Status Card */}
+                <div className={`bg-white dark:bg-zinc-900 border ${isPro ? 'border-yellow-500/50 dark:border-yellow-500/30' : 'border-zinc-200 dark:border-zinc-800'} rounded-xl overflow-hidden shadow-sm`}>
+                    <div className={`px-6 py-4 border-b ${isPro ? 'border-yellow-500/20 bg-yellow-500/5' : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50'} flex items-center justify-between`}>
+                        <div className="flex items-center gap-2">
+                            <CreditCard className={`h-5 w-5 ${isPro ? 'text-yellow-600 dark:text-yellow-500' : 'text-zinc-500'}`} />
+                            <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Subscription & Billing</h2>
+                        </div>
+                        {isPro && (
+                            <span className="text-xs font-medium text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30 px-2 py-0.5 rounded-full">Active</span>
+                        )}
+                    </div>
+                    <div className="p-6">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div>
+                                <div className="text-sm font-medium text-zinc-500 mb-1">Current Plan</div>
+                                <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
+                                    {isPro ? 'UnitMaster Pro' : 'Free Starter'}
+                                </div>
+                                <p className="text-sm text-zinc-500 mt-1 max-w-md">
+                                    {isPro
+                                        ? 'You have access to all premium features, unlimited batch processing, and priority support.'
+                                        : 'Upgrade to Pro to unlock unlimited batch processing, high-quality downloads, and ad-free experience.'
+                                    }
+                                </p>
+                            </div>
+
+                            <div>
+                                {isPro ? (
+                                    <Button onClick={handleManageSubscription} variant="outline" className="border-zinc-200 dark:border-zinc-700">
+                                        Manage Subscription
+                                    </Button>
+                                ) : (
+                                    <Button onClick={handleUpgrade} className="bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity border-0">
+                                        Upgrade to Pro
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Personal Details Card */}
                 <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
                     <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <UserIcon className="h-5 w-5 text-primary" />
+                            <UserIcon className="h-5 w-5 text-zinc-500" />
                             <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Personal Details</h2>
                         </div>
                         <button
@@ -120,7 +200,6 @@ export function ProfileContent({
                             <div className="flex items-center gap-2 text-zinc-900 dark:text-zinc-100 font-medium">
                                 <Mail className="h-4 w-4 text-zinc-400" />
                                 {user.email}
-                                <span className="h-2 w-2 rounded-full bg-green-500" title="Verified" />
                             </div>
                         </div>
                         <div>
@@ -136,7 +215,7 @@ export function ProfileContent({
                 {/* Address Card */}
                 <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
                     <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50 flex items-center gap-2">
-                        <MapPin className="h-5 w-5 text-primary" />
+                        <MapPin className="h-5 w-5 text-zinc-500" />
                         <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Address</h2>
                     </div>
                     <div className="p-6">
@@ -171,28 +250,6 @@ export function ProfileContent({
                                     {profile?.country || <span className="text-zinc-400 italic">-</span>}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Account Status Card */}
-                <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
-                    <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50 flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-primary" />
-                        <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Account Status</h2>
-                    </div>
-                    <div className="p-6 grid md:grid-cols-2 gap-8">
-                        <div>
-                            <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-2">Membership Tier</label>
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary font-medium text-sm">
-                                Free Plan
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-2">User ID</label>
-                            <code className="text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded text-zinc-500 font-mono">
-                                {user.id}
-                            </code>
                         </div>
                     </div>
                 </div>

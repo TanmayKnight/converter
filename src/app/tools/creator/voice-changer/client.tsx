@@ -4,20 +4,24 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Toaster, toast } from 'sonner';
-import { Loader2, Mic, Upload, Play, Download, Square, Music, Wand2 } from 'lucide-react';
+import { Loader2, Mic, Upload, Play, Download, Square, Music, Wand2, Lock } from 'lucide-react';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import { usePro } from '@/hooks/usePro';
+import { cn } from '@/lib/utils';
+import { ProGate } from '@/components/ui/pro-gate';
 
 
 const PRESETS = [
     { id: 'chipmunk', name: 'Chipmunk', icon: '🐿️', filter: 'asetrate=44100*1.5,aresample=44100,atempo=1' },
-    { id: 'robot', name: 'Robot', icon: '🤖', filter: 'asetrate=44100*0.8,aresample=44100,atempo=1.25,aecho=0.8:0.9:1000:0.3' },
-    { id: 'deep', name: 'Deep Voice', icon: '👹', filter: 'asetrate=44100*0.7,aresample=44100,atempo=1.3' },
+    { id: 'robot', name: 'Robot', icon: '🤖', filter: 'asetrate=44100*0.8,aresample=44100,atempo=1.25,aecho=0.8:0.9:1000:0.3', isProOnly: true },
+    { id: 'deep', name: 'Deep Voice', icon: '👹', filter: 'asetrate=44100*0.7,aresample=44100,atempo=1.3', isProOnly: true },
     { id: 'fast', name: 'Speed Up', icon: '⏩', filter: 'atempo=1.5' },
-    { id: 'slow', name: 'Slow Motion', icon: '🐢', filter: 'atempo=0.7' },
+    { id: 'slow', name: 'Slow Motion', icon: '🐢', filter: 'atempo=0.7', isProOnly: true },
 ];
 
 export default function VoiceChangerClient() {
+    const { isPro } = usePro();
     const [ffmpeg, setFfmpeg] = useState<FFmpeg | null>(null);
     const [loaded, setLoaded] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
@@ -26,6 +30,7 @@ export default function VoiceChangerClient() {
     const [processedUrl, setProcessedUrl] = useState<string | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
+    const [showPaywall, setShowPaywall] = useState(false);
 
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const chunksRef = useRef<Blob[]>([]);
@@ -191,21 +196,70 @@ export default function VoiceChangerClient() {
                         <Music className="h-5 w-5" /> Select Effect
                     </h2>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {PRESETS.map(preset => (
-                            <button
-                                key={preset.id}
-                                onClick={() => setSelectedPreset(preset.id)}
-                                className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${selectedPreset === preset.id
-                                    ? 'border-primary bg-primary/10 ring-2 ring-primary/20'
-                                    : 'border-border hover:border-primary/50 hover:bg-secondary/50'
-                                    }`}
+                    {showPaywall ? (
+                        <div className="py-8">
+                            <ProGate
+                                isPro={isPro}
+                                title="Premium Voice Filters"
+                                description="Robot, Deep Voice, and Slow Motion effects are available for Pro users."
+                                blurAmount="lg"
                             >
-                                <span className="text-2xl">{preset.icon}</span>
-                                <span className="text-sm font-medium">{preset.name}</span>
-                            </button>
-                        ))}
-                    </div>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 opacity-40 pointer-events-none">
+                                    {PRESETS.map(preset => (
+                                        <div
+                                            key={preset.id}
+                                            className="p-3 rounded-xl border flex flex-col items-center gap-2 border-border"
+                                        >
+                                            <span className="text-2xl">{preset.icon}</span>
+                                            <span className="text-sm font-medium">{preset.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </ProGate>
+                            <div className="text-center mt-6">
+                                <Button variant="ghost" onClick={() => setShowPaywall(false)}>
+                                    Use Free Voices
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {PRESETS.map(preset => {
+                                const isLocked = preset.isProOnly && !isPro;
+
+                                return (
+                                    <button
+                                        key={preset.id}
+                                        onClick={() => {
+                                            if (isLocked) {
+                                                setShowPaywall(true);
+                                                return;
+                                            }
+                                            setSelectedPreset(preset.id);
+                                        }}
+                                        className={cn(
+                                            "relative p-3 rounded-xl border flex flex-col items-center gap-2 transition-all overflow-hidden",
+                                            selectedPreset === preset.id
+                                                ? 'border-primary bg-primary/10 ring-2 ring-primary/20'
+                                                : 'border-border hover:border-primary/50 hover:bg-secondary/50',
+                                            isLocked && "opacity-70"
+                                        )}
+                                    >
+                                        {isLocked && (
+                                            <div className="absolute top-2 right-2">
+                                                <Lock className="h-3 w-3 text-muted-foreground" />
+                                            </div>
+                                        )}
+                                        <span className="text-2xl">{preset.icon}</span>
+                                        <span className="text-sm font-medium flex items-center gap-1">
+                                            {preset.name}
+                                            {preset.isProOnly && <span className="text-[10px] bg-gradient-to-r from-amber-500 to-orange-500 text-white px-1 rounded ml-1">PRO</span>}
+                                        </span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    )}
 
                     <Button
                         onClick={processAudio}

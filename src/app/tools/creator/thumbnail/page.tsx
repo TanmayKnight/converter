@@ -48,9 +48,9 @@ export default function ThumbnailPage() {
                         <div className="h-12 w-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-orange-500 mb-6">
                             <Shield className="h-6 w-6" />
                         </div>
-                        <h3 className="text-xl font-bold mb-3">100% Free</h3>
+                        <h3 className="text-xl font-bold mb-3">Free & Pro Options</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            No watermarks, no sign-ups. Just paste the link and grab the image.
+                            Download watermarked images for free, or upgrade to Pro for clean, high-resolution thumbnails.
                         </p>
                     </div>
                 </div>

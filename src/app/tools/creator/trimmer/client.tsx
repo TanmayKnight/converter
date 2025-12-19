@@ -8,7 +8,13 @@ import { Upload, Scissors, Download, FileVideo, AlertCircle, Loader2 } from 'luc
 import { toast } from 'sonner';
 
 
+import { usePro } from '@/hooks/usePro';
+import { ProGate } from '@/components/ui/pro-gate';
+
 export default function VideoTrimmerClient() {
+    const { isPro } = usePro();
+    const [showPaywall, setShowPaywall] = useState<'size' | 'quality' | null>(null);
+
     const [loaded, setLoaded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -89,12 +95,21 @@ export default function VideoTrimmerClient() {
         const file = e.target.files?.[0];
         if (!file) return;
 
+        // Freemium Check: File Size Limit (100MB)
+        if (!isPro && file.size > 100 * 1024 * 1024) {
+            setVideoFile(null);
+            setShowPaywall('size');
+            toast.error("File exceeds Free Tier limit (100MB).");
+            return;
+        }
+
         setVideoFile(file); // For UI display info
         originalFileRef.current = file;
         setDownloadUrl(null);
         setProgress(0);
         setIsPreviewMode(false);
         setVideoUrl(null);
+        setShowPaywall(null);
 
         // Auto-detect compatibility
         if (isFormatSupported(file)) {
@@ -208,6 +223,8 @@ export default function VideoTrimmerClient() {
                 </h1>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                     Trim videos instantly in your browser. No server upload required.
+                    <br />
+                    <span className="text-xs font-mono bg-secondary/50 px-2 py-1 rounded mt-2 inline-block">Free tier: 100MB limit</span>
                 </p>
             </div>
 
@@ -218,7 +235,37 @@ export default function VideoTrimmerClient() {
                 </div>
             )}
 
-            {loaded && !videoFile && (
+            {showPaywall === 'size' && (
+                <div className="max-w-2xl mx-auto">
+                    <ProGate
+                        isPro={isPro}
+                        title="Large File Support"
+                        description="Uploaded file exceeds the 100MB Free Tier limit. Upgrade to process unlimited file sizes."
+                        blurAmount="lg"
+                    >
+                        {/* Mock Blurred Player Content to look cool behind the lock */}
+                        <div className="bg-card border-2 border-dashed border-muted-foreground/25 rounded-xl p-10 flex flex-col items-center justify-center space-y-6 opacity-30">
+                            <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center">
+                                <FileVideo className="h-8 w-8 text-muted-foreground" />
+                            </div>
+                            <div className="space-y-2 text-center">
+                                <h3 className="font-semibold text-lg">1.5 GB Video Loaded</h3>
+                                <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                                    <div className="h-full bg-primary w-2/3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </ProGate>
+
+                    <div className="text-center mt-6">
+                        <Button variant="ghost" onClick={() => setShowPaywall(null)}>
+                            Try a smaller file
+                        </Button>
+                    </div>
+                </div>
+            )}
+
+            {loaded && !videoFile && !showPaywall && (
                 <div className="max-w-2xl mx-auto">
                     <label className="bg-card border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-10 flex flex-col items-center justify-center space-y-6 cursor-pointer group">
                         <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
@@ -308,12 +355,12 @@ export default function VideoTrimmerClient() {
                         </div>
 
                         {/* HEVC/Codec Note */}
-                        {isPreviewMode && !isOptimizing && (
+                        {/* {isPreviewMode && !isOptimizing && (
                             <div className="flex items-center gap-2 text-xs text-amber-600 bg-amber-50 dark:bg-amber-950/30 p-2 rounded justify-center">
                                 <AlertCircle className="h-3 w-3" />
                                 <span>Playing low-res preview. Trimming will apply to original lossless quality.</span>
                             </div>
-                        )}
+                        )} */}
                     </div>
 
                     {/* Timeline Controls */}
@@ -403,8 +450,6 @@ export default function VideoTrimmerClient() {
 
                 </div>
             )}
-
-
 
         </div>
     );

@@ -9,8 +9,12 @@ import { ArrowLeft, Download, Scissors, Loader2, FileText, CheckCircle } from 'l
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
+import { usePro } from '@/hooks/usePro';
+import { toast } from 'sonner';
+import { Lock, Crown } from 'lucide-react';
 
 export default function SplitPDFPage() {
+    const { isPro } = usePro();
     const [file, setFile] = useState<File | null>(null);
     const [pageCount, setPageCount] = useState<number>(0);
     const [selectedPages, setSelectedPages] = useState<string>('');
@@ -74,6 +78,29 @@ export default function SplitPDFPage() {
                 alert("Please select valid pages to extract.");
                 setIsProcessing(false);
                 return;
+            }
+
+            // Freemium Logic: Check for non-contiguous ranges (gaps)
+            if (!isPro && indicesToKeep.length > 1) {
+                let isContiguous = true;
+                for (let i = 0; i < indicesToKeep.length - 1; i++) {
+                    if (indicesToKeep[i + 1] !== indicesToKeep[i] + 1) {
+                        isContiguous = false;
+                        break;
+                    }
+                }
+
+                if (!isContiguous) {
+                    toast.error("Multi-range extraction is a Pro feature", {
+                        description: "Free users can only extract a single continuous block of pages.",
+                        action: {
+                            label: "Upgrade",
+                            onClick: () => window.location.href = '/pricing'
+                        }
+                    });
+                    setIsProcessing(false);
+                    return;
+                }
             }
 
             const copiedPages = await newDoc.copyPages(srcDoc, indicesToKeep);
@@ -141,6 +168,12 @@ export default function SplitPDFPage() {
                                     className="w-full p-4 bg-background border border-input rounded-xl focus:ring-2 focus:ring-primary/50 outline-none transition-all font-mono text-lg"
                                     placeholder="Example: 1-5, 8, 11-13"
                                 />
+                                {!isPro && (
+                                    <div className="flex items-center gap-2 mt-2 text-xs text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-900/20 p-2 rounded-lg">
+                                        <Lock className="w-3 h-3" />
+                                        <span>Free Limit: Single continuous range only (e.g., 1-5). <Link href="/pricing" className="underline font-semibold hover:text-amber-700">Upgrade for multi-range.</Link></span>
+                                    </div>
+                                )}
                             </div>
                             <div className="text-sm text-muted-foreground">
                                 <ul className="list-disc pl-4 space-y-1">

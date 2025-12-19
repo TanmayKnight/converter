@@ -150,13 +150,12 @@ export default async function Home() {
             ]}
           />
 
-          {/* 2. PDF Tools (Rose) - LOCKED */}
+          {/* 2. PDF Tools (Rose) - UNLOCKED */}
           <BentoCard
             title="PDF Tools"
             description="Merge, Split, and Compress documents securely."
             icon={<FileText />}
             colorTheme="rose"
-            locked={isLocked}
             items={[
               { title: "Merge PDF", href: "/tools/pdf/merge", icon: <Merge />, featured: true, type: 'tool' },
               { title: "Split PDF", href: "/tools/pdf/split", icon: <Scissors />, featured: true, type: 'tool' },
@@ -168,13 +167,12 @@ export default async function Home() {
             ]}
           />
 
-          {/* 3. Finance & Business (Emerald) - LOCKED */}
+          {/* 3. Finance & Business (Emerald) - UNLOCKED */}
           <BentoCard
             title="Finance & Business"
             description="Professional Suite: Real-Time Rates, PDF Reports & Analysis."
             icon={<DollarSign />}
             colorTheme="emerald"
-            locked={isLocked}
             items={[
               { title: "Mortgage (Pro)", href: "/calculators/finance/mortgage", icon: <DollarSign />, featured: true, type: 'calculator' },
               { title: "Loan Calculator", href: "/calculators/finance/loan", icon: <Wallet />, featured: true, type: 'calculator' },
@@ -202,13 +200,12 @@ export default async function Home() {
           />
 
 
-          {/* 5. Developer Tools (Cyan) - Professional */}
+          {/* 5. Developer Tools (Cyan) - UNLOCKED */}
           <BentoCard
             title="Developer Tools"
             description="Utilities for coding and data manipulation."
             icon={<Code2 />}
             colorTheme="purple"
-            locked={isLocked}
             items={[
               { title: "JSON Formatter", href: "/tools/dev/json-formatter", icon: <Braces />, featured: true, type: 'tool' },
               { title: "QR Code Gen", href: "/tools/dev/qr-code", icon: <QrCode />, featured: true, type: 'tool' },

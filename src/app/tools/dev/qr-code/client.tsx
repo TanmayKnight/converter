@@ -3,12 +3,16 @@
 import React, { useState, useRef } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import { Button } from '@/components/ui/button';
-import { Download, Link as LinkIcon, Type } from 'lucide-react';
+import { Download, Link as LinkIcon, Type, Palette, Lock, Crown } from 'lucide-react';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
 
 export default function QrCodeClient() {
+    const { isPro } = usePro();
     const [text, setText] = useState('');
     const [size, setSize] = useState(256);
+    const [fgColor, setFgColor] = useState('#000000');
+    const [bgColor, setBgColor] = useState('#ffffff');
     const canvasRef = useRef<HTMLDivElement>(null);
 
     const downloadQrCode = () => {
@@ -89,6 +93,50 @@ export default function QrCodeClient() {
                             />
                             <div className="text-xs text-muted-foreground text-right">{size}px</div>
                         </div>
+
+                        {/* Customization (Pro) */}
+                        <div className="space-y-3 pt-4 border-t">
+                            <div className="flex items-center justify-between">
+                                <label className="text-sm font-medium flex items-center gap-2">
+                                    <Palette className="h-4 w-4 text-muted-foreground" />
+                                    Custom Colors
+                                </label>
+                                {!isPro && (
+                                    <span className="text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <Lock className="w-3 h-3" /> PRO
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1">
+                                    <span className="text-xs text-muted-foreground">Foreground</span>
+                                    <div className="relative">
+                                        <input
+                                            type="color"
+                                            value={fgColor}
+                                            onChange={(e) => isPro && setFgColor(e.target.value)}
+                                            disabled={!isPro}
+                                            className={`w-full h-10 rounded-lg cursor-pointer ${!isPro ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        />
+                                        {!isPro && <div className="absolute inset-0 z-10" onClick={() => window.location.href = '/pricing'} />}
+                                    </div>
+                                </div>
+                                <div className="space-y-1">
+                                    <span className="text-xs text-muted-foreground">Background</span>
+                                    <div className="relative">
+                                        <input
+                                            type="color"
+                                            value={bgColor}
+                                            onChange={(e) => isPro && setBgColor(e.target.value)}
+                                            disabled={!isPro}
+                                            className={`w-full h-10 rounded-lg cursor-pointer ${!isPro ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        />
+                                        {!isPro && <div className="absolute inset-0 z-10" onClick={() => window.location.href = '/pricing'} />}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -102,6 +150,8 @@ export default function QrCodeClient() {
                                     size={Math.min(size, 300)} // Preview size cap
                                     level={"H"}
                                     includeMargin={true}
+                                    fgColor={fgColor}
+                                    bgColor={bgColor}
                                 />
                             </div>
                         ) : (

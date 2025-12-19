@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DollarSign, TrendingUp, Calendar } from 'lucide-react';
+import { DollarSign, TrendingUp, Calendar, Download, ArrowRightLeft, Lock, Crown } from 'lucide-react';
+import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
 
 export default function ROICalculatorClient() {
+    const { isPro } = usePro();
     const [invested, setInvested] = useState<string>('1000');
     const [returned, setReturned] = useState<string>('1500');
     const [days, setDays] = useState<string>('365');
@@ -106,6 +109,40 @@ export default function ROICalculatorClient() {
                             {annualizedRoi.toFixed(2)}%
                         </div>
                     </div>
+                </div>
+
+                {/* Actions (Gated) */}
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                    <button
+                        onClick={() => {
+                            if (!isPro) {
+                                toast.error("Saving results is a Pro feature", {
+                                    action: { label: "Upgrade", onClick: () => window.location.href = '/pricing' }
+                                });
+                            } else {
+                                toast.success("Scenario Saved (Simulation)");
+                            }
+                        }}
+                        className={`flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${!isPro ? 'bg-secondary text-muted-foreground' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}
+                    >
+                        {isPro ? <Download className="h-4 w-4" /> : <Lock className="h-3 w-3" />}
+                        Save PDF
+                    </button>
+                    <button
+                        onClick={() => {
+                            if (!isPro) {
+                                toast.error("Comparison Mode is a Pro feature", {
+                                    action: { label: "Upgrade", onClick: () => window.location.href = '/pricing' }
+                                });
+                            } else {
+                                toast.success("Comparison Mode Activated (Simulation)");
+                            }
+                        }}
+                        className={`flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-colors ${!isPro ? 'bg-secondary text-muted-foreground' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}
+                    >
+                        {isPro ? <ArrowRightLeft className="h-4 w-4" /> : <Lock className="h-3 w-3" />}
+                        Compare
+                    </button>
                 </div>
             </div>
         </div>

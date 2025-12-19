@@ -9,14 +9,22 @@ import { ArrowLeft, Download, Layers, Loader2, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { AdUnit } from '@/components/AdUnit';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { usePro } from '@/hooks/usePro';
+import { ProGate } from '@/components/ui/pro-gate';
 
 
 export default function MergePDFPage() {
     const [files, setFiles] = useState<File[]>([]);
     const [isProcessing, setIsProcessing] = useState(false);
     const [processedPdfUrl, setProcessedPdfUrl] = useState<string | null>(null);
+    const [showPaywall, setShowPaywall] = useState(false);
+    const { isPro } = usePro();
 
     const handleFilesSelected = (newFiles: File[]) => {
+        if (!isPro && (files.length + newFiles.length) > 3) {
+            setShowPaywall(true);
+            return;
+        }
         setFiles(prev => [...prev, ...newFiles]);
         setProcessedPdfUrl(null); // Reset result
     };
@@ -61,31 +69,57 @@ export default function MergePDFPage() {
 
             {/* Main Workspace Card */}
             <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">
-                <FileUploader
-                    onFilesSelected={handleFilesSelected}
-                    acceptedFileTypes={{ 'application/pdf': ['.pdf'] }}
-                    description="Drag & drop PDFs here to combine them"
-                    className="h-64"
-                />
 
-                {(files.length > 0) && (
-                    <div className="mt-8">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="font-semibold text-sm text-foreground/70 uppercase tracking-wider">
-                                Selected Files ({files.length})
-                            </h3>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setFiles([])}
-                                className="text-destructive hover:bg-destructive/10 h-8"
-                            >
-                                <Trash2 className="w-4 h-4 mr-2" />
-                                Clear All
+                {showPaywall ? (
+                    <div className="max-w-xl mx-auto py-12">
+                        <ProGate
+                            isPro={isPro}
+                            title="Batch Merge Unlimited Files"
+                            description="Free users are limited to merging 3 files at a time. Upgrade to Pro to merge unlimited documents."
+                            blurAmount="lg"
+                        >
+                            <div className="flex flex-col items-center justify-center space-y-4 opacity-40">
+                                <Layers className="h-16 w-16 text-muted-foreground" />
+                                <div className="space-y-2 text-center">
+                                    <h3 className="font-semibold text-lg">Adding 4th file...</h3>
+                                </div>
+                            </div>
+                        </ProGate>
+                        <div className="text-center mt-6">
+                            <Button variant="ghost" onClick={() => setShowPaywall(false)}>
+                                Back to files
                             </Button>
                         </div>
-                        <SelectedFileList files={files} onRemove={removeFile} />
                     </div>
+                ) : (
+                    <>
+                        <FileUploader
+                            onFilesSelected={handleFilesSelected}
+                            acceptedFileTypes={{ 'application/pdf': ['.pdf'] }}
+                            description="Drag & drop PDFs here to combine them"
+                            className="h-64"
+                        />
+
+                        {(files.length > 0) && (
+                            <div className="mt-8">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="font-semibold text-sm text-foreground/70 uppercase tracking-wider">
+                                        Selected Files ({files.length})
+                                    </h3>
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFiles([])}
+                                        className="text-destructive hover:bg-destructive/10 h-8"
+                                    >
+                                        <Trash2 className="w-4 h-4 mr-2" />
+                                        Clear All
+                                    </Button>
+                                </div>
+                                <SelectedFileList files={files} onRemove={removeFile} />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
 
@@ -145,7 +179,7 @@ export default function MergePDFPage() {
                 <h2>How to Merge PDF Files Online (Free & Private)</h2>
                 <p>
                     Merging multiple PDF documents into a single file is essential for organizing reports, combining agreements, or cleaning up your digital workspace.
-                    <strong>UnitMaster PDF Merger</strong> allows you to combine an unlimited number of PDF files securely in your browser.
+                    <strong>UnitMaster PDF Merger</strong> allows free users to combine up to 3 files instantly. Upgrade to Pro for unlimited batch merging.
                 </p>
 
                 <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
@@ -171,7 +205,7 @@ export default function MergePDFPage() {
                         <AccordionContent>
                             <div className="space-y-4 text-muted-foreground">
                                 <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Unlimited Files</strong>: Merge 2 or 200 files. We don't impose artificial limits.</li>
+                                    <li><strong>Unlimited Files (Pro)</strong>: Free users can merge 3 files. Pro users can merge 200+. We don't impose artificial limits on Pro accounts.</li>
                                     <li><strong>Drag & Drop Reordering</strong>: Easily arrange your documents in the exact order you need.</li>
                                     <li><strong>Instant Processing</strong>: No upload wait times. A 50MB merge takes milliseconds, not minutes.</li>
                                     <li><strong>Clean Output</strong>: We don't add watermarks to your professional documents.</li>
@@ -228,8 +262,7 @@ export default function MergePDFPage() {
                                 '@type': 'Question',
                                 name: ' Is there a limit to how many PDFs I can merge?',
                                 acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'No. You can merge an unlimited number of PDF files at once, free of charge.'
+                                    text: 'Free users can merge up to 3 files at once. Pro users can merge an unlimited number of PDF files.'
                                 }
                             },
                             {
@@ -244,6 +277,6 @@ export default function MergePDFPage() {
                     }),
                 }}
             />
-        </div>
+        </div >
     );
 }

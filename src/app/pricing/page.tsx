@@ -2,13 +2,18 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Check, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { createClient } from '@/lib/supabase/server';
+import { CheckoutButton } from '@/components/monetization/CheckoutButton';
 
 export const metadata = {
     title: 'Pricing - Upgrade to Pro | UnitMaster',
     description: 'Unlock batch processing, ad-free experience, and priority support with UnitMaster Pro.',
 };
 
-export default function PricingPage() {
+export default async function PricingPage() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
     return (
         <div className="container mx-auto px-4 py-24 max-w-6xl">
             <div className="text-center space-y-4 mb-16">
@@ -102,9 +107,10 @@ export default function PricingPage() {
                         </li>
                     </ul>
 
-                    <Button className="w-full h-12 text-lg font-bold shadow-lg shadow-primary/20">
-                        Get Started
-                    </Button>
+                    <CheckoutButton
+                        isLoggedIn={!!user}
+                        className="w-full h-12 text-lg font-bold shadow-lg shadow-primary/20"
+                    />
                     <p className="text-xs text-center text-muted-foreground mt-4">
                         14-day money-back guarantee. Cancel anytime.
                     </p>

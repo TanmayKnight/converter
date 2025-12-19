@@ -22,9 +22,11 @@ export default async function ProfilePage() {
         .eq('id', user.id)
         .single()
 
+    const isPro = profile?.is_pro || false
+
     return (
         <div className="container mx-auto px-4 py-12 max-w-4xl">
-            <ProfileContent user={user} profile={profile || {}} />
+            <ProfileContent user={user} profile={profile || {}} isPro={isPro} />
         </div>
     )
 }

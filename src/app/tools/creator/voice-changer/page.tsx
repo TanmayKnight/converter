@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'Voice Changer Studio - Free & Unlimited',
-        description: 'Professional voice filters in your browser. No server uploads. 100% Free.',
+        description: 'Professional voice filters in your browser. Freemium access available.',
         type: 'website',
         url: '/tools/creator/voice-changer',
     },
@@ -74,7 +74,7 @@ export default function VoiceChangerPage() {
                         </div>
                         <h3 className="text-xl font-bold mb-3">Pro Effects</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                            Instantly apply effects like Robot, Chipmunk (Helium), Deep Voice (Vader), and Echo to transform your sound.
+                            Instantly apply free effects or unlock Pro filters like Robot, Chipmunk, and Deep Voice to transform your sound.
                         </p>
                     </div>
 
@@ -168,7 +168,7 @@ export default function VoiceChangerPage() {
                             <AccordionContent className="px-4 pb-4 pt-2 text-muted-foreground">
                                 <div className="space-y-4">
                                     <p>
-                                        Yes. UnitMaster Voice Changer is 100% free with no limits on recording duration (as long as your browser memory handles it).
+                                        Basic voice effects are free to use. Premium AI filters (like Robot, Deep Voice) are available for Pro subscribers.
                                     </p>
                                 </div>
                             </AccordionContent>

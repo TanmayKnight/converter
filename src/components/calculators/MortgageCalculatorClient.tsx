@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft, Home, PiggyBank, Clock } from 'lucide-react';
+import { DollarSign, Percent, Calendar, Download, TrendingUp, ArrowRightLeft, Home, PiggyBank, Clock, Lock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line } from 'recharts';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { CalculatorContent } from '@/components/CalculatorContent';
 import { toast } from 'sonner';
+import { usePro } from '@/hooks/usePro';
+import { ProGate } from '@/components/ui/pro-gate';
 
 // Define types for amortization data
 type AmortizationData = {
@@ -19,6 +23,7 @@ type AmortizationData = {
 }[];
 
 export function MortgageCalculatorClient() {
+    const { isPro } = usePro();
     // Inputs
     const [homePrice, setHomePrice] = useState<string>('375000');
     const [downPayment, setDownPayment] = useState<string>('75000');
@@ -216,6 +221,28 @@ export function MortgageCalculatorClient() {
                     <h1 className="text-3xl font-bold mb-2">Mortgage Calculator</h1>
                     <p className="text-muted-foreground">Advanced planner with down payment & extra payment analysis.</p>
                 </div>
+
+                {/* Export Button Logic: Direct Link to Pricing if not Pro */}
+                {isPro ? (
+                    <Button
+                        onClick={downloadPDF}
+                        variant="default"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white gap-2 shadow-lg hover:shadow-xl transition-all"
+                    >
+                        <Download className="h-4 w-4" />
+                        Export Report
+                    </Button>
+                ) : (
+                    <Link href="/pricing">
+                        <Button
+                            variant="outline"
+                            className="gap-2 border-emerald-200 text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/20"
+                        >
+                            <Lock className="h-4 w-4" />
+                            Export Report
+                        </Button>
+                    </Link>
+                )}
             </div>
 
             <div className="grid lg:grid-cols-3 gap-8">
@@ -291,7 +318,7 @@ export function MortgageCalculatorClient() {
                             <div className="text-xs text-muted-foreground mt-2">Principal & Interest (Loan: ${loanAmount.toLocaleString()})</div>
                         </div>
 
-                        {interestSaved > 0 ? (
+                        {interestSaved > 0 && (
                             <div className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-3xl p-6 text-center animate-in fade-in zoom-in-95">
                                 <div className="text-sm text-green-700 dark:text-green-400 font-bold uppercase mb-1 flex items-center justify-center gap-2">
                                     <TrendingUp className="h-4 w-4" /> Impact
@@ -303,15 +330,8 @@ export function MortgageCalculatorClient() {
                                     Interest Saved & {timeSaved} Years Faster
                                 </div>
                             </div>
-                        ) : (
-                            <div className="bg-card border border-border rounded-3xl p-6 flex flex-col justify-center items-center cursor-pointer hover:border-emerald-500/50 transition-colors group" onClick={downloadPDF}>
-                                <div className="h-12 w-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center text-emerald-600 mb-2 group-hover:scale-110 transition-transform">
-                                    <Download className="h-6 w-6" />
-                                </div>
-                                <div className="font-semibold">Download Report</div>
-                                <div className="text-xs text-muted-foreground">Detailed PDF Schedule</div>
-                            </div>
                         )}
+
                     </div>
 
                     <div className="bg-card border border-border rounded-3xl p-6 h-[400px]">
@@ -342,12 +362,12 @@ export function MortgageCalculatorClient() {
                             </AreaChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
 
             <CalculatorContent title="Mortgage Guide">
                 <p>Making extra payments goes directly towards your Principal balance. This reduces the amount of interest charged in all future months, creating a compounding "Snowball Effect" that kills debt faster.</p>
             </CalculatorContent>
-        </div>
+        </div >
     );
 }
