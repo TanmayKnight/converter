@@ -59,8 +59,6 @@ import {
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
-import { createClient } from '@/lib/supabase/server';
-// import { cookies } from 'next/headers'; // Unused
 
 // Map icons for unit categories
 const iconMap: Record<UnitCategory, any> = {
@@ -100,11 +98,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home() {
-  const supabase = await createClient();
+export default function Home() {
+  // Performance Optimization: Removed server-side auth check.
+  // The homepage should be static/fast since we don't lock cards here anymore.
+  // const supabase = await createClient();
+  // const { data: { user } } = await supabase.auth.getUser();
+  // const isLocked = !user; 
+  const isLocked = false; // Always "unlocked" on homepage to show all tools
 
-  const { data: { user } } = await supabase.auth.getUser();
-  const isLocked = !user;
 
   // Helper to get unit item with instantiated icon
   const getUnitItem = (id: string, featured = false): BentoItem => {
