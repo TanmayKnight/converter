@@ -51,6 +51,13 @@ export default function PdfToWordPage() {
 
             {/* SEO Content (Server Rendered) */}
             <div className="container mx-auto px-4 max-w-6xl mt-24 mb-12">
+                <div className="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 className="text-3xl font-bold mb-6">What is the PDF to Word OCR Tool?</h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                        The UnitMaster PDF to Word Converter is a free, privacy-focused tool that uses <strong>Optical Character Recognition (OCR)</strong> to extract editable text from scanned PDF documents and images. Unlike other converters that upload your files to the cloud, our tool runs <strong>locally in your browser</strong>, ensuring your sensitive data never leaves your device.
+                    </p>
+                </div>
+
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">Why use UnitMaster OCR?</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">

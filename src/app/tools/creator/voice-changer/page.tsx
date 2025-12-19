@@ -22,21 +22,49 @@ export const metadata: Metadata = {
 export default function VoiceChangerPage() {
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
-        name: 'UnitMaster Voice Changer',
-        applicationCategory: 'MultimediaApplication',
-        operatingSystem: 'Any',
-        offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'USD',
-        },
-        description: 'Free online tool to change voice effects. detailed client-side processing using WebAssembly.',
-        aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '150',
-        },
+        '@graph': [
+            {
+                '@type': 'SoftwareApplication',
+                name: 'UnitMaster Voice Changer',
+                applicationCategory: 'MultimediaApplication',
+                operatingSystem: 'Any',
+                offers: {
+                    '@type': 'Offer',
+                    price: '0',
+                    priceCurrency: 'USD',
+                },
+                description: 'Free online tool to change voice effects. detailed client-side processing using WebAssembly.',
+                aggregateRating: {
+                    '@type': 'AggregateRating',
+                    ratingValue: '4.8',
+                    ratingCount: '150',
+                },
+            },
+            {
+                '@type': 'HowTo',
+                name: 'How to Change Your Voice Online',
+                step: [
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Input Audio',
+                        text: 'Click the mic button to record your voice directly, or upload an existing audio file.',
+                        position: 1
+                    },
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Apply Effect',
+                        text: 'Select a voice effect like Robot, Alien, or Deep Voice to instantly transform the sound.',
+                        position: 2
+                    },
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Download',
+                        text: 'Listen to the preview and download the transformed audio file.',
+                        position: 3
+                    }
+                ]
+            }
+        ]
     };
 
     return (

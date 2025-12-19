@@ -22,21 +22,49 @@ export const metadata: Metadata = {
 export default function AudioMixerPage() {
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
-        name: 'UnitMaster Audio Mixer',
-        applicationCategory: 'MultimediaApplication',
-        operatingSystem: 'Any',
-        offers: {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'USD',
-        },
-        description: 'Free online audio mixer needed to combine tracks. detailed client-side processing using WebAssembly.',
-        aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.8',
-            ratingCount: '95',
-        },
+        '@graph': [
+            {
+                '@type': 'SoftwareApplication',
+                name: 'UnitMaster Audio Mixer',
+                applicationCategory: 'MultimediaApplication',
+                operatingSystem: 'Any',
+                offers: {
+                    '@type': 'Offer',
+                    price: '0',
+                    priceCurrency: 'USD',
+                },
+                description: 'Free online audio mixer needed to combine tracks. detailed client-side processing using WebAssembly.',
+                aggregateRating: {
+                    '@type': 'AggregateRating',
+                    ratingValue: '4.8',
+                    ratingCount: '95',
+                },
+            },
+            {
+                '@type': 'HowTo',
+                name: 'How to Mix Audio Tracks Online',
+                step: [
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Add Tracks',
+                        text: 'Upload your voice recordings, background music, or sound effects to the mixer.',
+                        position: 1
+                    },
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Adjust Levels',
+                        text: 'Use the volume sliders to fade music down and bring voice up for specific tracks.',
+                        position: 2
+                    },
+                    {
+                        '@type': 'HowToStep',
+                        name: 'Export Mix',
+                        text: 'Click "Export Audio" to merge everything into a single MP3 file.',
+                        position: 3
+                    }
+                ]
+            }
+        ]
     };
 
     return (

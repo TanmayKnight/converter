@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   description: 'The all-in-one digital toolkit. Professional financial calculators, unit converters, and PDF tools. Fast, free, and privacy-focused.',
   keywords: [
     'unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter',
-    'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator'
+    'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator',
+    'audio mixer', 'voice changer', 'remove background', 'pdf to word', 'audio extractor'
   ],
   authors: [{ name: 'UnitMaster Team' }],
   metadataBase: new URL('https://unitmaster.io'),
