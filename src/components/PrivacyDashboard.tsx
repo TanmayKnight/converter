@@ -12,7 +12,15 @@ export function PrivacyDashboard() {
     // Aggregated Stats
     const analyticsStatus = requests.some(r => r.url.includes('google-analytics') && r.status === 'success') ? "Active" : "Allowed";
     const adsStatus = requests.some(r => r.url.includes('adsbygoogle') && r.status === 'success') ? "Active" : "Allowed";
-    const hasUploads = requests.some(r => r.method === 'POST' && !r.url.includes('analytics') && !r.url.includes('ads'));
+    const hasUploads = requests.some(r =>
+        r.method === 'POST' &&
+        !r.url.includes('analytics') &&
+        !r.url.includes('ads') &&
+        !r.url.includes('_vercel') &&
+        !r.url.includes('vitals') &&
+        !r.url.includes('stripe') &&
+        !r.url.includes('supabase')
+    );
 
     // Simulating Local Mode for demonstration if no uploads
     const processingMode = "Client-Side (WASM)";
