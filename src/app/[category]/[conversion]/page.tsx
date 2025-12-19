@@ -36,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 }
 
+import { richConversionContent } from '@/lib/content/conversions';
+
 export default async function ConversionPage({ params }: PageProps) {
     const { category: categoryIdParam, conversion } = await params;
     const categoryId = categoryIdParam as UnitCategory;
@@ -48,6 +50,10 @@ export default async function ConversionPage({ params }: PageProps) {
     const toUnit = category.units.find(u => u.id === toId);
 
     if (!fromUnit || !toUnit) notFound();
+
+    // Check for Rich Content
+    const contentKey = `${categoryId}/${conversion}`;
+    const richContent = richConversionContent[contentKey];
 
 
     return (
@@ -77,10 +83,10 @@ export default async function ConversionPage({ params }: PageProps) {
 
             <div className="text-center mb-10">
                 <h1 className="text-3xl md:text-5xl font-bold mb-4">
-                    Convert {fromUnit.name} to {toUnit.name}
+                    {richContent?.title || `Convert ${fromUnit.name} to ${toUnit.name}`}
                 </h1>
-                <p className="text-muted-foreground text-lg">
-                    Transform {fromUnit.name}s into {toUnit.name}s with engineering-grade precision.
+                <p className="text-muted-foreground text-lg text-pretty max-w-2xl mx-auto">
+                    {richContent ? richContent.intro : `Transform ${fromUnit.name}s into ${toUnit.name}s with engineering-grade precision.`}
                 </p>
             </div>
 
@@ -98,13 +104,48 @@ export default async function ConversionPage({ params }: PageProps) {
 
             <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
                 <div className="prose prose-neutral dark:prose-invert">
-                    <h3>How to convert {fromUnit.symbol} to {toUnit.symbol}</h3>
-                    <p>
-                        To convert a value from {fromUnit.name} to {toUnit.name}, you need to know the ratio between these two units.
-                        Our tool performs this calculation automatically using high-precision arithmetic.
-                    </p>
-                    {/* In a real app, calculate and display the specific formula here dynamically */}
-                    <div className="bg-secondary/50 p-4 rounded-lg border border-border not-prose">
+                    {/* Dynamic Content Section */}
+                    {richContent ? (
+                        <>
+                            <h3>Why Converts {fromUnit.symbol} to {toUnit.symbol}?</h3>
+                            <p>{richContent.intro}</p>
+
+                            {richContent.benefits && (
+                                <>
+                                    <h4>Key Benefits</h4>
+                                    <ul>
+                                        {richContent.benefits.map((b, i) => (
+                                            <li key={i}>{b}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
+
+                            {richContent.faq && (
+                                <>
+                                    <h3>Common Questions</h3>
+                                    {richContent.faq.map((item, i) => (
+                                        <div key={i} className="mb-4">
+                                            <h4 className="text-base font-bold mb-1">{item.question}</h4>
+                                            <p className="text-sm text-muted-foreground m-0">{item.answer}</p>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                        </>
+                    ) : (
+                        // Fallback Generic Content
+                        <>
+                            <h3>How to convert {fromUnit.symbol} to {toUnit.symbol}</h3>
+                            <p>
+                                To convert a value from {fromUnit.name} to {toUnit.name}, you need to know the ratio between these two units.
+                                Our tool performs this calculation automatically using high-precision arithmetic.
+                            </p>
+                        </>
+                    )}
+
+                    {/* Formula Box (Always Show) */}
+                    <div className="bg-secondary/50 p-4 rounded-lg border border-border not-prose mt-6">
                         <p className="font-mono text-sm text-center">
                             1 {fromUnit.name} ≈ {(fromUnit.ratio / toUnit.ratio).toFixed(6)} {toUnit.name}
                         </p>
