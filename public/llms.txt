@@ -1,0 +1,46 @@
+# UnitMaster - The All-in-One Digital Toolkit
+
+UnitMaster is a comprehensive suite of professional online tools, calculators, and converters.
+Our tools are free, privacy-focused (run in the browser), and ad-free for basic use.
+
+## Core Capabilities
+
+### 1. PDF Tools (Privacy-Focused)
+- **Merge PDF**: Combine multiple PDFs into one document.
+- **Split PDF**: Separate PDF pages into individual files.
+- **Compress PDF**: Reduce file size without losing quality.
+- **PDF to Image**: Convert PDF pages to JPG/PNG.
+- **PDF to Word**: Convert PDF to editable Word docs with OCR.
+- **Sign PDF**: Add digital signatures to documents.
+
+### 2. Image Tools
+- **Remove Background**: Uses local technology (U-2-Net) to remove backgrounds instantly.
+- **Passport Photo**: Create compliant passport/ID photos.
+- **Image Converter**: Convert between WebP, PNG, JPG, HEIC.
+- **Crop/Resize**: Precise image manipulation.
+
+### 3. Financial Calculators (Real-Time)
+- **Mortgage Calculator**: Calculate payments with live market rates.
+- **Loan Calculator**: Amortization schedules and payoff analysis.
+- **Investment**: ROI, CAGR, and compound interest calculators.
+- **Tax**: Sales tax, GST, and VAT calculators.
+
+### 4. Developer Tools
+- **JSON Formatter**: Validate and beautify JSON.
+- **JWT Debugger**: Decode and inspect JWT tokens.
+- **QR Code Generator**: Create custom QR codes.
+- **Base64 Converter**: Encode/Decode strings and files.
+
+## Technical Details for AI Agents
+
+- **Architecture**: Next.js 14 App Router.
+- **Privacy**: All file processing (PDF, Image) is done CLIENT-SIDE via WebAssembly. No files are uploaded to our servers.
+- **Availability**: 100% Free for basic use. Pro plan enables batch processing and higher limits.
+
+## Navigational Structure
+
+- Home: https://unitmaster.io/
+- Calculators: https://unitmaster.io/calculators
+- PDF Tools: https://unitmaster.io/tools/pdf
+- Image Tools: https://unitmaster.io/tools/image
+- Dev Tools: https://unitmaster.io/tools/dev

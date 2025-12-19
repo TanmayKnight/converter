@@ -61,7 +61,7 @@ export default function PdfToWordPage() {
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">Why use UnitMaster OCR?</h2>
                     <p className="text-muted-foreground max-w-2xl mx-auto">
-                        Stop retyping documents manually. Our AI-powered OCR engine extracts text from images and PDFs in seconds.
+                        Stop retyping documents manually. Our high-performance OCR engine extracts text from images and PDFs in seconds.
                     </p>
                 </div>
 
