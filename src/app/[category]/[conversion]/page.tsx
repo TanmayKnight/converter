@@ -14,9 +14,37 @@ interface PageProps {
     }>;
 }
 
-// NOTE: In a real app with thousands of pages, we might not want to pre-build ALL of them to save build time.
-// But for high-ranking SEO, static is best. We'll generate a subset or use dynamic rendering.
-// For this demo, let's dynamic render to avoid massive build times.
+// Optimization: Pre-render the most popular conversion pages for SEO.
+// This ensures that when Googlebot visits e.g. /digital/terabyte-to-bit, it gets a static HTML file instantly.
+export async function generateStaticParams() {
+    const params: { category: string; conversion: string }[] = [];
+
+    // Iterate through all categories
+    for (const [categoryId, category] of Object.entries(unitDefinitions)) {
+        // To keep build times reasonable, we only pre-render conversions between the top 8 units.
+        // For a category with 10 units, 8x8 = 64 pages.
+        // With ~20 categories, this is ~1200 static pages, which is manageable for Next.js.
+        const topUnits = category.units.slice(0, 8);
+
+        for (const fromUnit of topUnits) {
+            for (const toUnit of topUnits) {
+                if (fromUnit.id === toUnit.id) continue;
+
+                params.push({
+                    category: categoryId,
+                    conversion: `${fromUnit.id}-to-${toUnit.id}`,
+                });
+            }
+        }
+    }
+
+    return params;
+}
+
+// Next.js 15: Force dynamic rendering for paths NOT in generateStaticParams
+// This means less popular conversions (e.g. unit #9 to unit #10) will still work via SSR.
+export const dynamicParams = true;
+
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { category: categoryIdParam, conversion } = await params;
