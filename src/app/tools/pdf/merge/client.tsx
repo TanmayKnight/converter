@@ -60,10 +60,7 @@ export default function MergePDFClient() {
 
     return (
         <div className="space-y-8">
-            <div className="text-center space-y-4 mb-8">
-                <h1 className="text-3xl font-bold">Merge PDF Files</h1>
-                <p className="text-muted-foreground">Combine multiple PDF documents into a single file. Free, private, and 100% client-side.</p>
-            </div>
+            {/* Header moved to Server Component for SEO */}
 
             {/* Main Workspace Card */}
             <div className="bg-card border border-border rounded-3xl p-8 shadow-sm">

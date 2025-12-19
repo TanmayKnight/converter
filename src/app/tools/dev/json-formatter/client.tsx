@@ -67,14 +67,7 @@ export default function JsonFormatterClient() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <div className="text-center space-y-4 mb-8">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                    JSON Formatter & Validator
-                </h1>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                    Beautify, minify, and validate your JSON data. Processed locally in your browser for privacy.
-                </p>
-            </div>
+            {/* Header moved to Server Component for SEO */}
 
             <div className="space-y-4">
                 {/* Toolbar */}

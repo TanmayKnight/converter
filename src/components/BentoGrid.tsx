@@ -194,13 +194,10 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                 </div>
             )}
 
-            {/* Prominent Coming Soon Overlay (Only if not locked) */}
-            {comingSoon && !locked && (
+            {/* Prominent Coming Soon Overlay (DISABLED for AdSense Compliance) */}
+            {/* {comingSoon && !locked && (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center">
-                    {/* Glass/Blur Effect - Reduced opacity for readability */}
                     <div className="absolute inset-0 bg-background/5 backdrop-blur-[1px]" />
-
-                    {/* Centered Badge */}
                     <div className="relative bg-background/80 border border-border/40 shadow-sm px-4 py-2 rounded-full flex items-center gap-2.5 transform hover:scale-105 select-none">
                         <span className="relative flex h-2.5 w-2.5">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -211,7 +208,7 @@ export function BentoCard({ title, description, icon, colorTheme, items, classNa
                         </span>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

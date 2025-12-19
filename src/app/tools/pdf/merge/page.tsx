@@ -19,6 +19,11 @@ export const metadata: Metadata = {
 export default function MergePDFPage() {
     return (
         <div className="space-y-12">
+            <div className="container mx-auto px-4 max-w-4xl pt-8 text-center space-y-4">
+                <h1 className="text-3xl font-bold">Merge PDF Files</h1>
+                <p className="text-muted-foreground">Combine multiple PDF documents into a single file. Free, private, and 100% client-side.</p>
+            </div>
+
             <MergePDFClient />
 
             <div className="container mx-auto px-4 max-w-4xl space-y-16 py-12">

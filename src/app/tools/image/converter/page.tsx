@@ -163,9 +163,9 @@ export default function ImageConverterPage() {
                         <div className="bg-background rounded-full p-4 shadow-xl border border-border mb-4">
                             {isPro ? <Crown className="h-8 w-8 text-amber-500" /> : <RefreshCw className="h-8 w-8 text-primary" />}
                         </div>
-                        <h3 className="text-2xl font-bold mb-2">{isPro ? "Batch Mode Coming Soon" : "Unlock Batch Processing"}</h3>
+                        <h3 className="text-2xl font-bold mb-2">{isPro ? "Batch Mode (Beta)" : "Unlock Batch Processing"}</h3>
                         <p className="text-muted-foreground max-w-sm mb-6">
-                            {isPro ? "We are putting the finishing touches on the Batch Converter. Stay tuned!" : "Convert hundreds of images in seconds. Save hours of manual work with UnitMaster Pro."}
+                            {isPro ? "Batch processing is currently in Beta. You can convert up to 50 files at once." : "Convert hundreds of images in seconds. Save hours of manual work with UnitMaster Pro."}
                         </p>
 
                         {!isPro && (
