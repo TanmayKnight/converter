@@ -47,10 +47,16 @@ export default function ThumbnailClient() {
         }
     };
 
-    const { isPro } = usePro();
+    const { isPro, isLoading: isProLoading } = usePro();
 
     const downloadImage = async (quality: string, forceWatermark = false) => {
         if (!videoId) return;
+
+        // Check Pro status loaded
+        if (isProLoading) {
+            toast.loading("Verifying subscription...");
+            return;
+        }
 
         // Check Pro Gate first (Only for MaxRes)
         if (quality === 'maxresdefault' && !isPro && !forceWatermark) {

@@ -12,7 +12,7 @@ import { usePro } from '@/hooks/usePro';
 import { ProGate } from '@/components/ui/pro-gate';
 
 export default function VideoTrimmerClient() {
-    const { isPro } = usePro();
+    const { isPro, isLoading: isProLoading } = usePro();
     const [showPaywall, setShowPaywall] = useState<'size' | 'quality' | null>(null);
 
     const [loaded, setLoaded] = useState(false);
@@ -94,6 +94,12 @@ export default function VideoTrimmerClient() {
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        // Check Pro status loaded
+        if (isProLoading) {
+            toast.loading("Verifying usage limits...");
+            return;
+        }
 
         // Freemium Check: File Size Limit (100MB)
         if (!isPro && file.size > 100 * 1024 * 1024) {
@@ -265,21 +271,33 @@ export default function VideoTrimmerClient() {
                 </div>
             )}
 
-            {loaded && !videoFile && !showPaywall && (
+            {isProLoading ? (
                 <div className="max-w-2xl mx-auto">
-                    <label className="bg-card border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-10 flex flex-col items-center justify-center space-y-6 cursor-pointer group">
-                        <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                            <Upload className="h-8 w-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <div className="bg-card border border-border rounded-xl p-10 flex flex-col items-center justify-center space-y-6 animate-pulse">
+                        <div className="h-16 w-16 bg-secondary rounded-full" />
+                        <div className="space-y-2 text-center w-full">
+                            <div className="h-4 bg-secondary rounded w-1/3 mx-auto" />
+                            <div className="h-3 bg-secondary rounded w-1/2 mx-auto" />
                         </div>
-                        <div className="space-y-2 text-center">
-                            <h3 className="font-semibold text-lg">Upload Video</h3>
-                            <p className="text-sm text-muted-foreground">
-                                Drag and drop or click to select a video file (MP4, WEBM).
-                            </p>
-                        </div>
-                        <input type="file" accept="video/*" onChange={handleUpload} className="hidden" />
-                    </label>
+                    </div>
                 </div>
+            ) : (
+                loaded && !videoFile && !showPaywall && (
+                    <div className="max-w-2xl mx-auto">
+                        <label className="bg-card border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-10 flex flex-col items-center justify-center space-y-6 cursor-pointer group">
+                            <div className="h-16 w-16 bg-secondary rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                                <Upload className="h-8 w-8 text-muted-foreground group-hover:text-primary transition-colors" />
+                            </div>
+                            <div className="space-y-2 text-center">
+                                <h3 className="font-semibold text-lg">Upload Video</h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Drag and drop or click to select a video file (MP4, WEBM).
+                                </p>
+                            </div>
+                            <input type="file" accept="video/*" onChange={handleUpload} className="hidden" />
+                        </label>
+                    </div>
+                )
             )}
 
             {videoFile && videoUrl && (

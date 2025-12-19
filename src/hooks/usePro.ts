@@ -1,16 +1,34 @@
 import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
-// This is a placeholder hook. 
-// In the future, this will check Supabase Auth + Stripe Subscription status.
 export function usePro() {
-    // Default to false for development/testing of Free tier limits
-    // Set to true to test Pro features
     const [isPro, setIsPro] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const supabase = createClient();
 
-    // Simulation of checking auth state
     useEffect(() => {
-        // Here we would check the user session
+        const checkStatus = async () => {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('is_pro')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profile) {
+                        setIsPro(profile.is_pro || false);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking pro status:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        checkStatus();
     }, []);
 
     return { isPro, isLoading };

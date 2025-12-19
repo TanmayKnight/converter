@@ -21,7 +21,7 @@ const PRESETS = [
 ];
 
 export default function VoiceChangerClient() {
-    const { isPro } = usePro();
+    const { isPro, isLoading: isProLoading } = usePro();
     const [ffmpeg, setFfmpeg] = useState<FFmpeg | null>(null);
     const [loaded, setLoaded] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
@@ -196,7 +196,13 @@ export default function VoiceChangerClient() {
                         <Music className="h-5 w-5" /> Select Effect
                     </h2>
 
-                    {showPaywall ? (
+                    {isProLoading ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 animate-pulse">
+                            {[1, 2, 3, 4, 5].map(i => (
+                                <div key={i} className="h-24 rounded-xl bg-secondary border border-border" />
+                            ))}
+                        </div>
+                    ) : showPaywall ? (
                         <div className="py-8">
                             <ProGate
                                 isPro={isPro}

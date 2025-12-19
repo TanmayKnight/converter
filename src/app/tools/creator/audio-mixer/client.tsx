@@ -48,7 +48,7 @@ export default function AudioMixerClient() {
         }
     };
 
-    const { isPro } = usePro();
+    const { isPro, isLoading: isProLoading } = usePro();
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -182,11 +182,18 @@ export default function AudioMixerClient() {
                         </div>
 
                         <div className="space-y-4">
-                            {tracks.length === 0 && (
-                                <div className="text-center py-12 text-muted-foreground border-2 border-dashed border-border rounded-xl">
-                                    <Upload className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                    <p>No tracks added. Upload audio files to start mixing.</p>
+                            {isProLoading ? (
+                                <div className="text-center py-12 text-muted-foreground border-2 border-dashed border-border rounded-xl animate-pulse">
+                                    <div className="h-12 w-12 bg-secondary rounded-full mx-auto mb-4" />
+                                    <div className="h-4 bg-secondary rounded w-1/3 mx-auto" />
                                 </div>
+                            ) : (
+                                tracks.length === 0 && (
+                                    <div className="text-center py-12 text-muted-foreground border-2 border-dashed border-border rounded-xl">
+                                        <Upload className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                                        <p>No tracks added. Upload audio files to start mixing.</p>
+                                    </div>
+                                )
                             )}
 
                             {tracks.map((track) => (
