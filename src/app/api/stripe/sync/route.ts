@@ -25,15 +25,31 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // 2. Update the user's profile in Supabase
-        // We set 'is_pro' to true.
-        // In a real app, you might strict sync subscription_id and status.
-        const { error } = await supabase
+        if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+            console.error('Missing SUPABASE_SERVICE_ROLE_KEY');
+            return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+        }
+
+        // Use service role key to bypass RLS
+        const { createClient: createAdminClient } = await import('@supabase/supabase-js');
+        const supabaseAdmin = createAdminClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!,
+            {
+                auth: {
+                    autoRefreshToken: false,
+                    persistSession: false
+                }
+            }
+        );
+
+        // 2. Update the user's profile in Supabase using Admin Client
+        const { error } = await supabaseAdmin
             .from('profiles')
             .update({
                 is_pro: true,
                 stripe_customer_id: session.customer as string,
-                subscription_status: 'active' // Simple toggle for now
+                subscription_status: 'active'
             })
             .eq('id', user.id);
 
