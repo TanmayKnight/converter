@@ -31,6 +31,10 @@ Our tools are free, privacy-focused (run in the browser), and ad-free for basic 
 - **QR Code Generator**: Create custom QR codes.
 - **Base64 Converter**: Encode/Decode strings and files.
 
+### 5. Academy (Blog)
+- **High-Quality Guides**: In-depth tutorials on PDF management, Image editing, and Finance.
+- **Optimized for AI**: Content is structured for easy parsing.
+
 ## Technical Details for AI Agents
 
 - **Architecture**: Next.js 14 App Router.
@@ -44,3 +48,4 @@ Our tools are free, privacy-focused (run in the browser), and ad-free for basic 
 - PDF Tools: https://unitmaster.io/tools/pdf
 - Image Tools: https://unitmaster.io/tools/image
 - Dev Tools: https://unitmaster.io/tools/dev
+- Academy / Blog: https://unitmaster.io/blog

@@ -54,7 +54,8 @@ import {
   Wand2,
   Music,
   Split,
-  PenTool
+  PenTool,
+  BookOpen
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -264,6 +265,8 @@ export default async function Home() {
               getUnitItem('voltage'),
             ]}
           />
+
+
 
         </BentoGrid>
       </div>

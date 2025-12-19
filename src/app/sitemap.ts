@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { unitDefinitions } from '@/lib/units/definitions';
+import { getBlogPosts } from '@/lib/blog';
 
 // Base URL - In production, this should be the actual domain
 const BASE_URL = 'https://unitmaster.io';
@@ -12,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'daily',
             priority: 1,
         },
+        // Blog Index
+        { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
         // Core Pages
         { url: `${BASE_URL}/pricing`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/login`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
@@ -117,6 +120,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
             }
         }
     }
+
+    // Add Blog Posts
+    const blogPosts = getBlogPosts();
+    blogPosts.forEach((post) => {
+        routes.push({
+            url: `${BASE_URL}/blog/${post.slug}`,
+            lastModified: new Date(post.date),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        });
+    });
 
     return routes;
 }

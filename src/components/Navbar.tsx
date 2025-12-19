@@ -44,6 +44,9 @@ export async function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
+                        Blog
+                    </Link>
                     <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
                         Pricing
                     </Link>
