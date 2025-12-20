@@ -159,13 +159,14 @@ export default function Home() {
             icon={<FileText />}
             colorTheme="rose"
             items={[
-              { title: "Merge PDF", href: "/tools/pdf/merge", icon: <Merge />, featured: true, type: 'tool' },
-              { title: "Split PDF", href: "/tools/pdf/split", icon: <Scissors />, featured: true, type: 'tool' },
-              { title: "Compress PDF", href: "/tools/pdf/compress", icon: <Files />, featured: true, type: 'tool' },
-              { title: "PDF to Image", href: "/tools/pdf/pdf-to-image", icon: <ImageIcon />, type: 'tool' },
-              { title: "Split PDF", href: "/tools/pdf/split", icon: <Split />, type: 'tool' },
-              { title: "PDF to Word (OCR)", href: "/tools/pdf/to-word", icon: <FileText className="text-orange-500" />, featured: true, type: 'tool' },
-              { title: "Sign PDF", href: "/tools/pdf/sign", icon: <PenTool />, type: 'tool' },
+              { title: 'Merge PDF', href: '/tools/pdf/merge', icon: <Files className="w-full h-full" />, featured: true, type: 'tool' },
+              { title: 'Split PDF', href: '/tools/pdf/split', icon: <Scissors className="w-full h-full" />, featured: true, type: 'tool' },
+              { title: 'Sign PDF', href: '/tools/pdf/sign', icon: <PenTool className="w-full h-full" />, featured: true, type: 'tool' },
+              { title: 'Compress PDF', href: '/tools/pdf/compress', icon: <Minimize2 className="w-full h-full" />, type: 'tool' },
+              { title: 'Any to PDF', href: '/document/any-to-pdf', type: 'converter' },
+              { title: 'PDF to Word', href: '/document/pdf-to-word', type: 'converter' },
+              { title: 'PDF to Excel', href: '/document/pdf-to-xlsx', type: 'converter' },
+              { title: 'PDF to JPG', href: '/document/pdf-to-jpg', type: 'converter' },
             ]}
           />
 

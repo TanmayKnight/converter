@@ -1,79 +1,110 @@
-'use client';
 
-import dynamic from 'next/dynamic';
-import { Loader2 } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Metadata } from 'next';
+import { SignPdfClient } from './client';
 
+export const metadata: Metadata = {
+    title: 'Sign PDF Online - Free Electronic Signature Tool | UnitMaster',
+    description: 'Sign PDF documents online for free. Draw, type, or upload your signature. Secure client-side processing, no file uploads required.',
+    keywords: ['sign pdf', 'esignature', 'electronic signature', 'sign pdf online', 'pdf signer', 'free pdf signer'],
+};
 
-const PDFSigner = dynamic(() => import('@/components/pdf/PDFSigner'), {
-    loading: () => (
-        <div className="flex flex-col items-center justify-center min-h-[400px]">
-            <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
-            <p className="text-muted-foreground">Loading PDF Tools...</p>
-        </div>
-    ),
-    ssr: false
-});
+import { createClient } from '@/lib/supabase/server';
 
-export default function SignPDFPage() {
+export default async function SignPdfPage() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let isPro = false;
+    if (user) {
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_pro')
+            .eq('id', user.id)
+            .single();
+        isPro = !!profile?.is_pro;
+    }
+
     return (
-        <div className="space-y-8">
-            <PDFSigner />
-
-            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
-                <h2>Electronic Signatures: Fast, Legal, and Free</h2>
-                <p>
-                    In the remote work era, printing, signing, and scanning documents is obsolete.
-                    <strong>UnitMaster PDF Sign</strong> allows you to sign documents legally and securely from your browser.
+        <div className="container mx-auto px-4 py-12 max-w-screen-xl">
+            <div className="text-center mb-10">
+                <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                    Sign PDF Document
+                </h1>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                    Securely sign your PDF documents directly in the browser. No uploads, no waiting.
                 </p>
-
-                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
-                <Accordion type="single" collapsible className="w-full not-prose">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>Are Electronic Signatures Legal?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    Yes. In the United States (ESIGN Act of 2000) and the European Union (eIDAS), electronic signatures are legally binding for most business transactions, contracts, and agreements.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>Is it safe for confidential contracts?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    Most "free" tools upload your files to their servers. We do not.
-                                </p>
-
-
-                                {/* Content / SEO Section */}
-                                <div className="bg-primary/5 p-4 rounded-lg border-l-4 border-primary my-2">
-                                    <p className="text-sm font-medium text-foreground">
-                                        🔒 Private by Design: UnitMaster loads the PDF engine into your browser's local memory.
-                                        Your medical forms, NDAs, and contracts never leave your device.
-                                    </p>
-                                </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-3">
-                        <AccordionTrigger>Best Practices for e-Signing</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Draw Your Signature</strong>: While typing a signature is often legal, drawing it adds a layer of authenticity.</li>
-                                    <li><strong>Date the Document</strong>: Always add a date field next to your signature to establish the timeline of execution.</li>
-                                    <li><strong>Lock the File</strong>: After signing, it is good practice to "Flatten" or "Print to PDF" to prevent further modification.</li>
-                                </ul>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
             </div>
+            <SignPdfClient isPro={isPro} />
+
+            {/* Content / SEO Section */}
+            <div className="container mx-auto px-4 max-w-4xl space-y-16 py-12">
+                <div className="prose prose-neutral dark:prose-invert max-w-none bg-secondary/10 p-8 rounded-2xl border border-border/50">
+                    <h2>Sign PDF Documents Online</h2>
+                    <p>
+                        Printing, signing, and scanning documents is a thing of the past.
+                        <strong>UnitMaster eSignature</strong> provides a seamless, secure, and free way to sign your contracts, agreements, and forms directly in your browser.
+                    </p>
+
+                    <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
+                    <div className="space-y-6">
+                        <div>
+                            <h4 className="font-semibold text-lg">Is it safe to sign PDFs online?</h4>
+                            <p className="text-muted-foreground mt-2">
+                                Yes. Our eSignature tool processes your files <strong>100% locally in your browser</strong>.
+                                Your confidential documents are never uploaded to a server, ensuring maximum privacy and security.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 className="font-semibold text-lg">Can I create a digital signature for free?</h4>
+                            <p className="text-muted-foreground mt-2">
+                                Absolutely. You can <strong>Draw</strong> your signature with a mouse or touchpad, <strong>Type</strong> it to generate a cursive signature, or <strong>Upload</strong> an image.
+                                There are no hidden fees or limits for basic signing.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 className="font-semibold text-lg">How do I add a date to my signature?</h4>
+                            <p className="text-muted-foreground mt-2">
+                                Simply click the <strong>Date</strong> button in the toolbar. It will automatically generate a stamp with today's date that you can place anywhere on the document.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="border-t border-border pt-12">
+                    <h2 className="text-2xl font-bold mb-6 text-center">More Information</h2>
+                    <div className="grid gap-6 md:grid-cols-2">
+                        <div className="space-y-2">
+                            <h3 className="font-semibold">Supported Formats</h3>
+                            <p className="text-sm text-muted-foreground">We support all standard PDF documents. You can sign contracts, invoices, lease agreements, and more.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <h3 className="font-semibold">Device Compatibility</h3>
+                            <p className="text-sm text-muted-foreground">UnitMaster works on Mac, Windows, Linux, and even mobile device browsers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'SoftwareApplication',
+                        name: 'UnitMaster eSignature',
+                        applicationCategory: 'BusinessApplication',
+                        operatingSystem: 'Any',
+                        offers: {
+                            '@type': 'Offer',
+                            price: '0',
+                            priceCurrency: 'USD'
+                        },
+                        featureList: 'Electronic signature, PDF drawing, secure client-side processing',
+                    }),
+                }}
+            />
 
             <script
                 type="application/ld+json"
@@ -84,28 +115,20 @@ export default function SignPDFPage() {
                         mainEntity: [
                             {
                                 '@type': 'Question',
-                                name: 'Are online electronic signatures legal?',
+                                name: 'Is it safe to sign PDFs online?',
                                 acceptedAnswer: {
                                     '@type': 'Answer',
-                                    text: 'Yes, electronic signatures are legally binding in the US (ESIGN Act), EU (eIDAS), and most other jurisdictions for standard contracts and agreements.'
+                                    text: 'Yes. Our eSignature tool processes your files 100% locally in your browser. Your documents are never uploaded to a server.'
                                 }
                             },
                             {
                                 '@type': 'Question',
-                                name: ' Is UnitMaster PDF Sign safe for legal documents?',
+                                name: 'Can I create a digital signature for free?',
                                 acceptedAnswer: {
                                     '@type': 'Answer',
-                                    text: 'Yes. Our signing tool works 100% offline in your browser. Your confidential contracts and legal forms are never uploaded to any server.'
+                                    text: 'Absolutely. You can draw, type, or upload your signature for free.'
                                 }
                             },
-                            {
-                                '@type': 'Question',
-                                name: 'Can I draw my signature?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'Yes, you can draw your signature with a mouse or touch screen, or use a text-based signature, both of which are legally valid methods.'
-                                }
-                            }
                         ]
                     }),
                 }}
