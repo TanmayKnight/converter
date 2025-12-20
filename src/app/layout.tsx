@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
 import Script from 'next/script';
 import { PrivacyDashboard } from '@/components/PrivacyDashboard';
+import { AdSenseLoader } from '@/components/AdSenseLoader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -84,12 +85,7 @@ export default function RootLayout({
         <Analytics />
         <Toaster />
         <PrivacyDashboard />
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595166353140049"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
+        <AdSenseLoader />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
