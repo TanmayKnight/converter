@@ -12,7 +12,7 @@ export async function Navbar() {
     if (user) {
         const { data } = await supabase
             .from('profiles')
-            .select('first_name')
+            .select('first_name, is_pro')
             .eq('id', user.id)
             .single()
         profile = data
@@ -26,6 +26,9 @@ export async function Navbar() {
             }
         }
     }
+
+    // Helper to check for pro status safely
+    const isPro = profile?.is_pro === true;
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,9 +50,11 @@ export async function Navbar() {
                     <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
                         Blog
                     </Link>
-                    <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
-                        Pricing
-                    </Link>
+                    {!isPro && (
+                        <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
+                            Pricing
+                        </Link>
+                    )}
                     <div className="md:hidden">
                         <Search mobile />
                     </div>
