@@ -5,7 +5,7 @@ UnitMaster is a privacy-focused, client-side utility toolkit for PDF manipulatio
 It runs entirely in the browser using WebAssembly (WASM), ensuring user data is never uploaded to a server.
 
 ## Key Capabilities (Tools)
-- **PDF Tools**: Merge, Split, Compress, PDF to Image, Image to PDF.
+- **PDF Tools**: Merge, Split, Compress, Sign (eSignature), PDF to Image, Image to PDF.
 - **Image Tools**: Remove Background (U-2-Net), Converter, YouTube Thumbnail Downloader.
 - **Unit Connecters**: High-precision math for Length, Mass, Digital Storage, Temperature, etc.
 

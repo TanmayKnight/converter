@@ -6,6 +6,15 @@ export const metadata: Metadata = {
     title: 'Sign PDF Online - Free Electronic Signature Tool | UnitMaster',
     description: 'Sign PDF documents online for free. Draw, type, or upload your signature. Secure client-side processing, no file uploads required.',
     keywords: ['sign pdf', 'esignature', 'electronic signature', 'sign pdf online', 'pdf signer', 'free pdf signer'],
+    alternates: {
+        canonical: 'https://unitmaster.io/tools/pdf/sign',
+    },
+    openGraph: {
+        title: 'Sign PDF Online (Free eSignature)',
+        description: 'Sign PDF documents safely in your browser. No uploads required.',
+        url: 'https://unitmaster.io/tools/pdf/sign',
+        type: 'website',
+    },
 };
 
 import { createClient } from '@/lib/supabase/server';
