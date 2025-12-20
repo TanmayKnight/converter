@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { stripe } from '@/lib/stripe';
+import Stripe from 'stripe';
 
 export async function POST(req: NextRequest) {
     try {
@@ -39,39 +40,66 @@ export async function POST(req: NextRequest) {
                 .eq('id', user.id);
         }
 
-        // 3. Create Checkout Session
-        // Hardcoding a Price ID for now (Create a Product in Stripe Dashboard first!)
-        // OR create it dynamically. For simplicity, we'll use a placeholder or create one on the fly if needed.
-        // Better strategy: Use 'price_123...' if you have one, or create a product.
-        // Let's create a standard "Pro Plan" product if it doesn't exist?
-        // No, creating products in runtime is bad practice.
-        // I will use a dummy line item for now which generates a price on the fly.
-
-        const session = await stripe.checkout.sessions.create({
-            customer: customerId,
-            line_items: [
-                {
-                    price_data: {
-                        currency: 'usd',
-                        product_data: {
-                            name: 'UnitMaster Pro Plan',
-                            description: 'Unlimited access to all premium tools',
+        // 3. Create Checkout Session helper
+        const createSession = async (custId: string) => {
+            return await stripe.checkout.sessions.create({
+                customer: custId,
+                line_items: [
+                    {
+                        price_data: {
+                            currency: 'usd',
+                            product_data: {
+                                name: 'UnitMaster Pro Plan',
+                                description: 'Unlimited access to all premium tools',
+                                images: [`${process.env.NEXT_PUBLIC_BASE_URL}/icon.png`],
+                            },
+                            unit_amount: 999, // $9.99
+                            recurring: {
+                                interval: 'month',
+                            },
                         },
-                        unit_amount: 999, // $9.99
-                        recurring: {
-                            interval: 'month',
-                        },
+                        quantity: 1,
                     },
-                    quantity: 1,
+                ],
+                mode: 'subscription',
+                success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`,
+                metadata: {
+                    supabase_user_id: user.id,
                 },
-            ],
-            mode: 'subscription',
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`,
-            metadata: {
-                supabase_user_id: user.id,
-            },
-        });
+            });
+        };
+
+        let session;
+        try {
+            session = await createSession(customerId);
+        } catch (error: any) {
+            // Handle "No such customer" error (common when switching Test -> Live keys)
+            // Stripe error code: resource_missing, param: customer
+            if (error.code === 'resource_missing' && error.param === 'customer') {
+                console.warn('Stripe Customer not found (likely Test ID in Live mode). Creating new customer...');
+
+                // Create NEW Customer (Live)
+                const newCustomer = await stripe.customers.create({
+                    email: user.email,
+                    metadata: {
+                        supabase_user_id: user.id,
+                    },
+                });
+                customerId = newCustomer.id;
+
+                // Update Supabase with new ID
+                await supabase
+                    .from('profiles')
+                    .update({ stripe_customer_id: customerId })
+                    .eq('id', user.id);
+
+                // Retry Session Creation
+                session = await createSession(customerId);
+            } else {
+                throw error;
+            }
+        }
 
         return NextResponse.json({ url: session.url });
     } catch (error: any) {
