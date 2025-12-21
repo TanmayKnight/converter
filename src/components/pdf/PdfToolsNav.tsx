@@ -13,6 +13,8 @@ const pdfTools = [
     { name: 'Compress PDF', href: '/tools/pdf/compress' },
     { name: 'Redact PDF', href: '/tools/pdf/redact' },
     { name: 'Sign PDF', href: '/tools/pdf/sign' },
+    { name: 'Protect PDF', href: '/tools/pdf/protect' },
+    { name: 'Unlock PDF', href: '/tools/pdf/unlock' },
     { name: 'PDF to Image', href: '/tools/pdf/pdf-to-image' },
     { name: 'Image to PDF', href: '/tools/pdf/image-to-pdf' },
 ];

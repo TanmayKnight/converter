@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib-plus-encrypt';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Rnd } from 'react-rnd';
 import { Button } from '@/components/ui/button';

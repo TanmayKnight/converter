@@ -225,7 +225,7 @@ export function RetirementCalculatorClient() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} strokeOpacity={0.2} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: 'var(--background)', borderRadius: '12px', border: '1px solid var(--border)' }}
-                                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                                    formatter={(value: any) => [`$${value?.toLocaleString() ?? 0}`, '']}
                                 />
                                 <Legend />
                                 <Bar dataKey="savings" name="Your Savings" fill="url(#colorSavings)" barSize={20} radius={[4, 4, 0, 0]} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib-plus-encrypt';
 import { FileUploader } from '@/components/tools/FileUploader';
 import { Button } from '@/components/ui/button';
 import { Download, Scissors, Loader2, FileText, CheckCircle, Lock } from 'lucide-react';

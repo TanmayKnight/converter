@@ -204,7 +204,7 @@ export function InvestmentCalculatorClient() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} strokeOpacity={0.2} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: 'var(--background)', borderRadius: '12px', border: '1px solid var(--border)' }}
-                                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                                    formatter={(value: any) => [`$${value?.toLocaleString() ?? 0}`, '']}
                                 />
                                 <Legend />
                                 <Area type="monotone" dataKey="principal" stackId="1" name="Your Contributions" stroke="#6366f1" fill="url(#colorPrincipal)" />

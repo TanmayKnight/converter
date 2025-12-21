@@ -54,6 +54,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: `${BASE_URL}/tools/pdf/compress`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/sign`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/redact`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/protect`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/tools/pdf/unlock`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/pdf-to-image`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/image-to-pdf`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/to-word`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },

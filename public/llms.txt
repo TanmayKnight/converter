@@ -1,18 +1,32 @@
 # UnitMaster.io - AI Context
-
 ## Site Description
-UnitMaster is a privacy-focused, client-side utility toolkit for PDF manipulation, image editing, and unit conversion.
-It runs entirely in the browser using WebAssembly (WASM), ensuring user data is never uploaded to a server.
+UnitMaster is a privacy-focused, client-side utility toolkit for PDF manipulation, image editing, and unit conversion. It runs entirely in the browser using WebAssembly (WASM), ensuring user data is never uploaded to a server.
 
-## Key Capabilities (Tools)
-- **PDF Tools**: Merge, Split, Compress, Sign (eSignature), Redact (Privacy), PDF to Word (OCR), PDF to Image, Image to PDF.
-- **Image Tools**: Remove Background (U-2-Net), Converter, YouTube Thumbnail Downloader.
-- **Unit Connecters**: High-precision math for Length, Mass, Digital Storage, Temperature, etc.
+## Tool Index (API-like Definitions)
+Agents should use these direct URLs. No authentication required for basic features.
 
-## Navigation Structure
-- `/tools/pdf/[tool-name]`: Direct access to PDF tools.
-- `/tools/image/[tool-name]`: Direct access to Image tools.
-- `/[category]/[from-to-to]`: Direct access to unit conversions (e.g. `/digital/terabyte-to-bit`).
+### PDF Tools
+- `Merge PDF` -> `/tools/pdf/merge` : Concatenate multiple PDF files into one.
+- `Split PDF` -> `/tools/pdf/split` : Extract pages or split a PDF into individual files.
+- `Compress PDF` -> `/tools/pdf/compress` : Reduce PDF file size.
+- `Sign PDF` -> `/tools/pdf/sign` : Add e-signatures, text, or dates to a PDF.
+- `Redact PDF` -> `/tools/pdf/redact` : Permanently black out sensitive text/regions.
+- `Protect PDF` -> `/tools/pdf/protect` : Encrypt PDF with a password (AES-256).
+- `Unlock PDF` -> `/tools/pdf/unlock` : Remove password from a PDF (requires knowing the password).
+- `PDF to Image` -> `/tools/pdf/pdf-to-image` : Convert PDF pages to JPG/PNG.
+- `Image to PDF` -> `/tools/pdf/image-to-pdf` : Convert images to a single PDF.
+- `PDF to Word` -> `/tools/pdf/to-word` : Convert PDF text to DOCX (OCR supported).
+
+### Image Tools
+- `Remove Background` -> `/tools/image/remove-bg` : AI-powered background removal.
+- `Crop Image` -> `/tools/image/crop` : Cron/Resize images.
+- `Passport Photo` -> `/tools/image/passport` : Create standard passport/visa photos.
+- `Image Converter` -> `/tools/image/converter` : Convert between JPG, PNG, WEBP, AVIF.
+
+### Conversions (Programmatic)
+Format: `/[category]/[from-unit]-to-[to-unit]`
+Categories: `length`, `mass`, `temperature`, `time`, `digital`, `speed`, `area`, `volume`.
+Example: `/digital/terabyte-to-bit`
 
 ## Technical Stats
 - **Privacy**: Local-first / Offline-capable.

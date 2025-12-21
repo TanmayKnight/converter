@@ -56,7 +56,8 @@ import {
   Split,
   PenTool,
   BookOpen,
-  EyeOff
+  EyeOff,
+  Lock
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -164,6 +165,8 @@ export default function Home() {
               { title: 'Split PDF', href: '/tools/pdf/split', icon: <Scissors className="w-full h-full" />, featured: true, type: 'tool' },
               { title: 'Sign PDF', href: '/tools/pdf/sign', icon: <PenTool className="w-full h-full" />, featured: true, type: 'tool' },
               { title: 'Redact PDF', href: '/tools/pdf/redact', icon: <EyeOff className="w-full h-full" />, featured: true, type: 'tool' },
+              { title: 'Protect PDF', href: '/tools/pdf/protect', icon: <Shield className="w-full h-full" />, type: 'tool' },
+              { title: 'Unlock PDF', href: '/tools/pdf/unlock', icon: <Lock className="w-full h-full" />, type: 'tool' },
               { title: 'Compress PDF', href: '/tools/pdf/compress', icon: <Minimize2 className="w-full h-full" />, type: 'tool' },
               { title: 'PDF to Word', href: '/tools/pdf/to-word', icon: <FileText className="w-full h-full" />, type: 'tool' },
               { title: 'PDF to Image', href: '/tools/pdf/pdf-to-image', icon: <ImageIcon className="w-full h-full" />, type: 'tool' },

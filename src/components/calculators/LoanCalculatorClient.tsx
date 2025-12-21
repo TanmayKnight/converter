@@ -243,7 +243,7 @@ export function LoanCalculatorClient() {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} strokeOpacity={0.2} />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: 'var(--background)', borderRadius: '12px', border: '1px solid var(--border)' }}
-                                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                                    formatter={(value: any) => [`$${value?.toLocaleString() ?? 0}`, '']}
                                 />
                                 <Legend />
                                 <Area type="monotone" dataKey="balance" name="Remaining Balance" stroke="#22c55e" fillOpacity={1} fill="url(#colorPrincipalL)" />
