@@ -28,12 +28,40 @@ export async function POST(req: NextRequest) {
         }
 
         // Create Portal Session
-        const session = await stripe.billingPortal.sessions.create({
-            customer: profile.stripe_customer_id,
-            return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile`,
-        });
+        try {
+            const session = await stripe.billingPortal.sessions.create({
+                customer: profile.stripe_customer_id,
+                return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile`,
+            });
+            return NextResponse.json({ url: session.url });
 
-        return NextResponse.json({ url: session.url });
+        } catch (error: any) {
+            // Handle invalid customer ID (e.g. from previous environment)
+            if (error.code === 'resource_missing' && error.param === 'customer') {
+                console.warn('Stripe Customer not found. Creating new one...');
+
+                // Create new customer
+                const newCustomer = await stripe.customers.create({
+                    email: user.email,
+                    metadata: { supabase_user_id: user.id },
+                });
+
+                // Update Supabase
+                await supabase
+                    .from('profiles')
+                    .update({ stripe_customer_id: newCustomer.id })
+                    .eq('id', user.id);
+
+                // Retry Portal Creation
+                const session = await stripe.billingPortal.sessions.create({
+                    customer: newCustomer.id,
+                    return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile`,
+                });
+                return NextResponse.json({ url: session.url });
+            }
+            throw error;
+        }
+
     } catch (error: any) {
         console.error('Stripe Portal Error:', error);
         return NextResponse.json(
