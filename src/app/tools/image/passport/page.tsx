@@ -231,9 +231,9 @@ export default function PassportPhotoPage() {
                             </div>
 
                             <div className="pt-4 border-t border-border/50 space-y-2">
-                                <Button onClick={() => onDownloadClick(false)} className="w-full" variant="outline" size="sm">
-                                    <Download className="h-4 w-4 mr-2" />
-                                    Download Preview {isPro ? '(Watermarked)' : '(Free)'}
+                                <Button onClick={() => onDownloadClick(false)} className="w-full h-auto py-3 whitespace-normal text-center" variant="outline">
+                                    <Download className="h-4 w-4 mr-2 flex-shrink-0" />
+                                    <span>Download Preview {isPro ? '(Watermarked)' : '(Free)'}</span>
                                 </Button>
                                 <Button onClick={() => onDownloadClick(true)} className={`w-full ${!isPro ? 'opacity-90' : 'bg-emerald-600 hover:bg-emerald-700'}`} size="lg">
                                     {!isPro ? <Lock className="h-4 w-4 mr-2 text-amber-200" /> : <Crown className="h-4 w-4 mr-2 text-yellow-300" />}
