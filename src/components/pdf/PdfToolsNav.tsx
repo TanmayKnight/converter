@@ -11,6 +11,7 @@ const pdfTools = [
     { name: 'Merge PDF', href: '/tools/pdf/merge' },
     { name: 'Split PDF', href: '/tools/pdf/split' },
     { name: 'Compress PDF', href: '/tools/pdf/compress' },
+    { name: 'Redact PDF', href: '/tools/pdf/redact' },
     { name: 'Sign PDF', href: '/tools/pdf/sign' },
     { name: 'PDF to Image', href: '/tools/pdf/pdf-to-image' },
     { name: 'Image to PDF', href: '/tools/pdf/image-to-pdf' },
