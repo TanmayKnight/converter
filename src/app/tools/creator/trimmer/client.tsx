@@ -184,6 +184,11 @@ export default function VideoTrimmerClient() {
         setStatus('Trimming original video (Lossless)...');
 
         try {
+            // Artificial Delay for Free Users
+            if (!isPro) {
+                await new Promise(resolve => setTimeout(resolve, 30000));
+            }
+
             const ffmpeg = ffmpegRef.current;
             // Write original file again (in case it was overwritten or not present)
             // Note: If we already wrote 'input_original.mp4' in createProxy, we could reuse it, 
@@ -440,7 +445,7 @@ export default function VideoTrimmerClient() {
                             </Button>
                             <Button onClick={trimVideo} disabled={isProcessing} className="flex-1 gap-2">
                                 {isProcessing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Scissors className="h-4 w-4" />}
-                                {isProcessing ? `Processing...` : 'Trim Video'}
+                                {isProcessing ? (isPro ? `Processing...` : `Queue (30s)...`) : 'Trim Video'}
                             </Button>
                         </div>
                     </div>

@@ -46,22 +46,12 @@ export async function POST(req: NextRequest) {
                 customer: custId,
                 line_items: [
                     {
-                        price_data: {
-                            currency: 'usd',
-                            product_data: {
-                                name: 'UnitMaster Pro Plan',
-                                description: 'Unlimited access to all premium tools',
-                                images: [`${process.env.NEXT_PUBLIC_BASE_URL}/icon.png`],
-                            },
-                            unit_amount: 999, // $9.99
-                            recurring: {
-                                interval: 'month',
-                            },
-                        },
+                        price: process.env.STRIPE_PRICE_ID_PRO,
                         quantity: 1,
                     },
                 ],
                 mode: 'subscription',
+                allow_promotion_codes: true, // Enable coupons for "SAVE 50%" logic if they want to use codes
                 success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/profile?session_id={CHECKOUT_SESSION_ID}`,
                 cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/pricing`,
                 metadata: {

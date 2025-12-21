@@ -107,6 +107,11 @@ export default function VoiceChangerClient() {
         if (!ffmpeg || !loaded || !audioFile || !selectedPreset) return;
 
         setIsProcessing(true);
+        // Artificial Delay for Free Users
+        if (!isPro) {
+            await new Promise(resolve => setTimeout(resolve, 30000));
+        }
+
         try {
             const inputName = 'input.' + audioFile.name.split('.').pop();
             const outputName = 'output.mp3';

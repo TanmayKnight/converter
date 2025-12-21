@@ -78,10 +78,15 @@ export default async function PricingPage() {
                         <h3 className="text-2xl font-bold mb-2 text-primary">Pro Power</h3>
                         <p className="text-primary/80">For power users & pros</p>
                         <div className="mt-6 flex items-baseline gap-1">
-                            <span className="text-4xl font-bold">$9</span>
+                            <span className="text-4xl font-bold">$4.99</span>
                             <span className="text-muted-foreground">/mo</span>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">Billed annually ($108/yr)</p>
+                        <div className="flex flex-col gap-1 mt-2">
+                            <Badge variant="secondary" className="w-fit bg-green-100 text-green-700 hover:bg-green-100 border-green-200">
+                                SAVE 50%
+                            </Badge>
+                            <p className="text-xs text-muted-foreground">Billed $59 annually</p>
+                        </div>
                     </div>
 
                     <ul className="space-y-4 mb-8 flex-1">

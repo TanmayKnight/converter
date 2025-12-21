@@ -88,6 +88,13 @@ export default function AudioMixerClient() {
         }
 
         setIsProcessing(true);
+        // Artificial Delay for Free Users
+        if (!isPro) {
+            toast.loading('Free Tier Queue: Mixing in 30s...');
+            await new Promise(resolve => setTimeout(resolve, 30000));
+            toast.dismiss();
+        }
+
         try {
             const inputs: string[] = [];
             const filterParts: string[] = [];
@@ -243,7 +250,7 @@ export default function AudioMixerClient() {
                                 <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Mixing...
                             </>
                         ) : (
-                            'Merge Tracks'
+                            isPro ? 'Merge Tracks' : 'Join (30s Queue)'
                         )}
                     </Button>
                 </div>

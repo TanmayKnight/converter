@@ -19,7 +19,8 @@ export default function MergePDFClient() {
     const { isPro } = usePro();
 
     const handleFilesSelected = (newFiles: File[]) => {
-        if (!isPro && (files.length + newFiles.length) > 3) {
+        // Limit free users to 2 files (Resume + Cover Letter is fine, adds upsell for Portfolio)
+        if (!isPro && (files.length + newFiles.length) > 2) {
             setShowPaywall(true);
             return;
         }
@@ -37,6 +38,12 @@ export default function MergePDFClient() {
 
         setIsProcessing(true);
         try {
+            // Artificial Delay for Free Users (The "Friction" Strategy)
+            if (!isPro) {
+                // User requested 30s pain
+                await new Promise(resolve => setTimeout(resolve, 30000));
+            }
+
             const mergedPdf = await PDFDocument.create();
 
             for (const file of files) {
@@ -70,7 +77,7 @@ export default function MergePDFClient() {
                         <ProGate
                             isPro={isPro}
                             title="Batch Merge Unlimited Files"
-                            description="Free users are limited to merging 3 files at a time. Upgrade to Pro to merge unlimited documents."
+                            description="Free users are limited to merging 2 files at a time. Upgrade to Pro to merge unlimited documents."
                             blurAmount="lg"
                         >
                             <div className="flex flex-col items-center justify-center space-y-4 opacity-40">
@@ -123,8 +130,12 @@ export default function MergePDFClient() {
                 {isProcessing ? (
                     <div className="text-center w-full max-w-md">
                         <Loader2 className="w-10 h-10 text-primary animate-spin mx-auto mb-6" />
-                        <h3 className="text-xl font-bold mb-2">Processing Your Files</h3>
-                        <p className="text-muted-foreground mb-6">Merging documents securely in your browser...</p>
+                        <h3 className="text-xl font-bold mb-2">
+                            {isPro ? 'Processing...' : 'Free Tier Processing...'}
+                        </h3>
+                        <p className="text-muted-foreground mb-6">
+                            {isPro ? 'Merging your files instantly.' : 'Your files are being queued. Upgrade to Pro for instant processing.'}
+                        </p>
                         <div className="h-2 w-full bg-border overflow-hidden rounded-full">
                             <div className="h-full bg-primary animate-progress origin-left"></div>
                         </div>
@@ -172,7 +183,7 @@ export default function MergePDFClient() {
                 <h2>How to Merge PDF Files Online (Free & Private)</h2>
                 <p>
                     Merging multiple PDF documents into a single file is essential for organizing reports, combining agreements, or cleaning up your digital workspace.
-                    <strong>UnitMaster PDF Merger</strong> allows free users to combine up to 3 files instantly. Upgrade to Pro for unlimited batch merging.
+                    <strong>UnitMaster PDF Merger</strong> allows free users to combine up to 2 files. Upgrade to Pro for unlimited batch merging and instant processing.
                 </p>
 
                 <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
@@ -198,9 +209,9 @@ export default function MergePDFClient() {
                         <AccordionContent>
                             <div className="space-y-4 text-muted-foreground">
                                 <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Unlimited Files (Pro)</strong>: Free users can merge 3 files. Pro users can merge 200+. We don&apos;t impose artificial limits on Pro accounts.</li>
+                                    <li><strong>Unlimited Files (Pro)</strong>: Free users can merge 2 files. Pro users can merge 200+. We don&apos;t impose artificial limits on Pro accounts.</li>
                                     <li><strong>Drag & Drop Reordering</strong>: Easily arrange your documents in the exact order you need.</li>
-                                    <li><strong>Instant Processing</strong>: No upload wait times. A 50MB merge takes milliseconds, not minutes.</li>
+                                    <li><strong>Instant Processing (Pro)</strong>: Pro users skip the queue. A 50MB merge takes milliseconds.</li>
                                     <li><strong>Clean Output</strong>: We don&apos;t add watermarks to your professional documents.</li>
                                 </ul>
                             </div>

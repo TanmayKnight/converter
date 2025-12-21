@@ -73,6 +73,12 @@ export default function AudioExtractorClient() {
         setStatus('Extracting audio track...');
 
         try {
+            // Artificial Delay for Free Users
+            if (!isPro) {
+                setStatus('Free Tier Queue (30s wait)...');
+                await new Promise(resolve => setTimeout(resolve, 30000));
+            }
+
             const ffmpeg = ffmpegRef.current;
             await ffmpeg.writeFile('input.mp4', await fetchFile(videoFile));
 

@@ -38,6 +38,18 @@ export default function RemoveBackgroundClient() {
         setStatus('Initializing AI Model (This runs in your browser)...');
 
         try {
+            // Artificial Delay for Free Users
+            if (!isPro) {
+                // Update status to keep user engaged/annoyed into upgrading
+                const startTime = Date.now();
+                while (Date.now() - startTime < 30000) {
+                    const remaining = Math.ceil((30000 - (Date.now() - startTime)) / 1000);
+                    setStatus(`Free Tier Queue: Processing in ${remaining}s... (Upgrade to skip)`);
+                    await new Promise(r => setTimeout(r, 1000));
+                }
+            }
+            setStatus('Initializing AI Model (This runs in your browser)...');
+
             // Processing
             // The library fetches WASM/ONNX files from Unpkg/JSDelivr by default
             const imageBlob = await removeBackground(imageSrc, {

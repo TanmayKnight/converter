@@ -71,6 +71,11 @@ export default function UnlockPdfClient({ isPro }: { isPro: boolean }) {
 
         setIsProcessing(true);
 
+        // Artificial Delay for Free Users
+        if (!isPro) {
+            await new Promise(resolve => setTimeout(resolve, 30000));
+        }
+
         try {
             const arrayBuffer = await file.arrayBuffer();
 

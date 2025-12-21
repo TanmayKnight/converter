@@ -64,6 +64,11 @@ export default function SplitPDFClient() {
 
         setIsProcessing(true);
         try {
+            // Artificial Delay for Free Users
+            if (!isPro) {
+                await new Promise(resolve => setTimeout(resolve, 30000));
+            }
+
             const arrayBuffer = await file.arrayBuffer();
             const srcDoc = await PDFDocument.load(arrayBuffer);
             const newDoc = await PDFDocument.create();
@@ -179,8 +184,12 @@ export default function SplitPDFClient() {
                     {isProcessing ? (
                         <div className="text-center w-full max-w-md">
                             <Loader2 className="w-10 h-10 text-primary animate-spin mx-auto mb-6" />
-                            <h3 className="text-xl font-bold mb-2">Extracting Pages...</h3>
-                            <p className="text-muted-foreground mb-6">Processing your requests...</p>
+                            <h3 className="text-xl font-bold mb-2">
+                                {isPro ? 'Extracting Pages...' : 'Free Tier Processing...'}
+                            </h3>
+                            <p className="text-muted-foreground mb-6">
+                                {isPro ? 'Processing your requests instanty.' : 'Your request is in the free queue standard wait time is 30s. Upgrade to Pro to skip.'}
+                            </p>
                             <div className="h-2 w-full bg-border overflow-hidden rounded-full">
                                 <div className="h-full bg-primary animate-progress origin-left"></div>
                             </div>

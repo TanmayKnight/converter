@@ -28,8 +28,13 @@ export default function CompressPDFClient() {
         if (!file) return;
 
         setIsProcessing(true);
-        // Simulate "Processing" time for Ad impression and user expectations (compression is fast)
-        await new Promise(r => setTimeout(r, 2000));
+        // Artificial Delay for Free Users (The "Friction" Strategy)
+        if (!isPro) {
+            await new Promise(resolve => setTimeout(resolve, 30000));
+        } else {
+            // Minimal UI feedback for Pro
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
 
         try {
             const arrayBuffer = await file.arrayBuffer();
@@ -115,8 +120,12 @@ export default function CompressPDFClient() {
                     {isProcessing ? (
                         <div className="text-center w-full max-w-md">
                             <Loader2 className="w-10 h-10 text-primary animate-spin mx-auto mb-6" />
-                            <h3 className="text-xl font-bold mb-2">Compressing...</h3>
-                            <p className="text-muted-foreground mb-6">Optimizing your document structure.</p>
+                            <h3 className="text-xl font-bold mb-2">
+                                {isPro ? 'Compressing...' : 'Free Tier Processing...'}
+                            </h3>
+                            <p className="text-muted-foreground mb-6">
+                                {isPro ? 'Optimizing instantly.' : 'Your file is in the slow queue (30s wait). Upgrade to Pro for instant speed.'}
+                            </p>
                             <div className="h-2 w-full bg-border overflow-hidden rounded-full">
                                 <div className="h-full bg-primary animate-progress origin-left"></div>
                             </div>
