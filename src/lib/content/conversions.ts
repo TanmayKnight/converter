@@ -90,5 +90,51 @@ export const richConversionContent: Record<string, RichConversionContent> = {
                 answer: "100 km/h is equal to 62 mph, which is a standard highway speed limit in many parts of the world."
             }
         ]
+    },
+    // Currency: INR to EUR
+    'currency/INR-to-EUR': {
+        title: "Convert Indian Rupee to Euro (INR to EUR) - Live Rates",
+        intro: "Converting Indian Rupees (INR) to Euros (EUR) is critical for travelers to Europe, students studying abroad in the EU, and businesses managing cross-border trade. Exchange rates fluctuate constantly based on economic factors like inflation, central bank policies (RBI and ECB), and global market sentiment.",
+        benefits: [
+            "Get real-time exchange rate estimates for travel budgeting.",
+            "Calculate exact remittance amounts for students or family in Europe.",
+            "Compare against bank rates to ensure you aren't paying hidden forex markups."
+        ],
+        faq: [
+            {
+                question: "What affects the INR to EUR exchange rate?",
+                answer: "The rate is influenced by trade balances between India and the Eurozone, interest rate differentials between the RBI and ECB, and general geopolitical stability. High inflation in India typically weakens the INR against the EUR over time."
+            },
+            {
+                question: "Is it better to exchange currency in India or Europe?",
+                answer: "It is often cheaper to exchange currency in India before you travel (using travel cards or forex dealers) rather than at European airports, which typically charge higher commission fees."
+            }
+        ]
+    },
+    // Currency: USD to EUR
+    'currency/USD-to-EUR': {
+        title: "Convert US Dollar to Euro (USD to EUR)",
+        intro: "The USD/EUR pair is the most traded currency pair in the world. Understanding this rate is vital for global finance, international business, and tourism. Since both the US and Eurozone are economic powerhouses, small shifts in this rate can signal major global economic trends.",
+        faq: [
+            {
+                question: "When is the best time to convert USD to EUR?",
+                answer: "Exchange rates are volatile. Historically, the rate fluctuates based on US Federal Reserve and ECB interest rate decisions. Monitoring these economic calendars can help you time your conversion."
+            },
+            {
+                question: "Do conversion rates include fees?",
+                answer: "The 'mid-market' rate shown here is the raw exchange rate. Banks and exchange bureaus will typically add a 'spread' (markup) of 1-3% on top of this rate when you buy cash."
+            }
+        ]
+    },
+    // Currency: GBP to USD
+    'currency/GBP-to-USD': {
+        title: "Convert British Pound to US Dollar (GBP to USD)",
+        intro: "Known as 'The Cable' by traders, the GBP to USD exchange rate connects two of the world's oldest and strongest financial systems. It is heavily watched by investors and is a key benchmark for the health of the UK economy relative to the US.",
+        faq: [
+            {
+                question: "Why is it called 'The Cable'?",
+                answer: "In the 19th century, the exchange rate between the London and New York stock exchanges was transmitted via a massive undersea cable laid across the Atlantic Ocean. The name stuck."
+            }
+        ]
     }
 };

@@ -25,7 +25,7 @@ Agents should use these direct URLs. No authentication required for basic featur
 
 ### Conversions (Programmatic)
 Format: `/[category]/[from-unit]-to-[to-unit]`
-Categories: `length`, `mass`, `temperature`, `time`, `digital`, `speed`, `area`, `volume`.
+Categories: `length`, `weight`, `temperature`, `volume`, `area`, `time`, `digital`, `speed`, `pressure`, `power`, `energy`, `force`, `currency`, `torque`, `acceleration`, `flow`, `current`, `voltage`, `resistance`, `charge`, `magnetism`, `illuminance`, `radiation`.
 Example: `/digital/terabyte-to-bit`
 
 ## Technical Stats

@@ -162,22 +162,58 @@ export default async function ConversionPage({ params }: PageProps) {
                             )}
                         </>
                     ) : (
-                        // Fallback Generic Content
+                        // Programmatic Dynamic Content
                         <>
-                            <h3>How to convert {fromUnit.symbol} to {toUnit.symbol}</h3>
+                            <h3>How to convert {fromUnit.name} to {toUnit.name} ({fromUnit.symbol} to {toUnit.symbol})</h3>
                             <p>
-                                To convert a value from {fromUnit.name} to {toUnit.name}, you need to know the ratio between these two units.
-                                Our tool performs this calculation automatically using high-precision arithmetic.
+                                Converting <strong>{fromUnit.name}s</strong> to <strong>{toUnit.name}s</strong> is a common calculation in fields ranging from physics to daily life.
+                                To get the result, you multiply the {fromUnit.name} value by the conversion factor.
+                            </p>
+
+                            <h4>The Formula</h4>
+                            <div className="bg-secondary/50 p-4 rounded-lg border border-border not-prose my-4">
+                                <p className="font-mono text-center font-bold text-lg">
+                                    {(fromUnit.offset !== undefined || toUnit.offset !== undefined) ? (
+                                        // Complex formula for temperature
+                                        categoryId === 'temperature' ? (
+                                            fromUnit.id === 'celsius' && toUnit.id === 'fahrenheit' ? `(${fromUnit.symbol} × 9/5) + 32 = ${toUnit.symbol}` :
+                                                fromUnit.id === 'fahrenheit' && toUnit.id === 'celsius' ? `(${fromUnit.symbol} - 32) × 5/9 = ${toUnit.symbol}` :
+                                                    fromUnit.id === 'celsius' && toUnit.id === 'kelvin' ? `${fromUnit.symbol} + 273.15 = ${toUnit.symbol}` :
+                                                        fromUnit.id === 'kelvin' && toUnit.id === 'celsius' ? `${fromUnit.symbol} - 273.15 = ${toUnit.symbol}` :
+                                                            `Use the calculator above for complex temperature conversions.`
+                                        ) : (
+                                            `Multiply by ${(fromUnit.ratio / toUnit.ratio).toPrecision(6)}`
+                                        )
+                                    ) : (
+                                        // Standard Ratio Formula
+                                        `1 ${fromUnit.symbol} = ${(fromUnit.ratio / toUnit.ratio).toPrecision(6)} ${toUnit.symbol}`
+                                    )}
+                                </p>
+                            </div>
+
+                            <h4>Calculation Example</h4>
+                            <p>
+                                Let's say you want to convert 5 {fromUnit.symbol} to {toUnit.symbol}:
+                            </p>
+                            <ul className="list-disc pl-6 space-y-2">
+                                <li><strong>Input:</strong> 5 {fromUnit.symbol}</li>
+                                <li><strong>Calculation:</strong> 5 × {(fromUnit.ratio / toUnit.ratio).toPrecision(6)}</li>
+                                <li><strong>Result:</strong> {(5 * (fromUnit.ratio / toUnit.ratio)).toFixed(4)} {toUnit.symbol}</li>
+                            </ul>
+
+                            <h3 className="mt-8">Why is this conversion important?</h3>
+                            <p>
+                                {categoryId === 'digital' && "In the digital age, understanding data storage units is crucial for managing files, hard drives, and internet speeds."}
+                                {categoryId === 'length' && "Length conversions are fundamental in construction, engineering, and travel. Accurate measurements ensure compatibility between metric and imperial systems."}
+                                {categoryId === 'weight' && "Weight conversion is vital for shipping logistics, cooking, and scientific experiments where precision is paramount."}
+                                {categoryId === 'temperature' && "Temperature conversion allows us to interpret weather forecasts, cooking instructions, and scientific data across different regions."}
+                                {categoryId === 'currency' && `Currency exchange rates fluctuate constantly. Understanding the value of ${fromUnit.name} against ${toUnit.name} helps in international travel and trade.`}
+                                {['finance', 'speed', 'volume', 'area', 'time', 'pressure', 'power', 'energy', 'force', 'torque', 'acceleration', 'flow', 'current', 'voltage', 'resistance', 'charge', 'magnetism', 'illuminance', 'radiation'].includes(categoryId) &&
+                                    `This conversion is essential for professionals in science and engineering who need to switch between different unit standards globally.`}
                             </p>
                         </>
                     )}
 
-                    {/* Formula Box (Always Show) */}
-                    <div className="bg-secondary/50 p-4 rounded-lg border border-border not-prose mt-6">
-                        <p className="font-mono text-sm text-center">
-                            1 {fromUnit.name} ≈ {(fromUnit.ratio / toUnit.ratio).toFixed(6)} {toUnit.name}
-                        </p>
-                    </div>
                 </div>
 
                 <div className="prose prose-neutral dark:prose-invert">

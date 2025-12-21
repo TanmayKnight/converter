@@ -30,7 +30,10 @@ const SCIENCE_LINKS: NavLink[] = [
     { href: '/calculators/physics/ohms-law', label: 'Ohm\'s Law' },
     { href: '/pressure', label: 'Pressure' },
     { href: '/power', label: 'Power' },
+    { href: '/energy', label: 'Energy' },
     { href: '/force', label: 'Force' },
+    { href: '/torque', label: 'Torque' },
+    { href: '/voltage', label: 'Voltage' },
 ];
 
 export function CalculatorToolsNav() {
