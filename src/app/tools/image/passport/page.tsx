@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import ReactCrop, { Crop, PixelCrop, centerCrop, makeAspectCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import Cropper, { Area } from 'react-easy-crop';
 import { ImageDropzone } from '@/components/image-tools/ImageDropzone';
 import { Button } from '@/components/ui/button';
-import { Download, X, Globe, User, CheckCircle2, Lock, Crown } from 'lucide-react';
+import { Slider } from '@/components/ui/slider';
+import { Download, X, Globe, User, CheckCircle2, Lock, Crown, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { usePro } from '@/hooks/usePro';
@@ -21,64 +21,113 @@ const PASSPORT_STANDARDS = [
     { id: 'au', name: 'Australia', dimensions: '35x45 mm', width: 827, height: 1063, aspect: 35 / 45, guide: "Head size 32-36mm." },
 ];
 
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-    return centerCrop(
-        makeAspectCrop(
-            {
-                unit: '%',
-                width: 80,
-            },
-            aspect,
-            mediaWidth,
-            mediaHeight,
-        ),
-        mediaWidth,
-        mediaHeight,
-    )
-}
-
-// Visual overlay component for head alignment
-const FaceOverlay = () => (
-    <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40">
-        <svg viewBox="0 0 200 200" className="h-[80%] w-[80%] text-white drop-shadow-md">
-            {/* Dashed oval for face */}
-            <ellipse cx="100" cy="90" rx="45" ry="60" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
-            {/* Shoulder line */}
-            <path d="M 20 200 Q 100 160 180 200" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
-        </svg>
-    </div>
-);
-
 export default function PassportPhotoPage() {
     const { isPro } = usePro();
     const [imgSrc, setImgSrc] = useState('');
-    const [crop, setCrop] = useState<Crop>();
-    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-    const imgRef = useRef<HTMLImageElement>(null);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [rotation, setRotation] = useState(0);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
     const [standardId, setStandardId] = useState('us');
 
     const currentStandard = PASSPORT_STANDARDS.find(s => s.id === standardId) || PASSPORT_STANDARDS[0];
 
     // Select image
     function onSelectFile(file: File) {
-        setCrop(undefined);
+        setCrop({ x: 0, y: 0 });
+        setZoom(1);
+        setRotation(0);
         const reader = new FileReader();
         reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
         reader.readAsDataURL(file);
     }
 
-    function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-        const { width, height } = e.currentTarget;
-        setCrop(centerAspectCrop(width, height, currentStandard.aspect));
-    }
+    const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    }, []);
 
-    // Effect to update crop when standard changes
-    useEffect(() => {
-        if (imgRef.current) {
-            const { width, height } = imgRef.current;
-            setCrop(centerAspectCrop(width, height, currentStandard.aspect));
+    // Helper to create image from URL
+    const createImage = (url: string): Promise<HTMLImageElement> =>
+        new Promise((resolve, reject) => {
+            const image = new Image();
+            image.addEventListener('load', () => resolve(image));
+            image.addEventListener('error', (error) => reject(error));
+            image.setAttribute('crossOrigin', 'anonymous');
+            image.src = url;
+        });
+
+    // Helper to get cropped image
+    async function getCroppedImg(
+        imageSrc: string,
+        pixelCrop: Area,
+        width: number,
+        height: number,
+        isOfficial: boolean
+    ): Promise<string> {
+        const image = await createImage(imageSrc);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+            return '';
         }
-    }, [standardId]);
+
+        // Draw the image rotated onto a temporary canvas if needed (simplification: strict crop)
+        // For passport photos, we want strict dimensions.
+        canvas.width = width;
+        canvas.height = height;
+
+        // White Background
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // High Quality
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        /* 
+           react-easy-crop returns pixelCrop relative to the rotated image provided. 
+           But if functionality is simple pan/zoom, we can draw directly.
+           If we support rotation, we need more complex logic. 
+           For this snippet, we assume 0 rotation or simple crop extraction.
+        */
+
+        // Draw the cropped portion to the new canvas
+        ctx.drawImage(
+            image,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            width,
+            height
+        );
+
+        if (!isOfficial) {
+            // Add Watermark
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(-Math.PI / 4);
+            ctx.font = `bold ${width / 10}px sans-serif`;
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('UnitMaster Preview', 0, 0);
+            ctx.fillText('UnitMaster Preview', 0, height / 3);
+            ctx.fillText('UnitMaster Preview', 0, -height / 3);
+            ctx.restore();
+        }
+
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                const url = URL.createObjectURL(blob);
+                resolve(url);
+            }, 'image/jpeg', 0.95);
+        });
+    }
 
     async function onDownloadClick(isOfficial: boolean) {
         if (isOfficial && !isPro) {
@@ -86,68 +135,26 @@ export default function PassportPhotoPage() {
             return;
         }
 
-        const image = imgRef.current;
-        if (!image || !completedCrop) return;
+        // Need the image source (not just the ref, which might be the rendered one) logic handled by getCroppedImg
+        if (!imgSrc || !croppedAreaPixels) return;
 
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
+        try {
+            const croppedImageUrl = await getCroppedImg(
+                imgSrc,
+                croppedAreaPixels, // Pass pixels directly (already natural scale)
+                currentStandard.width,
+                currentStandard.height,
+                isOfficial
+            );
 
-        const canvas = document.createElement('canvas');
-        canvas.width = currentStandard.width;   // Enforce strict output size
-        canvas.height = currentStandard.height; // Enforce strict output size
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // White Background Fill (Safety)
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // High Quality Scaling
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-
-        const cropX = completedCrop.x * scaleX;
-        const cropY = completedCrop.y * scaleY;
-        const cropWidth = completedCrop.width * scaleX;
-        const cropHeight = completedCrop.height * scaleY;
-
-        ctx.drawImage(
-            image,
-            cropX,
-            cropY,
-            cropWidth,
-            cropHeight,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-        if (!isOfficial) {
-            // Add Watermark
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(-Math.PI / 4);
-            ctx.font = `bold ${canvas.width / 10}px sans-serif`;
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('UnitMaster Preview', 0, 0);
-            ctx.fillText('UnitMaster Preview', 0, canvas.height / 3);
-            ctx.fillText('UnitMaster Preview', 0, -canvas.height / 3);
-            ctx.restore();
-        }
-
-        canvas.toBlob((blob) => {
-            if (!blob) return;
-            const url = URL.createObjectURL(blob);
             const anchor = document.createElement('a');
             anchor.download = `passport-photo-${currentStandard.id}${!isOfficial ? '-preview' : ''}.jpg`;
-            anchor.href = url;
+            anchor.href = croppedImageUrl;
             anchor.click();
-            URL.revokeObjectURL(url);
-        }, 'image/jpeg', 0.95);
+            URL.revokeObjectURL(croppedImageUrl);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (
@@ -208,6 +215,21 @@ export default function PassportPhotoPage() {
                                 </AlertDescription>
                             </Alert>
 
+                            {/* Zoom Control */}
+                            <div className="space-y-3 pt-4 border-t border-border/50">
+                                <div className="flex justify-between text-xs font-medium">
+                                    <span className="flex items-center gap-1"><ZoomOut className="h-3 w-3" /> Zoom</span>
+                                    <span>{Math.round(zoom * 100)}%</span>
+                                </div>
+                                <Slider
+                                    value={[zoom]}
+                                    min={1}
+                                    max={3}
+                                    step={0.1}
+                                    onValueChange={(vals) => setZoom(vals[0])}
+                                />
+                            </div>
+
                             <div className="pt-4 border-t border-border/50 space-y-2">
                                 <Button onClick={() => onDownloadClick(false)} className="w-full" variant="outline" size="sm">
                                     <Download className="h-4 w-4 mr-2" />
@@ -237,41 +259,56 @@ export default function PassportPhotoPage() {
                             </span>
                         </div>
 
-                        <div className="flex-1 flex items-center justify-center bg-secondary/10 rounded-lg p-4 overflow-hidden relative min-h-[500px]">
-                            <ReactCrop
+                        {/* Relative container for Cropper */}
+                        <div className="relative w-full h-[500px] bg-secondary/10 rounded-lg overflow-hidden border border-border/50">
+                            <Cropper
+                                image={imgSrc}
                                 crop={crop}
-                                onChange={(_, percentCrop) => setCrop(percentCrop)}
-                                onComplete={(c) => setCompletedCrop(c)}
+                                zoom={zoom}
+                                rotation={rotation}
                                 aspect={currentStandard.aspect}
-                                className="max-w-full shadow-2xl"
-                                ruleOfThirds
-                                locked={true}
-                            >
-                                <img
-                                    ref={imgRef}
-                                    alt="Crop me"
-                                    src={imgSrc}
-                                    onLoad={onImageLoad}
-                                    className="max-w-full max-h-[60vh] object-contain"
-                                    style={{ transform: 'translateZ(0)' }} // Fix render issues
-                                />
-                                {/* The Overlay sits INSIDE the crop area? No, ReactCrop doesn't easily allow children inside the selection box to scale. 
-                                   Actually, we want the overlay to be 'static' relative to the crop selection? 
-                                   Easier approach: Just rely on ruleOfThirds for now, OR position the overlay absolutely on top of the image container if possible.
-                                   Let's try putting it as a sibling of img, but scoped to the ReactCrop container?
-                                   ReactCrop children are rendered inside the crop selection? Yes.
-                               */}
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
-                                    {/* SVG Guide centered in the SELECTION */}
-                                    <svg viewBox="0 0 100 100" className="w-[80%] h-[80%] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                                        <ellipse cx="50" cy="45" rx="25" ry="32" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4" />
-                                        <path d="M 15 100 Q 50 70 85 100" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4" />
-                                    </svg>
+                                onCropChange={setCrop}
+                                onCropComplete={onCropComplete}
+                                onZoomChange={setZoom}
+                                showGrid={false}
+                                objectFit="contain"
+                            />
+
+                            {/* Static Overlay for Face Alignment */}
+                            {/* Uses pointer-events-none so drags pass through to Cropper */}
+                            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                                {/* The crop area is centered by default in react-easy-crop.
+                                    We need to approximate the visual guide. 
+                                    Currently, we'll center it relative to the viewport. 
+                                    Ideally, we would sync this with the crop size, but react-easy-crop manages that.
+                                    However, since we are using objectFit="contain" and the crop box is centered...
+                                    Actually, react-easy-crop has a semi-transparent mask. We just need the LINES.
+                                */}
+                                <div
+                                    className="border-2 border-white/50 border-dashed rounded-full shadow-sm"
+                                    style={{
+                                        // Approximate the visual size of the crop area for the face guide.
+                                        // This is a bit tricky without knowing exact rendered crop dimensions.
+                                        // But for a simple UX, a centered static guide is usually "good enough" if the user centers the crop.
+                                        // Or better, we let react-easy-crop handle the mask, and we just provide the guidelines.
+                                        // Let's create a generic SVG overlay that looks like a head outline.
+                                        width: '200px',
+                                        height: '260px',
+                                        opacity: 0.7
+                                    }}
+                                >
+                                    {/* Inner face oval */}
+                                    {/* Just using the div border as the head guide for now, simple and effective. */}
                                 </div>
-                            </ReactCrop>
+                                <svg viewBox="0 0 100 100" className="absolute w-[300px] h-[300px] text-white opacity-50 drop-shadow-md">
+                                    {/* Shoulder Guide */}
+                                    <path d="M 10 100 Q 50 60 90 100" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4" />
+                                </svg>
+                            </div>
                         </div>
+
                         <p className="text-center text-xs text-muted-foreground mt-4">
-                            Drag the corners to fit your head inside the dashed oval.
+                            Drag the image to position. Use the slider to zoom.
                         </p>
                     </div>
                 </div>
