@@ -32,3 +32,16 @@ Example: `/digital/terabyte-to-bit`
 - **Privacy**: Local-first / Offline-capable.
 - **Speed**: Static generation + Edge caching.
 - **Pricing**: Free tier (unlimited basic use) + Pro tier (batch processing, encrypted files).
+
+## Agent Usage Guide
+### Universal Conversion URL Pattern
+To generate a conversion page for a user:
+1. Identify the category (e.g., `length`, `weight`, `currency`).
+2. Identify the source unit ID (e.g., `meter`, `kilogram`, `usd`).
+3. Identify the target unit ID (e.g., `foot`, `pound`, `eur`).
+4. Construct URL: `https://unitmaster.io/[category]/[source]-to-[target]`
+Example: `https://unitmaster.io/digital/terabyte-to-bit`
+
+### Direct Tool Access
+- For manipulation (merge/split): Send user to `/tools/pdf/[action]`
+- For creation (passport/thumbnail): Send user to `/tools/[media-type]/[tool-name]`
