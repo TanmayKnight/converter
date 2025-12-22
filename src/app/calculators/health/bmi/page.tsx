@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import BMICalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'BMI Calculator - Body Mass Index (Metric & Imperial) | UnitMaster',
@@ -74,6 +75,14 @@ export default function BMIPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Health Calculators', path: '/calculators/health' },
+                    { name: 'BMI Calculator', path: '/calculators/health/bmi' }
+                ]}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { RetirementCalculatorClient } from '@/components/calculators/RetirementCalculatorClient';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Retirement Planner - Create Your Financial Freedom Roadmap',
@@ -78,6 +79,13 @@ export default function RetirementPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Finance', path: '/calculators/finance' },
+                    { name: 'Retirement Calculator', path: '/calculators/finance/retirement' }
+                ]}
             />
         </div>
     );

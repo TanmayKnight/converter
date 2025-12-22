@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import TipCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Tip Calculator - Split Bill & Calculate Gratuity Offline',
@@ -71,6 +72,14 @@ export default function TipPage() {
                     },
                     "featureList": "Tip Calculation, Bill Splitter, Gratuity Guide"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Tip Calculator', path: '/calculators/math/tip' }
+                ]}
             />
         </div>
     );

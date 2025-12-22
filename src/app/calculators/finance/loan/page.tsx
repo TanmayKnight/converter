@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { LoanCalculatorClient } from '@/components/calculators/LoanCalculatorClient';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Personal Loan Calculator - Calculate Payments & APR',
@@ -70,6 +71,13 @@ export default function LoanPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Finance', path: '/calculators/finance' },
+                    { name: 'Loan Calculator', path: '/calculators/finance/loan' }
+                ]}
             />
         </div>
     );

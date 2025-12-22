@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { InvestmentCalculatorClient } from '@/components/calculators/InvestmentCalculatorClient';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Investment Calculator - Wealth Growth Charts & Reports',
@@ -74,6 +75,13 @@ export default function InvestmentPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Finance', path: '/calculators/finance' },
+                    { name: 'Investment Calculator', path: '/calculators/finance/investment' }
+                ]}
             />
         </div>
     );

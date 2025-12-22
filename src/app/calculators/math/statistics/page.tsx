@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import StatsCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Statistics Calculator - Permutations, Combinations & Probability',
@@ -75,6 +76,14 @@ export default function StatisticsPage() {
                     },
                     "featureList": "Permutations, Combinations, Factorials, Probability, Offline Calculation"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Statistics Calculator', path: '/calculators/math/statistics' }
+                ]}
             />
         </div>
     );

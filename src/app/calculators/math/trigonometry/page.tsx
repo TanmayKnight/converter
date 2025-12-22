@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import TrigCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Trigonometry Calculator - Sin, Cos, Tan Offline',
@@ -71,6 +72,14 @@ export default function TrigPage() {
                     },
                     "featureList": "Sine, Cosine, Tangent, Inverse Trig, Degree Mode"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Trigonometry Calculator', path: '/calculators/math/trigonometry' }
+                ]}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import MassForceCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Force Converter - Mass to Force Calculator (kg to kN)',
@@ -74,6 +75,14 @@ export default function MassForcePage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Physics Calculators', path: '/calculators/physics' },
+                    { name: 'Force Canverter', path: '/calculators/physics/force-mass' }
+                ]}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import BaseConverterClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Base Converter - Binary, Octal, Decimal, Hex Offline',
@@ -71,6 +72,14 @@ export default function BasePage() {
                     },
                     "featureList": "Binary Conversion, Hex Conversion, Octal Conversion, Base 36"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Base Converter', path: '/calculators/math/base' }
+                ]}
             />
         </div>
     );

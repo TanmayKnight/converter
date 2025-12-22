@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import AsciiConverterClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'ASCII Converter - Text to Hex, Binary, Decimal Offline',
@@ -67,6 +68,14 @@ export default function AsciiPage() {
                     },
                     "featureList": "ASCII to Text, Text to Binary, Text to Hex, Local Processing"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'ASCII Converter', path: '/calculators/math/ascii' }
+                ]}
             />
         </div>
     );

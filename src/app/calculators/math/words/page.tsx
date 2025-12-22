@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import WordsConverterClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Numbers to Words Converter - Check Writing Helper | UnitMaster',
@@ -71,6 +72,14 @@ export default function WordsPage() {
                     },
                     "featureList": "Number to Text, Check Writing Helper, Offline Processing"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Numbers to Words Converter', path: '/calculators/math/words' }
+                ]}
             />
         </div>
     );

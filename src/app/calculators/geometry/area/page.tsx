@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import AreaCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Area Calculator - Calculate Surface Area of Shapes',
@@ -74,6 +75,14 @@ export default function AreaPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Geometry Calculators', path: '/calculators/geometry' },
+                    { name: 'Area Calculator', path: '/calculators/geometry/area' }
+                ]}
             />
         </div>
     );

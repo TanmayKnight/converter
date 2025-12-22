@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import OhmsLawCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: "Ohm's Law Calculator - Voltage, Current, Resistance & Power",
@@ -74,6 +75,14 @@ export default function OhmsLawPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Physics Calculators', path: '/calculators/physics' },
+                    { name: "Ohm's Law Calculator", path: '/calculators/physics/ohms-law' }
+                ]}
             />
         </div>
     );

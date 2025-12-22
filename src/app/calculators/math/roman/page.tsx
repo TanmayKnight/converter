@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import RomanConverterClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Roman Numeral Converter - Date & Number to Roman Offline',
@@ -71,6 +72,14 @@ export default function RomanPage() {
                     },
                     "featureList": "Roman to Number, Number to Roman, Date Conversion, Offline Calculation"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Roman Numeral Converter', path: '/calculators/math/roman' }
+                ]}
             />
         </div>
     );

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import AlgebraClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Algebra Calculator - Square Roots, Exponents & Logarithms Offline',
@@ -71,6 +72,14 @@ export default function AlgebraPage() {
                     },
                     "featureList": "Square Root, Exponents, Logarithms, Natural Log, Offline Calculation"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Algebra Calculator', path: '/calculators/math/algebra' }
+                ]}
             />
         </div>
     );

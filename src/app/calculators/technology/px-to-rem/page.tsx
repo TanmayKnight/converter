@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import PxRemConverterClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'PX to REM Converter - CSS Unit Calculator',
@@ -74,6 +75,14 @@ export default function PxRemPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Technology Calculators', path: '/calculators/technology' },
+                    { name: 'PX to REM Converter', path: '/calculators/technology/px-to-rem' }
+                ]}
             />
         </div>
     );

@@ -89,7 +89,7 @@ export default function MortgagePage() {
             <JsonLdBreadcrumb
                 crumbs={[
                     { name: 'Home', path: '/' },
-                    { name: 'Finance', path: '#' },
+                    { name: 'Finance', path: '/calculators/finance' },
                     { name: 'Mortgage Calculator', path: '/calculators/finance/mortgage' }
                 ]}
             />

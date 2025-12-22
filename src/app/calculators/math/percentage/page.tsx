@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import PercentageCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Percentage Calculator - Calculate % Increase & Difference Offline',
@@ -75,6 +76,14 @@ export default function PercentagePage() {
                     },
                     "featureList": "Percentage Increase, Percentage Decrease, Reverse Percentage, Offline Calculation"
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Math Calculators', path: '/calculators/math' },
+                    { name: 'Percentage Calculator', path: '/calculators/math/percentage' }
+                ]}
             />
         </div>
     );

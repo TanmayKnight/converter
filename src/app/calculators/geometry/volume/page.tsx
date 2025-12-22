@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import VolumeCalculatorClient from './client';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Volume Calculator - Calculate Volume of 3D Shapes',
@@ -74,6 +75,14 @@ export default function VolumePage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Geometry Calculators', path: '/calculators/geometry' },
+                    { name: 'Volume Calculator', path: '/calculators/geometry/volume' }
+                ]}
             />
         </div>
     );

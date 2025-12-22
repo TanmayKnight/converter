@@ -80,7 +80,7 @@ export default function AdvancedLoanPage() {
             <JsonLdBreadcrumb
                 crumbs={[
                     { name: 'Home', path: '/' },
-                    { name: 'Finance', path: '#' },
+                    { name: 'Finance', path: '/calculators/finance' },
                     { name: 'Advanced Loan Calculator', path: '/calculators/finance/loan-advanced' }
                 ]}
             />

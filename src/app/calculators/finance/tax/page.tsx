@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { TaxCalculatorClient } from '@/components/calculators/TaxCalculatorClient';
 import { SeoContentSection } from '@/components/seo/SeoContentSection';
+import { JsonLdBreadcrumb } from '@/components/JsonLdBreadcrumb';
 
 export const metadata: Metadata = {
     title: 'Tax & Invoice Generator - GST, VAT & Legal Invoices',
@@ -78,6 +79,13 @@ export default function TaxPage() {
                         "priceCurrency": "USD"
                     }
                 }}
+            />
+            <JsonLdBreadcrumb
+                crumbs={[
+                    { name: 'Home', path: '/' },
+                    { name: 'Finance', path: '/calculators/finance' },
+                    { name: 'Tax & Invoice Generator', path: '/calculators/finance/tax' }
+                ]}
             />
         </div>
     );

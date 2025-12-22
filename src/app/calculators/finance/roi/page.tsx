@@ -85,7 +85,7 @@ export default function ROIPage() {
             <JsonLdBreadcrumb
                 crumbs={[
                     { name: 'Home', path: '/' },
-                    { name: 'Finance', path: '#' },
+                    { name: 'Finance', path: '/calculators/finance' },
                     { name: 'ROI Calculator', path: '/calculators/finance/roi' }
                 ]}
             />
