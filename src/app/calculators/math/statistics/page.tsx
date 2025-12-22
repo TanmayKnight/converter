@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import StatsCalculatorClient from './client';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { SeoContentSection } from '@/components/seo/SeoContentSection';
 
 export const metadata: Metadata = {
     title: 'Statistics Calculator - Permutations, Combinations & Probability',
-    description: 'Solve statistics problems online. Calculate Mean (Average), Permutations (nPr), Combinations (nCr), and Factorials instanty.',
-    keywords: ['statistics calculator', 'permutation calculator', 'combination calculator', 'npr calculator', 'ncr calculator', 'probability calculator'],
+    description: 'Solve statistics problems online. Calculate Mean, Permutations (nPr), Combinations (nCr), and Probability instantly. Works offline.',
+    keywords: ['statistics calculator offline', 'permutation calculator', 'combination calculator', 'npr calculator', 'probability calculator local', 'ncr calculator'],
     alternates: {
         canonical: 'https://unitmaster.io/calculators/math/statistics',
     },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function StatisticsPage() {
     return (
-        <>
+        <div className="space-y-8">
             <div className="container mx-auto px-4 py-8 max-w-4xl text-center">
                 <h1 className="text-3xl font-bold mb-2">Statistics Calculator</h1>
                 <p className="text-muted-foreground">Permutations, Combinations, Factorials & More.</p>
@@ -21,65 +21,61 @@ export default function StatisticsPage() {
 
             <StatsCalculatorClient />
 
-            <div className="container mx-auto px-4 py-12 max-w-4xl prose prose-neutral dark:prose-invert">
-                {/* Dynamic explanations moved to client component */}
-
-                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
-                <Accordion type="single" collapsible className="w-full not-prose">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>What does n and r stand for?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    <strong>n</strong> = Total number of items in the set.
-                                    <br />
-                                    <strong>r</strong> = Number of items you are choosing/selecting.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>What is the probability of winning the lottery?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    This is a Combination problem. If you need to choose 6 numbers out of 49, it is <code>49 C 6</code>.
-                                    That equals 13,983,816. The probability is <strong>1 in 13.9 million</strong>.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </div>
-
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'FAQPage',
-                        mainEntity: [
-                            {
-                                '@type': 'Question',
-                                name: 'What is the difference between Permutation and Combination?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'In Permutations, the order of items matters (like a lock code). In Combinations, order does not matter (like ingredients in a salad).'
-                                }
-                            },
-                            {
-                                '@type': 'Question',
-                                name: 'What is 0 factorial (0!)?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: '0! is defined as 1. This convention makes many mathematical formulas work correctly.'
-                                }
-                            }
-                        ]
-                    }),
+            <SeoContentSection
+                title="Statistics Concepts Explained"
+                description="Solve common probability and combinatorics problems without confusion. Understand the difference between Permutations and Combinations instantly."
+                features={[
+                    {
+                        title: "Permutations (nPr)",
+                        description: "Calculates the number of ways to arrange items where order matters (e.g., a lock code)."
+                    },
+                    {
+                        title: "Combinations (nCr)",
+                        description: "Calculates the number of ways to choose items where order does not matter (e.g., lottery numbers)."
+                    },
+                    {
+                        title: "Factorials (!)",
+                        description: "Compute factorials used in advanced probability. 5! = 5 × 4 × 3 × 2 × 1 = 120."
+                    }
+                ]}
+                benefits={[
+                    "Verify probability homework.",
+                    "Calculate lottery odds.",
+                    "Understand data grouping.",
+                    "Offline & Private."
+                ]}
+                faqs={[
+                    {
+                        question: "What does n and r stand for?",
+                        answer: "n = Total number of items in the set. r = Number of items you are choosing/selecting to arrange."
+                    },
+                    {
+                        question: "What is the probability of winning the lottery?",
+                        answer: "This is a Combination problem. If you choose 6 numbers out of 49, it is 49 C 6 = 13,983,816. The probability is 1 in 13.9 million."
+                    },
+                    {
+                        question: "What is 0 factorial (0!)?",
+                        answer: "0! is defined as 1. This mathematical convention makes probability formulas work correctly."
+                    },
+                    {
+                        question: "What is the difference between Permutation and Combination?",
+                        answer: "In Permutations, the order matters (code 123 is different from 321). In Combinations, order doesn't matter (a fruit salad of Apple+Banana is the same as Banana+Apple)."
+                    }
+                ]}
+                jsonLd={{
+                    "@context": "https://schema.org",
+                    "@type": "SoftwareApplication",
+                    "name": "Statistics Calculator",
+                    "applicationCategory": "EducationalApplication",
+                    "operatingSystem": "Any",
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD"
+                    },
+                    "featureList": "Permutations, Combinations, Factorials, Probability, Offline Calculation"
                 }}
             />
-        </>
+        </div>
     );
 }
