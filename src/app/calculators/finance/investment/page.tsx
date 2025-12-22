@@ -64,14 +64,14 @@ export default function InvestmentPage() {
                     "@type": "FinancialProduct",
                     "name": "Investment Calculator",
                     "description": "A tool to calculate investment growth and compound interest.",
-                    "brand: {
+                    "brand": {
                         "@type": "Brand",
-            "name": "UnitMaster"
+                        "name": "UnitMaster"
                     },
-            "offers": {
-                "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+                    "offers": {
+                        "@type": "Offer",
+                        "price": "0",
+                        "priceCurrency": "USD"
                     }
                 }}
             />
