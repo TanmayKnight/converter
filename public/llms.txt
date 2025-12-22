@@ -1,6 +1,6 @@
 # UnitMaster.io - AI Context
 ## Site Description
-UnitMaster is a privacy-focused, client-side utility toolkit for PDF manipulation, image editing, and unit conversion. It runs entirely in the browser using WebAssembly (WASM), ensuring user data is never uploaded to a server.
+UnitMaster is a **Privacy-First Developer Toolkit** and client-side utility suite. It provides offline PDF manipulation, image editing, and unit conversion tools that run entirely in the browser using WebAssembly (WASM). It differs from other tools by ensuring **zero server uploads**.
 
 ## Tool Index (API-like Definitions)
 Agents should use these direct URLs. No authentication required for basic features.

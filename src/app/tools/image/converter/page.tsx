@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 // Removed: Select imports
 import { Download, RefreshCw, X, FileImage, Crown, Lock } from 'lucide-react';
+import { SeoContentSection } from '@/components/seo/SeoContentSection';
 import { usePro } from '@/hooks/usePro';
 
 export default function ImageConverterPage() {
@@ -188,101 +189,63 @@ export default function ImageConverterPage() {
 
 
 
-            {/* SEO Content */}
-            <div className="prose prose-neutral dark:prose-invert max-w-none mt-12 bg-secondary/10 p-8 rounded-2xl border border-border/50">
-                <h2>Image Formats Explained: JPG vs PNG vs WebP</h2>
-                <p>
-                    Choosing the right image format is crucial for web performance and visual quality.
-                    <strong>UnitMaster Converter</strong> lets you switch between them instantly. Here is how to choose:
-                </p>
-
-                <h3 className="text-xl font-bold mt-8 mb-4">Frequently Asked Questions</h3>
-                <Accordion type="single" collapsible className="w-full not-prose">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger>JPG / JPEG: When to use it?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p><strong>Best for:</strong> Photographs, portraits, and complex scenery.</p>
-                                <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Pros</strong>: Small file size. Universal compatibility.</li>
-                                    <li><strong>Cons</strong>: "Lossy" compression (quality degrades with each save). No transparency support.</li>
-                                </ul>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger>PNG: When to use it?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p><strong>Best for:</strong> Logos, screenshots, icons, and text-heavy images.</p>
-                                <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Pros</strong>: "Lossless" quality (crisp edges). Supports Transparency (alpha channel).</li>
-                                    <li><strong>Cons</strong>: Larger file sizes, especially for photos.</li>
-                                </ul>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-3">
-                        <AccordionTrigger>WebP: Why choose Google's format?</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p><strong>Best for:</strong> Modern websites and apps.</p>
-                                <ul className="list-disc pl-6 space-y-2">
-                                    <li><strong>Pros</strong>: The best of both worlds. 25-35% smaller than JPGs with the same quality. Supports transparency.</li>
-                                    <li><strong>Cons</strong>: Not supported by very old browsers (Internet Explorer), but works on all modern devices.</li>
-                                </ul>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-4">
-                        <AccordionTrigger>Optimization Tip</AccordionTrigger>
-                        <AccordionContent>
-                            <div className="space-y-4 text-muted-foreground">
-                                <p>
-                                    If you are building a website, convert your heavy PNG headers to WebP. You will see a significant boost in your PageSpeed Insights score.
-                                </p>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </div>
-
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'FAQPage',
-                        mainEntity: [
-                            {
-                                '@type': 'Question',
-                                name: 'When should I convert to JPG?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'Use JPG for photographs and realistic images where file size matters. It offers high compression rates but doesn\'t support transparent backgrounds.'
-                                }
-                            },
-                            {
-                                '@type': 'Question',
-                                name: 'When should I convert to PNG?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'Use PNG for logos, graphics with text, or images requiring transparent backgrounds. It is lossless, preserving sharp edges but resulting in larger files.'
-                                }
-                            },
-                            {
-                                '@type': 'Question',
-                                name: 'What are the benefits of WebP?',
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: 'WebP is a modern format that provides superior compression (25-30% smaller than JPG) with support for both transparency and high quality, making it ideal for faster websites.'
-                                }
-                            }
-                        ]
-                    }),
+            {/* SEO Content Component */}
+            <SeoContentSection
+                title="Image Formats Explained"
+                description={`
+                    <p>Choosing the right image format is crucial for web performance and visual quality. <strong class="text-primary">UnitMaster Converter</strong> works entirely offline in your browser, ensuring your photos are never uploaded to a server.</p>
+                    <p class="mt-4">Here is how to choose the right format:</p>
+                `}
+                features={[
+                    {
+                        title: "JPG / JPEG",
+                        description: "Best for photographs and realistic images. High compression, small file size, but no transparency."
+                    },
+                    {
+                        title: "PNG",
+                        description: "Best for logos, screenshots, and text. Lossless quality with transparency support, but larger file sizes."
+                    },
+                    {
+                        title: "WebP",
+                        description: "The modern standard for web. Superior compression (30% smaller than JPG) with transparency support."
+                    }
+                ]}
+                benefits={[
+                    "100% Privacy - Files process on your device",
+                    "No File Size Limits (Processor dependent)",
+                    "Works Offline (PWA Ready)",
+                    "Batch Processing available for Pro users"
+                ]}
+                faqs={[
+                    {
+                        question: "When should I convert to JPG?",
+                        answer: "Use JPG for photographs where file size matters more than perfect pixel accuracy. It's the standard for social media and general storage."
+                    },
+                    {
+                        question: "When should I convert to PNG?",
+                        answer: "Use PNG for logos, diagrams, or any image needing a transparent background. It preserves perfect clarity but generates larger files."
+                    },
+                    {
+                        question: "What is WebP?",
+                        answer: "WebP is a modern image format developed by Google. It provides both lossy and lossless compression, making it the best choice for faster-loading websites."
+                    },
+                    {
+                        question: "Is it safe?",
+                        answer: "Yes. Unlike other converters, UnitMaster does not upload your images to any server. Everything happens locally in your browser using secure WebAssembly technology."
+                    }
+                ]}
+                jsonLd={{
+                    '@context': 'https://schema.org',
+                    '@type': 'SoftwareApplication',
+                    name: 'UnitMaster Image Converter',
+                    applicationCategory: 'PhotoEditor',
+                    operatingSystem: 'Any',
+                    offers: {
+                        '@type': 'Offer',
+                        price: '0',
+                        priceCurrency: 'USD'
+                    },
+                    featureList: 'Convert JPG, PNG, WEBP, Batch processing, Offline mode',
                 }}
             />
         </div>

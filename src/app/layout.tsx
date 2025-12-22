@@ -13,11 +13,12 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'UnitMaster - Premium Unit Converter & Calculators',
-    template: '%s | UnitMaster',
+    default: 'UnitMaster - Privacy-First Developer Tools & Unit Converters',
+    template: '%s | UnitMaster - Privacy-First Tools',
   },
-  description: 'The all-in-one digital toolkit. Professional financial calculators, unit converters, and PDF tools. Fast, free, and privacy-focused.',
+  description: 'The all-in-one privacy-focused digital toolkit for developers and professionals. Run PDF tools, converters, and calculators offline in your browser. No server uploads.',
   keywords: [
+    'privacy first tools', 'offline developer tools', 'local pdf converter', 'wasm tools',
     'unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter',
     'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator',
     'audio mixer', 'voice changer', 'remove background', 'pdf to word', 'audio extractor'

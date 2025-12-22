@@ -64,7 +64,7 @@ export default function PdfToWordClient() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (!(pdfjs as any).GlobalWorkerOptions.workerSrc) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (pdfjs as any).GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs`;
+            (pdfjs as any).GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${(pdfjs as any).version}/build/pdf.worker.min.mjs`;
         }
 
         const arrayBuffer = await pdfFile.arrayBuffer();

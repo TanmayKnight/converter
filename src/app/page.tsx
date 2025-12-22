@@ -91,14 +91,7 @@ const iconMap: Record<UnitCategory, any> = {
 
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'UnitMaster - The All-in-One Unit Converter & Digital Toolkit',
-  description: 'Free online Unit Converter, Financial Calculators, PDF Tools, and Developer Utilities. Professional, privacy-first, and ad-free.',
-  keywords: ['unit converter', 'pdf tools', 'financial calculator', 'developer tools', 'json formatter', 'video trimmer'],
-  alternates: {
-    canonical: 'https://unitmaster.io',
-  },
-};
+// Metadata handled by layout.tsx default
 
 export default function Home() {
   // Performance Optimization: Removed server-side auth check.
@@ -128,10 +121,10 @@ export default function Home() {
 
         <div className="mb-10 text-center space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-            The <span className="text-primary">All-in-One</span> Digital Toolkit.
+            The <span className="text-primary">Privacy-First</span> Digital Toolkit.
           </h1>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Master your workflow with professional Financial Calculators, Unit Converters, and secure PDF & Image tools. Fast, free, and privacy-first.
+            A developer-focused suite of PDF tools, converters, and calculators that run <strong>entirely offline</strong> in your browser. zero server uploads.
           </p>
         </div>
 
