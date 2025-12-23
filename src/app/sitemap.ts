@@ -48,6 +48,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
         { url: `${BASE_URL}/calculators/health/bmi`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
 
+        // Student Tools (High Value)
+        { url: `${BASE_URL}/calculators/students/gpa`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/students/scientific`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/students/financial-aid`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/students/grade`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/students/citation`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+        { url: `${BASE_URL}/calculators/students/pomodoro`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+
         // PDF Tools (High Value)
         { url: `${BASE_URL}/tools/pdf/merge`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/tools/pdf/split`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },

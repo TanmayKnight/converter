@@ -57,7 +57,8 @@ import {
   PenTool,
   BookOpen,
   EyeOff,
-  Lock
+  Lock,
+  GraduationCap
 } from 'lucide-react';
 import { unitDefinitions, UnitCategory } from '@/lib/units/definitions';
 import { BentoGrid, BentoCard, BentoItem } from '@/components/BentoGrid';
@@ -121,10 +122,10 @@ export default function Home() {
 
         <div className="mb-10 text-center space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-            The <span className="text-primary">Privacy-First</span> Digital Toolkit.
+            The <span className="text-primary">Developer's</span> Offline Unit Converter & PDF Toolkit.
           </h1>
           <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            A developer-focused suite of PDF tools, converters, and calculators that run <strong>entirely offline</strong> in your browser. zero server uploads.
+            A privacy-first suite of tools running <strong>100% locally via WebAssembly (WASM)</strong>. No server logs. No file uploads. Zero latency.
           </p>
         </div>
 
@@ -214,7 +215,23 @@ export default function Home() {
             ]}
           />
 
-          {/* 6. Math & Statistics (Orange) - Academic/Niche */}
+          {/* 6. Student Tools (Orange) - New */}
+          <BentoCard
+            title="Student Tools"
+            description="Grade calculators and academic planning."
+            icon={<GraduationCap />}
+            colorTheme="orange"
+            items={[
+              { title: "GPA Calculator", href: "/calculators/students/gpa", icon: <GraduationCap />, featured: true, type: 'calculator' },
+              { title: "Financial Aid", href: "/calculators/students/financial-aid", icon: <DollarSign />, featured: true, type: 'calculator' },
+              { title: "Grade Calc", href: "/calculators/students/grade", icon: <Activity />, type: 'calculator' },
+              { title: "Citation Gen", href: "/calculators/students/citation", icon: <BookOpen />, type: 'tool' },
+              { title: "Pomodoro", href: "/calculators/students/pomodoro", icon: <Clock />, type: 'tool' },
+              { title: "Scientific Calc", href: "/calculators/students/scientific", icon: <FunctionSquare />, type: 'calculator' },
+            ]}
+          />
+
+          {/* 7. Math & Statistics (Orange) - Academic/Niche */}
           <BentoCard
             title="Math & Statistics"
             description="Solvers for algebra, geometry, and probability."

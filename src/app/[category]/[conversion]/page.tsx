@@ -59,8 +59,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (!fromUnit || !toUnit) return {};
 
     return {
-        title: `Convert ${fromUnit.name} to ${toUnit.name} (${fromUnit.symbol} to ${toUnit.symbol}) - Fast & Accurate`,
-        description: `Instant free online tool for ${fromUnit.name} to ${toUnit.name} conversion. Learn the formula and convert values between ${fromUnit.name}s and ${toUnit.name}s.`,
+        title: `Convert ${fromUnit.name} to ${toUnit.name} (${fromUnit.symbol} to ${toUnit.symbol}) - Offline & Accurate`,
+        description: `Secure, offline conversion of ${fromUnit.name} to ${toUnit.name}. Run this calculation locally in your browser with high floating-point precision. No server logs.`,
     };
 }
 
@@ -166,8 +166,8 @@ export default async function ConversionPage({ params }: PageProps) {
                         <>
                             <h3>How to convert {fromUnit.name} to {toUnit.name} ({fromUnit.symbol} to {toUnit.symbol})</h3>
                             <p>
-                                Converting <strong>{fromUnit.name}s</strong> to <strong>{toUnit.name}s</strong> is a common calculation in fields ranging from physics to daily life.
-                                To get the result, you multiply the {fromUnit.name} value by the conversion factor.
+                                Converting <strong>{fromUnit.name}s</strong> to <strong>{toUnit.name}s</strong> is critical for developers working with international data standards or scientific applications.
+                                This tool performs the calculation <strong>entirely on your client (browser)</strong> using JavaScript/WASM, ensuring zero latency and maximum privacy.
                             </p>
 
                             <h4>The Formula</h4>

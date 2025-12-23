@@ -46,6 +46,15 @@ export function CalculatorToolsNav() {
         links = MATH_LINKS;
     } else if (pathname.includes('/physics') || pathname.includes('/technology')) {
         links = SCIENCE_LINKS;
+    } else if (pathname.includes('/students')) {
+        links = [
+            { href: '/calculators/students/gpa', label: 'GPA Calculator' },
+            { href: '/calculators/students/scientific', label: 'Scientific Calculator' },
+            { href: '/calculators/students/financial-aid', label: 'Financial Aid' },
+            { href: '/calculators/students/grade', label: 'Grade Calculator' },
+            { href: '/calculators/students/citation', label: 'Citation Generator' },
+            { href: '/calculators/students/pomodoro', label: 'Pomodoro Timer' },
+        ];
     } else {
         // Fallback or maybe show categories? 
         // For now, if we are in root /calculators, maybe show Finance as default or nothing?

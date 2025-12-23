@@ -14,12 +14,14 @@ import {
     Monitor,
     Ruler,
     Binary,
-    Sigma
+    Sigma,
+    GraduationCap
 } from 'lucide-react';
 
 const calculators = [
     {
         category: 'Finance',
+
         icon: DollarSign,
         slug: 'finance',
         tools: [
@@ -74,7 +76,17 @@ const calculators = [
         ],
     },
     {
+        category: 'Student',
+        icon: GraduationCap,
+        slug: 'students',
+        tools: [
+            { name: 'GPA Calculator', slug: 'students/gpa', icon: GraduationCap, desc: 'Semester & Cumulative GPA.' },
+            { name: 'Scientific Calculator', slug: 'students/scientific', icon: Binary, desc: 'Trig, Log, Exponents.' },
+        ],
+    },
+    {
         category: 'Technology',
+
         icon: Smartphone,
         slug: 'technology',
         tools: [

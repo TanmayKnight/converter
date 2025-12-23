@@ -13,50 +13,15 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'UnitMaster - Privacy-First Developer Tools & Unit Converters',
-    template: '%s | UnitMaster - Privacy-First Tools',
+    default: 'UnitMaster - Offline, Privacy-First Developer Tools (WASM)',
+    template: '%s | UnitMaster - Offline Developer Tools',
   },
-  description: 'The all-in-one privacy-focused digital toolkit for developers and professionals. Run PDF tools, converters, and calculators offline in your browser. No server uploads.',
+  description: 'The secure, offline-first developer toolkit. Parse JSON, debug JWTs, merge PDFs, and convert units locally using WebAssembly. No server logs or file uploads.',
   keywords: [
-    'privacy first tools', 'offline developer tools', 'local pdf converter', 'wasm tools',
-    'unit converter', 'financial calculator', 'mortgage calculator', 'pdf tools', 'image resize', 'currency converter',
-    'passport photo maker', 'video trimmer', 'pdf merger', 'qr code generator', 'json formatter', 'ohm\'s law calculator',
-    'audio mixer', 'voice changer', 'remove background', 'pdf to word', 'audio extractor'
+    'offline unit converter', 'wasm pdf tools', 'local developer tools', 'secure json formatter',
+    'jwt debugger offline', 'privacy first calculator', 'client side processing', 'no sermon logs',
+    'pdf merge local', 'base64 converter offline', 'developer utilities', 'typescript tools'
   ],
-  authors: [{ name: 'UnitMaster Team' }],
-  metadataBase: new URL('https://unitmaster.io'),
-  openGraph: {
-    title: 'UnitMaster',
-    description: 'The all-in-one digital toolkit for professionals.',
-    url: 'https://unitmaster.io',
-    siteName: 'UnitMaster',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'UnitMaster',
-    description: 'Calculators, Converters, and Tools for everyone.',
-    creator: '@unitmaster',
-  },
-  verification: {
-    google: 'bjpEfNzGpb13ry19KxJAobdZBxyUuMaTil95SQG-GS8',
-    other: {
-      'impact-site-verification': '1ce22c09-2796-4064-aa79-18e749c44bce',
-      'google-adsense-account': 'ca-pub-6595166353140049',
-    },
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

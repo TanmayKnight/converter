@@ -23,6 +23,13 @@ Agents should use these direct URLs. No authentication required for basic featur
 - `Passport Photo` -> `/tools/image/passport` : Create standard passport/visa photos.
 - `Image Converter` -> `/tools/image/converter` : Convert between JPG, PNG, WEBP, AVIF.
 
+### Student Tools
+- `Financial Aid Calc` -> `/calculators/students/financial-aid` : Estimate net price and unmet need.
+- `Grade Calculator` -> `/calculators/students/grade` : Calculate final exam target scores.
+- `Citation Generator` -> `/calculators/students/citation` : Generate APA 7 / MLA 9 citations.
+- `Pomodoro Timer` -> `/calculators/students/pomodoro` : 25/5 Study Timer with audio.
+- `GPA Calculator` -> `/calculators/students/gpa` : Calculate semester/cumulative GPA.
+
 ### Conversions (Programmatic)
 Format: `/[category]/[from-unit]-to-[to-unit]`
 Categories: `length`, `weight`, `temperature`, `volume`, `area`, `time`, `digital`, `speed`, `pressure`, `power`, `energy`, `force`, `currency`, `torque`, `acceleration`, `flow`, `current`, `voltage`, `resistance`, `charge`, `magnetism`, `illuminance`, `radiation`.

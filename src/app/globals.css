@@ -33,11 +33,11 @@
     /* White */
     --foreground: 30 41 59;
     /* Slate 800 */
-    --card: 255 255 255;
-    --card-foreground: 30 41 59;
-    --popover: 255 255 255;
-    --popover-foreground: 30 41 59;
-    --primary: 99 102 241;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --popover: #ffffff;
+    --popover-foreground: #0f172a;
+    --primary: #4f46e5;
     /* Indigo 500 - rgb(99, 102, 241) */
     --primary-foreground: 255 255 255;
     --secondary: 241 245 249;
@@ -55,11 +55,7 @@
     --ring: 99 102 241;
     --radius: 0.75rem;
 
-    /* For RGB conversion if needed by tailwind v4 opacity modifier shorthand, 
-       but v4 supports color-mix or just plain colors nicely. 
-       We'll stick to simple hex/rgb for now or check docs.
-       Tailwind v4 theme variables usually take the full color value.
-    */
+    /* Fixed HEX values below */
     --background: #ffffff;
     --foreground: #0f172a;
     --card: #ffffff;
@@ -86,6 +82,8 @@
     --card: #0f172a;
     /* Slate 900 */
     --card-foreground: #f8fafc;
+    --popover: #020617;
+    --popover-foreground: #f8fafc;
     --primary: #6366f1;
     /* Indigo 500 */
     --primary-foreground: #f8fafc;

@@ -36,9 +36,9 @@ export function SeoContentSection({ title, description, features, benefits, faqs
 
             {/* Main Content Block */}
             <div className="container mx-auto px-4 max-w-4xl">
-                <div className="text-center space-y-6 mb-12">
-                    <h2 className="text-3xl font-bold">{title}</h2>
-                    <div className="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed text-lg">
+                <div className="space-y-6 mb-12">
+                    <h2 className="text-3xl font-bold text-center">{title}</h2>
+                    <div className="prose dark:prose-invert max-w-3xl mx-auto text-left text-muted-foreground leading-relaxed text-lg">
                         <div dangerouslySetInnerHTML={{ __html: description }} />
                     </div>
                 </div>
