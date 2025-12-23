@@ -74,7 +74,7 @@ export default function FinancialAidPage() {
                             answer: "This tool provides an estimate based on the numbers you input. For official figures, always refer to your college's financial aid offer letter or use their specific Net Price Calculator."
                         }
                     ]}
-                    schema={{
+                    jsonLd={{
                         "@context": "https://schema.org",
                         "@type": "SoftwareApplication",
                         "name": "UnitMaster Financial Aid Calculator",
