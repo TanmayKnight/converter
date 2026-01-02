@@ -38,10 +38,10 @@ export default function ContactPage() {
                     </p>
 
                     <a
-                        href="mailto:tableaulancer@gmail.com"
-                        className="inline-flex items-center justify-center w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 rounded-xl font-medium transition-colors"
+                        href="mailto:curiousmindshex@gmail.com"
+                        className="text-lg font-medium hover:text-primary transition-colors mb-2"
                     >
-                        tableaulancer@gmail.com
+                        curiousmindshex@gmail.com
                     </a>
                 </div>
 

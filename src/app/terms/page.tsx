@@ -39,7 +39,7 @@ export default function TermsOfService() {
                 <section>
                     <h2 className="text-xl font-semibold mb-2">5. Contact</h2>
                     <p>
-                        If you have any questions about these Terms, please contact us at <a href="mailto:tableaulancer@gmail.com" className="hover:text-primary transition-colors">tableaulancer@gmail.com</a>.
+                        If you have any questions about these Terms, please contact us at <a href="mailto:curiousmindshex@gmail.com" className="hover:text-primary transition-colors">curiousmindshex@gmail.com</a>.
                     </p>
                 </section>
             </div>

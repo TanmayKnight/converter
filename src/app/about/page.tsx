@@ -57,7 +57,7 @@ export default function AboutPage() {
                     Have a suggestion, found a bug, or just want to say hi? We'd love to hear from you.
                 </p>
                 <p className="text-muted-foreground">
-                    Email: <a href="mailto:tableaulancer@gmail.com" className="hover:text-primary transition-colors">tableaulancer@gmail.com</a>
+                    Email: <a href="mailto:curiousmindshex@gmail.com" className="hover:text-primary transition-colors">curiousmindshex@gmail.com</a>
                 </p>
             </div>
         </div>

@@ -72,7 +72,7 @@ export default function RootLayout({
               ],
               contactPoint: {
                 '@type': 'ContactPoint',
-                email: 'tableaulancer@gmail.com',
+                email: 'curiousmindshex@gmail.com',
                 contactType: 'customer support'
               }
             }),
