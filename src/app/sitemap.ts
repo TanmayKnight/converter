@@ -18,7 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         // Core Pages
         { url: `${BASE_URL}/pricing`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/login`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
-        { url: `${BASE_URL}/signup`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
         // Static Calculator Pages
         { url: `${BASE_URL}/calculators/finance/mortgage`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
         { url: `${BASE_URL}/calculators/finance/loan`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },

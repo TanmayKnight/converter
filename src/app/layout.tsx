@@ -12,6 +12,7 @@ import { AdSenseLoader } from '@/components/AdSenseLoader';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://unitmaster.io'),
   title: {
     default: 'UnitMaster - Offline, Privacy-First Developer Tools (WASM)',
     template: '%s | UnitMaster - Offline Developer Tools',
@@ -27,6 +28,10 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'default',
     title: 'UnitMaster',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/icon.png', // Assuming icon.png can be used as apple touch icon or add a specific one if available
   },
 };
 
