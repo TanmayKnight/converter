@@ -211,81 +211,116 @@ export default async function ConversionPage({ params }: PageProps) {
                                 {['finance', 'speed', 'volume', 'area', 'time', 'pressure', 'power', 'energy', 'force', 'torque', 'acceleration', 'flow', 'current', 'voltage', 'resistance', 'charge', 'magnetism', 'illuminance', 'radiation'].includes(categoryId) &&
                                     `This conversion is essential for professionals in science and engineering who need to switch between different unit standards globally.`}
                             </p>
-                        </>
-                    )}
 
-                </div>
+                            {/* Auto-Generated FAQs to combat 'Thin Content' signals */}
+                            <h3>Frequently Asked Questions</h3>
 
-                <div className="prose prose-neutral dark:prose-invert">
-                    <h3>Quick Conversion Table</h3>
-                    <div className="not-prose rounded-lg border border-border overflow-hidden">
-                        <table className="w-full text-sm text-left">
-                            <thead className="bg-secondary text-secondary-foreground font-medium">
-                                <tr>
-                                    <th className="px-4 py-3">{fromUnit.symbol}</th>
-                                    <th className="px-4 py-3">{toUnit.symbol}</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-border">
-                                {[1, 5, 10, 20, 50, 100].map((val) => (
-                                    <tr key={val} className="bg-card">
-                                        <td className="px-4 py-2">{val}</td>
-                                        <td className="px-4 py-2">{(val * (fromUnit.ratio / toUnit.ratio)).toFixed(4)}</td>
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="font-bold text-base mb-1">How do I convert {fromUnit.name} to {toUnit.name}?</h4>
+                                    <p className="text-sm text-muted-foreground m-0">
+                                        To convert {fromUnit.name} to {toUnit.name}, you need to multiply the {fromUnit.symbol} value by <strong>{(fromUnit.ratio / toUnit.ratio).toPrecision(6)}</strong>.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-base mb-1">What is the formula for {fromUnit.symbol} to {toUnit.symbol}?</h4>
+                                    <p className="text-sm text-muted-foreground m-0">
+                                        The simple formula is: <code>{toUnit.symbol} = {fromUnit.symbol} × {(fromUnit.ratio / toUnit.ratio).toPrecision(6)}</code>.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-base mb-1">Which is bigger: {fromUnit.name} or {toUnit.name}?</h4>
+                                    <p className="text-sm text-muted-foreground m-0">
+                                        {fromUnit.ratio > toUnit.ratio ? (
+                                            <>A <strong>{fromUnit.name}</strong> is bigger. One {fromUnit.name} is equal to approx {(fromUnit.ratio / toUnit.ratio).toFixed(4)} {toUnit.name}s.</>
+                                        ) : (
+                                            <>A <strong>{toUnit.name}</strong> is bigger. One {toUnit.name} is equal to approx {(toUnit.ratio / fromUnit.ratio).toFixed(4)} {fromUnit.name}s.</>
+                                        )}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-base mb-1">How many {fromUnit.name}s are in one {toUnit.name}?</h4>
+                                    <p className="text-sm text-muted-foreground m-0">
+                                        There are approximately <strong>{(toUnit.ratio / fromUnit.ratio).toPrecision(6)}</strong> {fromUnit.name}s in one {toUnit.name}.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    <div className="prose prose-neutral dark:prose-invert">
+                        <h3>Quick Conversion Table</h3>
+                        <div className="not-prose rounded-lg border border-border overflow-hidden">
+                            <table className="w-full text-sm text-left">
+                                <thead className="bg-secondary text-secondary-foreground font-medium">
+                                    <tr>
+                                        <th className="px-4 py-3">{fromUnit.symbol}</th>
+                                        <th className="px-4 py-3">{toUnit.symbol}</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="divide-y divide-border">
+                                    {[1, 5, 10, 20, 50, 100].map((val) => (
+                                        <tr key={val} className="bg-card">
+                                            <td className="px-4 py-2">{val}</td>
+                                            <td className="px-4 py-2">{(val * (fromUnit.ratio / toUnit.ratio)).toFixed(4)}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="mt-12 mb-8">
-                <h3 className="text-xl font-bold mb-6 text-center">More {fromUnit.symbol} Conversions</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {category.units.filter(u => u.id !== fromUnit.id && u.id !== toUnit.id).slice(0, 8).map(u => (
-                        <Link
-                            key={u.id}
-                            href={`/${categoryId}/${fromUnit.id}-to-${u.id}`}
-                            className="text-sm p-3 bg-card border border-border rounded-lg text-center hover:bg-primary/5 hover:border-primary/50 transition-colors"
-                        >
-                            {fromUnit.name} to {u.name}
-                        </Link>
-                    ))}
+                <div className="mt-12 mb-8">
+                    <h3 className="text-xl font-bold mb-6 text-center">More {fromUnit.symbol} Conversions</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {category.units.filter(u => u.id !== fromUnit.id && u.id !== toUnit.id).slice(0, 8).map(u => (
+                            <Link
+                                key={u.id}
+                                href={`/${categoryId}/${fromUnit.id}-to-${u.id}`}
+                                className="text-sm p-3 bg-card border border-border rounded-lg text-center hover:bg-primary/5 hover:border-primary/50 transition-colors"
+                            >
+                                {fromUnit.name} to {u.name}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
+
+
+                <div className="mt-16 mb-8">
+                    <AdUnit className="max-w-3xl mx-auto" slotId="footer-slot" />
+                </div>
+
+                <JsonLdBreadcrumb
+                    crumbs={[
+                        { name: 'Home', path: '/' },
+                        { name: category.name, path: `/${categoryId}` },
+                        { name: `${fromUnit.name} to ${toUnit.name}`, path: `/${categoryId}/${fromUnit.id}-to-${toUnit.id}` }
+                    ]}
+                />
+
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'WebApplication',
+                            name: `Convert ${fromUnit.name} to ${toUnit.name}`,
+                            description: `Free online tool to convert ${fromUnit.name} to ${toUnit.name}.`,
+                            applicationCategory: 'UtilityApplication',
+                            operatingSystem: 'Any',
+                            offers: {
+                                '@type': 'Offer',
+                                price: '0',
+                                priceCurrency: 'USD',
+                            },
+                            featureList: `Convert ${fromUnit.symbol} to ${toUnit.symbol}, High Precision, Instant Results`,
+                        }),
+                    }}
+                />
             </div>
-
-
-            <div className="mt-16 mb-8">
-                <AdUnit className="max-w-3xl mx-auto" slotId="footer-slot" />
-            </div>
-
-            <JsonLdBreadcrumb
-                crumbs={[
-                    { name: 'Home', path: '/' },
-                    { name: category.name, path: `/${categoryId}` },
-                    { name: `${fromUnit.name} to ${toUnit.name}`, path: `/${categoryId}/${fromUnit.id}-to-${toUnit.id}` }
-                ]}
-            />
-
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'WebApplication',
-                        name: `Convert ${fromUnit.name} to ${toUnit.name}`,
-                        description: `Free online tool to convert ${fromUnit.name} to ${toUnit.name}.`,
-                        applicationCategory: 'UtilityApplication',
-                        operatingSystem: 'Any',
-                        offers: {
-                            '@type': 'Offer',
-                            price: '0',
-                            priceCurrency: 'USD',
-                        },
-                        featureList: `Convert ${fromUnit.symbol} to ${toUnit.symbol}, High Precision, Instant Results`,
-                    }),
-                }}
-            />
-        </div>
-    );
+            );
 }
