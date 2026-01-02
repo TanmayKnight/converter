@@ -306,20 +306,69 @@ export default async function ConversionPage({ params }: PageProps) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'WebApplication',
-                        name: `Convert ${fromUnit.name} to ${toUnit.name}`,
-                        description: `Free online tool to convert ${fromUnit.name} to ${toUnit.name}.`,
-                        applicationCategory: 'UtilityApplication',
-                        operatingSystem: 'Any',
-                        offers: {
-                            '@type': 'Offer',
-                            price: '0',
-                            priceCurrency: 'USD',
+                    __html: JSON.stringify([
+                        {
+                            '@context': 'https://schema.org',
+                            '@type': 'WebApplication',
+                            name: `Convert ${fromUnit.name} to ${toUnit.name}`,
+                            description: `Free online tool to convert ${fromUnit.name} to ${toUnit.name}.`,
+                            applicationCategory: 'UtilityApplication',
+                            operatingSystem: 'Any',
+                            offers: {
+                                '@type': 'Offer',
+                                price: '0',
+                                priceCurrency: 'USD',
+                            },
+                            featureList: `Convert ${fromUnit.symbol} to ${toUnit.symbol}, High Precision, Instant Results`,
                         },
-                        featureList: `Convert ${fromUnit.symbol} to ${toUnit.symbol}, High Precision, Instant Results`,
-                    }),
+                        {
+                            '@context': 'https://schema.org',
+                            '@type': 'FAQPage',
+                            mainEntity: richContent?.faq ? richContent.faq.map(f => ({
+                                '@type': 'Question',
+                                name: f.question,
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: f.answer
+                                }
+                            })) : [
+                                {
+                                    '@type': 'Question',
+                                    name: `How do I convert ${fromUnit.name} to ${toUnit.name}?`,
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: `To convert ${fromUnit.name} to ${toUnit.name}, you need to multiply the ${fromUnit.symbol} value by ${(fromUnit.ratio / toUnit.ratio).toPrecision(6)}.`
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: `What is the formula for ${fromUnit.symbol} to ${toUnit.symbol}?`,
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: `The simple formula is: ${toUnit.symbol} = ${fromUnit.symbol} × ${(fromUnit.ratio / toUnit.ratio).toPrecision(6)}.`
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: `Which is bigger: ${fromUnit.name} or ${toUnit.name}?`,
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: fromUnit.ratio > toUnit.ratio
+                                            ? `A ${fromUnit.name} is bigger. One ${fromUnit.name} is equal to approx ${(fromUnit.ratio / toUnit.ratio).toFixed(4)} ${toUnit.name}s.`
+                                            : `A ${toUnit.name} is bigger. One ${toUnit.name} is equal to approx ${(toUnit.ratio / fromUnit.ratio).toFixed(4)} ${fromUnit.name}s.`
+                                    }
+                                },
+                                {
+                                    '@type': 'Question',
+                                    name: `How many ${fromUnit.name}s are in one ${toUnit.name}?`,
+                                    acceptedAnswer: {
+                                        '@type': 'Answer',
+                                        text: `There are approximately ${(toUnit.ratio / fromUnit.ratio).toPrecision(6)} ${fromUnit.name}s in one ${toUnit.name}.`
+                                    }
+                                }
+                            ]
+                        }
+                    ]),
                 }}
             />
         </div >
