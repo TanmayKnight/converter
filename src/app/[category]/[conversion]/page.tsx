@@ -248,31 +248,23 @@ export default async function ConversionPage({ params }: PageProps) {
                                     </p>
                                 </div>
                             </div>
-
-                        </div>
-
-                    <div className="prose prose-neutral dark:prose-invert">
-                        <h3>Quick Conversion Table</h3>
-                        <div className="not-prose rounded-lg border border-border overflow-hidden">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-secondary text-secondary-foreground font-medium">
-                                    <tr>
-                                        <th className="px-4 py-3">{fromUnit.symbol}</th>
-                                        <th className="px-4 py-3">{toUnit.symbol}</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                    {[1, 5, 10, 20, 50, 100].map((val) => (
-                                        <tr key={val} className="bg-card">
-                                            <td className="px-4 py-2">{val}</td>
-                                            <td className="px-4 py-2">{(val * (fromUnit.ratio / toUnit.ratio)).toFixed(4)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                            <tr>
+                                <th className="px-4 py-3">{fromUnit.symbol}</th>
+                                <th className="px-4 py-3">{toUnit.symbol}</th>
+                            </tr>
+                        </thead>
+                    <tbody className="divide-y divide-border">
+                        {[1, 5, 10, 20, 50, 100].map((val) => (
+                            <tr key={val} className="bg-card">
+                                <td className="px-4 py-2">{val}</td>
+                                <td className="px-4 py-2">{(val * (fromUnit.ratio / toUnit.ratio)).toFixed(4)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+                </div >
 
                 <div className="mt-12 mb-8">
                     <h3 className="text-xl font-bold mb-6 text-center">More {fromUnit.symbol} Conversions</h3>
@@ -321,6 +313,6 @@ export default async function ConversionPage({ params }: PageProps) {
                         }),
                     }}
                 />
-            </div>
+            </div >
             );
 }
